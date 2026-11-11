@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>嫩豆腐接接樂｜銓Dubu嘟布韓式豆腐煲 義華店</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#0f274d;--navy-700:#183b72;--navy-500:#244d8c;--gold-400:#fecc6b;--gold-100:#fff3d1;--ring-cream:#ffecc9;
+  --seal-red:#c71211;--ink:#1a1a1a;--ink-muted:#5a6578;--paper:#fff8ec;--surface:#fff;--chili-hot:#e63b2e;--kimchi-orange:#ff7a3d;
+  --cheese-yellow:#ffd34d;--stroke-ui:4px;--shadow-comic:4px 4px 0 #1a1a1a;--shadow-comic-lg:6px 6px 0 #1a1a1a;
+  --radius-sm:6px;--radius-md:14px;--radius-lg:20px;--ease-out:cubic-bezier(.22,1,.36,1);--ease-back:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#0b1a33;overflow:hidden;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);touch-action:none;user-select:none;-webkit-user-select:none}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{position:relative;width:390px;height:844px;transform-origin:center center;overflow:hidden;background:var(--navy-700);border-radius:0}
+canvas{position:absolute;inset:0;width:390px;height:844px;display:block}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center}
+.screen.on{display:flex;animation:fade 240ms var(--ease-out)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.navybg{background:radial-gradient(circle at 50% 52.5%,transparent 0 150px,var(--ring-cream) 151px 158px,transparent 159px 168px,var(--ring-cream) 169px 171px,transparent 172px),radial-gradient(var(--ring-cream) 1.4px,transparent 1.6px) 0 0/22px 22px,var(--navy-700)}
+.paperbg{background:radial-gradient(rgba(24,59,114,.08) 1.4px,transparent 1.6px) 0 0/18px 18px,var(--paper)}
+.stroke{paint-order:stroke fill;-webkit-text-stroke:8px var(--ink)}
+.btn{font:900 20px/1.2 "Noto Sans TC",sans-serif;min-height:56px;padding:0 26px;border:var(--stroke-ui) solid var(--ink);border-radius:999px;box-shadow:var(--shadow-comic);cursor:pointer;color:var(--ink);background:var(--gold-400);transition:transform 120ms var(--ease-out),box-shadow 120ms var(--ease-out)}
+.btn:active{transform:translate(4px,4px);box-shadow:none}
+.btn.secondary{background:var(--surface)}
+.btn.wide{width:320px}
+.btn:disabled{opacity:.5;cursor:default}
+.link{background:none;border:0;font:700 13px "Noto Sans TC";color:var(--gold-100);text-decoration:underline;cursor:pointer;padding:8px}
+.paperbg .link{color:var(--ink-muted)}
+/* home */
+#home .title{margin:72px 0 0;text-align:center;line-height:1.02}
+#home .title b{display:block;font-weight:900;font-size:76px;color:var(--gold-400);transform:rotate(-3deg)}
+#home .title i{display:block;font-style:normal;font-weight:900;font-size:66px;color:#fff;transform:rotate(2deg);margin-top:4px}
+#home .sub{margin:16px 0 0;font:700 17px "Noto Sans TC";color:var(--gold-100);background:var(--navy-900);border:3px solid var(--ink);border-radius:999px;padding:4px 16px;position:relative;z-index:1}
+#home .hero{width:280px;margin-top:0;animation:bob 1.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(3deg)}}
+#home .actions{position:absolute;bottom:92px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.footer{position:absolute;left:0;right:0;bottom:0;height:56px;background:var(--gold-400);border-top:4px solid var(--ink);display:flex;align-items:center;justify-content:center;font:900 14px "Noto Sans TC";color:var(--navy-900)}
+/* rules */
+#rules{overflow-y:auto;touch-action:pan-y;padding-bottom:28px}
+#rules h2{margin:30px 0 2px;font:900 30px "Noto Sans TC";color:var(--navy-700)}
+.period{margin:6px 0 14px;background:var(--navy-700);color:var(--gold-400);border:3px solid var(--ink);border-radius:999px;padding:6px 16px;font:900 15px "Noto Sans TC";box-shadow:3px 3px 0 var(--ink)}
+.rbox{width:350px;background:#fff;border:4px solid var(--ink);border-radius:var(--radius-lg);box-shadow:var(--shadow-comic);padding:12px 14px;margin-bottom:12px}
+.rbox h3{margin:0 0 8px;font:900 17px "Noto Sans TC";color:var(--navy-700);display:flex;align-items:center;gap:8px}
+.rbox h3::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--chili-hot)}
+.rbox p,.rbox li{margin:0;font:500 14px/1.55 "Noto Sans TC"}
+.rbox ol{margin:0;padding-left:20px}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.legend div{display:flex;align-items:center;gap:6px;font:700 13px/1.25 "Noto Sans TC"}
+.legend img{width:46px;height:40px;object-fit:contain;flex:none}
+.legend b{color:var(--navy-700)} .legend b.neg{color:var(--seal-red)}
+.tiers{width:100%;border-collapse:collapse;font:700 13px/1.4 "Noto Sans TC"}
+.tiers td{padding:5px 4px;border-top:2px dashed #e1d7c3;vertical-align:top} .tiers tr:first-child td{border-top:0}
+.tiers td:first-child{white-space:nowrap;color:var(--navy-700);font-weight:900}
+#rules .btn{margin-top:6px;flex:none}
+#home .period{margin-top:10px}
+/* tutorial */
+#tutorial h2{margin:40px 0 4px;font:900 30px "Noto Sans TC";color:var(--navy-700)}
+#tutorial .hint{margin:0 0 16px;font:500 15px "Noto Sans TC";color:var(--ink-muted)}
+.panels{display:flex;flex-direction:column;gap:14px;width:340px}
+.panel{background:#fff;border:4px solid var(--ink);border-radius:var(--radius-lg);box-shadow:var(--shadow-comic);height:150px;position:relative;overflow:hidden;display:flex;align-items:center;padding:0 14px;gap:8px}
+.panel .no{position:absolute;left:10px;top:8px;width:28px;height:28px;border-radius:50%;background:var(--navy-700);color:var(--gold-400);font:900 15px/22px "Noto Sans TC";text-align:center;border:3px solid var(--ink)}
+.panel .cap{font:900 20px/1.3 "Noto Sans TC";flex:1;text-align:center}
+.panel .art{width:150px;height:140px;position:relative;flex:none}
+.panel .art img{position:absolute}
+#tutorial .btn{margin-top:22px}
+/* hud */
+#hud{position:absolute;inset:0;pointer-events:none;display:none}
+#hud.on{display:block}
+.card{position:absolute;background:#fff;border:4px solid var(--ink);border-radius:var(--radius-md);box-shadow:var(--shadow-comic)}
+#scoreCard{left:14px;top:14px;padding:5px 12px 7px;min-width:122px}
+.lab{font:700 11px/1.2 "Noto Sans TC";letter-spacing:.08em;color:var(--ink-muted)}
+#score{font:900 30px/1 "Noto Sans TC";color:var(--navy-700);font-variant-numeric:tabular-nums}
+#timer{position:absolute;left:148px;top:26px;background:var(--gold-400);border:4px solid var(--ink);border-radius:999px;padding:6px 14px;font:900 22px/1 "Noto Sans TC";font-variant-numeric:tabular-nums;box-shadow:var(--shadow-comic)}
+#timer.hurry{background:var(--chili-hot)}
+#timer.tick{animation:tick 300ms var(--ease-back)}
+@keyframes tick{40%{transform:scale(1.15)}}
+#bossCard{right:14px;top:14px;width:84px;height:78px;padding:2px;text-align:center;overflow:hidden}
+#bossImg{height:72px;display:block;margin:0 auto}
+#bossCard.shake{animation:shake 300ms linear}
+#aids{position:absolute;inset:0}
+#bossFace{position:relative;width:100%;height:100%;transform-origin:50% 90%}
+#bossCard.hurt #bossFace{animation:knock 560ms var(--ease-out)}
+@keyframes knock{0%{transform:none}14%{transform:translate(-7px,-3px) rotate(-16deg) scale(1.12)}32%{transform:translate(5px,2px) rotate(9deg) scale(.96)}52%{transform:translate(-3px,0) rotate(-5deg)}74%{transform:rotate(2deg)}100%{transform:none}}
+#bossCard::after{content:"";position:absolute;inset:0;background:var(--chili-hot);opacity:0;pointer-events:none;border-radius:10px}
+#bossCard.hurt::after{animation:flash 420ms linear}
+@keyframes flash{0%,40%{opacity:.55}20%,60%{opacity:0}50%{opacity:.35}100%{opacity:0}}
+.aid{position:absolute;width:26px;height:11px;pointer-events:none;animation:slap 300ms var(--ease-back)}
+@keyframes slap{0%{transform:scale(2.2) rotate(var(--r));opacity:0}100%{transform:scale(1) rotate(var(--r));opacity:1}}
+#hitFx{position:absolute;right:20px;top:84px;z-index:3;font:900 26px "Noto Sans TC";color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;display:none;transform:rotate(-12deg);pointer-events:none}
+#hitFx.on{display:block;animation:hitpop 600ms var(--ease-out) forwards}
+@keyframes hitpop{0%{transform:scale(.4) rotate(-12deg);opacity:0}25%{transform:scale(1.2) rotate(-12deg);opacity:1}100%{transform:translate(-14px,-18px) scale(1) rotate(-18deg);opacity:0}}
+@keyframes shake{20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-3px,-2px)}80%{transform:translate(3px,2px)}}
+#bpCard{left:14px;right:14px;top:104px;height:42px;display:flex;align-items:center;gap:10px;padding:0 12px}
+#bpCard .lab{font-size:13px;color:var(--ink);white-space:nowrap}
+#bp{position:relative;flex:1;height:20px;border:3px solid var(--ink);border-radius:999px;background:#fff;overflow:visible}
+#bpFill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:var(--chili-hot);transition:width 450ms var(--ease-back)}
+#bp.hot #bpFill{animation:hot 600ms ease-in-out infinite}
+@keyframes hot{50%{filter:brightness(1.25)}}
+#bp .tk{position:absolute;top:2px;bottom:2px;width:2px;background:rgba(26,26,26,.35);border-radius:2px}
+#bp .crack{position:absolute;inset:-10px -6px;display:none;pointer-events:none}
+#bp.burst{background:#fff;animation:burst 500ms linear}
+#bp.burst #bpFill{width:100%!important;background:var(--chili-hot)}
+#bp.burst .crack{display:block}
+@keyframes burst{10%{transform:scale(1.12) rotate(-2deg)}30%{transform:translate(-6px,2px) rotate(2deg)}50%{transform:translate(6px,-2px)}70%{transform:translate(-4px,1px)}100%{transform:none}}
+.shard{position:absolute;width:10px;height:8px;background:var(--chili-hot);border:2px solid var(--ink);border-radius:2px;pointer-events:none;animation:shard 700ms var(--ease-out) forwards}
+@keyframes shard{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+#bpPop{position:absolute;right:6px;top:-30px;font:900 28px "Noto Sans TC";color:var(--chili-hot);-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;transform:rotate(-8deg);display:none}
+#bp.burst + #bpPop{display:block;animation:bump 400ms var(--ease-back)}
+#bpCard.shake{animation:shake 300ms linear}
+#combo{position:absolute;left:18px;top:158px;width:96px;height:96px;display:none;place-items:center;background:var(--kimchi-orange);clip-path:polygon(50% 0,61% 18%,80% 8%,79% 29%,100% 31%,87% 48%,100% 65%,80% 70%,82% 91%,62% 83%,50% 100%,38% 83%,18% 91%,20% 70%,0 65%,13% 48%,0 31%,21% 29%,20% 8%,39% 18%);text-align:center;animation:wob 2s ease-in-out infinite}
+#combo.on{display:grid}
+#combo b{display:block;font:900 12px/1 "Noto Sans TC"} #combo span{font:900 26px/1 "Noto Sans TC"}
+#combo.bump{animation:bump 240ms var(--ease-back)}
+@keyframes wob{50%{transform:rotate(6deg)}} @keyframes bump{0%{transform:scale(1.3)}100%{transform:scale(1)}}
+#status{position:absolute;right:14px;top:156px;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.chip{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:2px 10px 2px 8px;font:900 12px "Noto Sans TC";box-shadow:3px 3px 0 var(--ink);position:relative;overflow:hidden;min-width:96px}
+.chip u{position:absolute;left:0;bottom:0;height:3px;background:var(--ink);text-decoration:none}
+#mute{position:absolute;right:124px;top:22px;width:44px;height:44px;border-radius:50%;border:4px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink);pointer-events:auto;cursor:pointer;display:grid;place-items:center;padding:0}
+#bubble{position:absolute;display:none;background:#fff;border:4px solid var(--ink);border-radius:999px;padding:7px 16px;font:700 16px/1.3 "Noto Sans TC";box-shadow:var(--shadow-comic);white-space:nowrap;transform:translateX(-50%)}
+#bubble.on{display:block;animation:fade 200ms var(--ease-out)}
+#bubble::after{content:"";position:absolute;left:var(--tail,50%);bottom:-17px;border:9px solid transparent;border-top:13px solid var(--ink);border-bottom:0;transform:translateX(-50%)}
+#bubble::before{content:"";position:absolute;left:var(--tail,50%);bottom:-8px;border:6px solid transparent;border-top:8px solid #fff;border-bottom:0;transform:translateX(-50%);z-index:1}
+#bubble.up::after{bottom:auto;top:-17px;border-top:0;border-bottom:13px solid var(--ink)}
+#bubble.up::before{bottom:auto;top:-8px;border-top:0;border-bottom:8px solid #fff}
+/* faint */
+#faint{background:rgba(26,26,26,.6)}
+#faint .big{margin-top:150px;width:220px;animation:topple 900ms var(--ease-out) forwards}
+@keyframes topple{from{transform:scale(.5)}to{transform:scale(1) rotate(-15deg)}}
+#faint h2{margin:20px 0 4px;font:900 40px "Noto Sans TC";color:var(--chili-hot)}
+#faint p{margin:0 0 30px;font:700 17px "Noto Sans TC";color:#fff}
+/* result */
+#result .rk{position:relative;margin-top:28px;width:300px;height:250px;display:grid;place-items:center}
+#result .rk .burst{position:absolute;inset:0;background:var(--gold-400);clip-path:polygon(50% 0,58% 20%,75% 7%,74% 28%,96% 25%,84% 43%,100% 55%,81% 64%,90% 85%,69% 79%,62% 100%,50% 84%,38% 100%,31% 79%,10% 85%,19% 64%,0 55%,16% 43%,4% 25%,26% 28%,25% 7%,42% 20%)}
+#result .rk img{position:relative;width:250px;animation:bob 1.2s ease-in-out infinite}
+#result .pre{margin:18px 0 0;font:700 16px "Noto Sans TC";color:var(--ink-muted)}
+#rank{margin:2px 0 0;font:900 50px/1.05 "Noto Sans TC";color:var(--chili-hot);transform:rotate(-3deg)}
+#rankSub{margin:8px 0 0;font:700 16px "Noto Sans TC";color:var(--ink-muted)}
+.statcard{margin-top:16px;width:340px;background:#fff;border:4px solid var(--ink);border-radius:var(--radius-lg);box-shadow:var(--shadow-comic);display:flex}
+.statcard div{flex:1;padding:10px 0;text-align:center} .statcard div+div{border-left:3px dashed var(--ink)}
+.statcard b{display:block;font:900 30px/1.1 "Noto Sans TC";color:var(--navy-700);font-variant-numeric:tabular-nums}
+#result .acts{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:10px}
+#practiceNote{font:700 13px "Noto Sans TC";color:var(--ink-muted);margin:8px 0 0;text-align:center;max-width:320px}
+/* coupon */
+#coupon h2{margin:36px 0 4px;font:900 30px "Noto Sans TC";color:var(--navy-700)}
+#coupon .hint{margin:0 0 22px;font:700 15px "Noto Sans TC";color:var(--ink-muted)}
+.cp{position:relative;width:340px;background:var(--navy-700);border:4px solid var(--ink);border-radius:var(--radius-lg);box-shadow:var(--shadow-comic-lg);padding:12px;color:#fff;text-align:center}
+.cp .in{border:3px dashed var(--ring-cream);border-radius:var(--radius-md);padding:18px 12px}
+.cp .t{font:700 14px "Noto Sans TC";color:var(--gold-100)}
+.cp .r{font:900 28px/1.25 "Noto Sans TC";color:var(--gold-400);margin:8px 0}
+.cp .code{display:inline-block;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:var(--radius-md);padding:6px 18px;font:900 26px "Noto Sans TC";letter-spacing:.12em;margin:10px 0}
+.cp .cap{font:700 12px/1.5 "Noto Sans TC";color:var(--gold-100)}
+.cp .tofu{position:absolute;right:-26px;top:-46px;width:120px;animation:bob 1.2s ease-in-out infinite}
+.cp.used{filter:grayscale(1);opacity:.75}
+.cp .stamp{display:none;position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-12deg);border:5px solid var(--seal-red);color:var(--seal-red);background:#fff;font:900 22px "Noto Sans TC";padding:6px 14px;border-radius:12px;white-space:nowrap}
+.cp.used .stamp{display:block}
+#redeem{margin-top:22px;width:340px;position:relative;overflow:hidden;background:#fff;color:var(--seal-red);touch-action:none}
+#redeem i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold-400)}
+#redeem span{position:relative}
+#coupon .acts{margin-top:12px}
+/* share modal */
+#share{background:rgba(26,26,26,.75);justify-content:center;gap:14px}
+#share img{width:250px;border:4px solid var(--ink);border-radius:var(--radius-md);box-shadow:var(--shadow-comic-lg);background:#fff}
+#share p{margin:0;font:700 15px/1.5 "Noto Sans TC";color:#fff;text-align:center}
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <canvas id="c" aria-label="遊戲畫面"></canvas>
+
+  <div id="hud" aria-hidden="true">
+    <div id="scoreCard" class="card"><div class="lab">SCORE</div><div id="score">0</div></div>
+    <div id="timer">1:00</div>
+    <button id="mute" aria-label="靜音" title="靜音"></button>
+    <div id="bossCard" class="card"><div id="bossFace"><img id="bossImg" alt=""><div id="aids"></div></div></div><div id="hitFx">好痛！</div>
+    <div id="bpCard" class="card"><span class="lab">老闆血壓</span><div id="bp"><div id="bpFill"></div><i class="tk" style="left:20%"></i><i class="tk" style="left:40%"></i><i class="tk" style="left:60%"></i><i class="tk" style="left:80%"></i>
+      <svg class="crack" viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M40 0 L52 16 L44 24 L58 40 M150 0 L140 14 L158 22 L146 40 M232 0 L246 18 L236 26 L252 40 M90 20 L120 18 M190 22 L214 20" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linejoin="round"/></svg>
+    </div><span id="bpPop">爆表！</span></div>
+    <div id="combo"><div><b id="comboN">COMBO 5</b><span id="comboX">×1.5</span></div></div>
+    <div id="status"></div>
+    <div id="bubble"></div>
+  </div>
+
+  <section id="home" class="screen navybg on">
+    <h1 class="title"><b class="stroke">嫩豆腐</b><i class="stroke">接接樂！</i></h1>
+    <p class="sub">溫柔一點，豆腐會痛。</p>
+    <div class="period" id="periodH">活動期間：—</div>
+    <img class="hero" data-sprite="tofu-idle" alt="嫩豆腐小嫩">
+    <div class="actions">
+      <button class="btn wide" id="startBtn">開始接豆腐</button>
+      <button class="link" id="myCoupon">查看今天的優惠券</button>
+    </div>
+    <div class="footer">玩完領小菜｜銓Dubu嘟布韓式豆腐煲 義華店</div>
+  </section>
+
+  <section id="rules" class="screen paperbg">
+    <h2>活動說明</h2>
+    <div class="period" id="periodR">活動期間：—</div>
+    <div class="rbox"><h3>怎麼玩</h3><ol>
+      <li>一局 60 秒，左右拖動石鍋，接住掉下來的東西。</li>
+      <li><b>停穩再接</b>是完美；鍋子衝太快，嫩豆腐會碎。</li>
+      <li>漏接或打碎豆腐，老闆血壓會升高；累積 5 次就爆表，遊戲提前結束。</li>
+      <li>連續完美接住 5 次分數 ×1.5，10 次 ×2；最後 15 秒豆腐暴雨，分數再 ×2。</li>
+    </ol></div>
+    <div class="rbox"><h3>會掉下來的東西</h3><div class="legend">
+      <div><img data-sprite="tofu-idle" alt=""><span>嫩豆腐 <b>+10</b><br>太猛會碎</span></div>
+      <div><img data-sprite="item-fried" alt=""><span>炸豆腐 <b>+30</b><br>不會碎</span></div>
+      <div><img data-sprite="item-ricecake" alt=""><span>年糕 <b>+15</b></span></div>
+      <div><img data-sprite="item-ramen" alt=""><span>拉麵 <b>+20</b><br>鍋子變寬 5 秒</span></div>
+      <div><img data-sprite="item-cheese" alt=""><span>起司 <b>+5</b><br>下一塊必定完美</span></div>
+      <div><img data-sprite="item-chili" alt=""><span>辣椒 <b>+5</b><br>5 秒分數 ×2</span></div>
+      <div><img data-sprite="item-slipper" alt=""><span>老闆拖鞋 <b class="neg">−20</b><br>Combo 歸零</span></div>
+      <div><img data-sprite="item-egg" alt=""><span>生雞蛋 <b>0</b><br>蛋液擋畫面 3 秒</span></div>
+    </div></div>
+    <div class="rbox"><h3>獎勵</h3><table class="tiers">
+      <tr><td>1000 分以上</td><td>義華路豆腐之神｜豆腐煲主餐 9 折</td></tr>
+      <tr><td>600–999 分</td><td>嫩豆腐守護者｜手工小菜兌換一份</td></tr>
+      <tr><td>300–599 分</td><td>實習接豆工｜韓國拉麵加購免費</td></tr>
+      <tr><td>0–299 分</td><td>豆腐殺手｜韓國拉麵加購免費＋老闆手寫道歉信</td></tr>
+    </table></div>
+    <div class="rbox"><h3>兌換規則</h3><ol>
+      <li>每支手機每天 1 局正式成績，分享結算圖後可以多 1 局。</li>
+      <li>優惠券保留當天最高分，當天到店使用。</li>
+      <li>限銓Dubu嘟布韓式豆腐煲 義華店，須點任一豆腐煲，每桌限用一張，不與其他優惠併用。</li>
+      <li>結帳時出示優惠券，由店員長按 3 秒核銷。</li>
+      <li>高雄市三民區義華路 468 號｜11:00–13:30、17:00–21:30｜訂位 0902-268-213</li>
+    </ol></div>
+    <button class="btn wide" id="rulesBtn">我知道了，下一步</button>
+  </section>
+
+  <section id="tutorial" class="screen paperbg">
+    <h2>怎麼玩？</h2>
+    <p class="hint">左右拖動石鍋，停穩再接。</p>
+    <div class="panels">
+      <div class="panel"><span class="no">1</span><div class="art"><img data-sprite="tofu-fall" style="width:150px;left:0;top:-4px" alt=""></div><div class="cap">豆腐<br>掉下來了！</div></div>
+      <div class="panel"><span class="no">2</span><div class="art"><img data-sprite="tofu-perfect" style="width:110px;left:20px;top:-6px" alt=""><img data-sprite="pot-proud" style="width:120px;left:15px;top:72px" alt=""></div><div class="cap">先移過去，<br>停穩～</div></div>
+      <div class="panel"><span class="no">3</span><div class="art"><img data-sprite="tofu-broken" style="width:150px;left:0;top:-4px" alt=""></div><div class="cap">衝太快…<br>嘟布碎了</div></div>
+    </div>
+    <button class="btn wide" id="goBtn">我懂了！</button>
+  </section>
+
+  <section id="faint" class="screen">
+    <img class="big" data-sprite="boss-5" alt="老闆昏倒">
+    <h2 class="stroke" style="-webkit-text-stroke-width:6px">老闆昏倒了！</h2>
+    <p>你害他血壓爆表。</p>
+    <button class="btn wide" id="faintBtn">看結果</button>
+  </section>
+
+  <section id="result" class="screen paperbg">
+    <div class="rk"><div class="burst"></div><img id="rankImg" data-sprite="tofu-ghost" alt=""></div>
+    <p class="pre">你的稱號是…</p>
+    <h2 id="rank" class="stroke" style="-webkit-text-stroke-width:7px">豆腐殺手</h2>
+    <p id="rankSub">老闆已經哭到脫水了。</p>
+    <div class="statcard"><div><span class="lab">分數</span><b id="rScore">0</b></div><div><span class="lab">犧牲豆腐</span><b id="rDead">0</b></div></div>
+    <p id="practiceNote" class="hidden"></p>
+    <div class="acts">
+      <button class="btn wide" id="toCoupon">領優惠券</button>
+      <button class="btn wide secondary" id="shareBtn">分享再玩一局</button>
+      <button class="link" id="homeBtn">回首頁</button>
+    </div>
+  </section>
+
+  <section id="coupon" class="screen paperbg">
+    <h2>領到了！</h2>
+    <p class="hint">拿給店員看，就能兌換。</p>
+    <div class="cp" id="cp">
+      <img class="tofu" data-sprite="tofu-idle" alt="">
+      <div class="in">
+        <div class="t" id="cpDate">優惠券</div>
+        <div class="r" id="cpReward">—</div>
+        <div class="t" id="cpRank">—</div>
+        <div class="code" id="cpCode">——————</div>
+        <div class="cap">限義華店｜須點任一豆腐煲｜每桌限用一張<br>高雄市三民區義華路 468 號<br>11:00–13:30、17:00–21:30</div>
+      </div>
+      <div class="stamp">已兌換，謝謝支持二店！</div>
+    </div>
+    <button class="btn" id="redeem"><i></i><span>店員核銷（長按 3 秒）</span></button>
+    <div class="acts"><button class="link" id="cpHome">回首頁</button></div>
+  </section>
+
+  <section id="share" class="screen">
+    <img id="shareImg" alt="結算分享圖">
+    <p>長按圖片存到手機，<br>分享到 FB 或 IG 限動。</p>
+    <button class="btn wide" id="sharedBtn">我分享了，再玩一局</button>
+    <button class="link" id="shareClose">先不要</button>
+  </section>
+</div></div>
+
+<script>
+/* 活動期間：上線前填入實際日期 */
+const EVENT_PERIOD = '[開始日] – [結束日]';
+const SPRITES = {"boss-1": "<svg width=\"625\" height=\"862\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 -40 250 345\"><path d=\"M20 300 Q30 222 120 214 Q210 222 220 300 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M70 300 L78 236 Q120 250 162 236 L170 300 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"120\" cy=\"272\" r=\"12\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><rect x=\"96\" y=\"186\" width=\"48\" height=\"40\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M52 92 Q48 18 122 14 Q194 18 190 96 Q194 168 162 200 Q122 226 82 200 Q50 170 52 92 Z\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><polygon points=\"51.8,69.9 47.4,59.5 57.1,55.2 54.6,44.0 64.9,41.9 64.5,30.4 74.9,30.6 76.5,19.2 86.7,21.7 90.3,10.9 99.9,15.5 105.4,5.7 113.9,12.4 121.0,4.0 128.1,12.4 136.6,5.7 142.1,15.5 151.7,10.9 155.3,21.7 165.5,19.2 167.1,30.6 177.5,30.4 177.1,41.9 187.4,44.0 184.9,55.2 194.6,59.5 190.2,69.9 190,84 52,84\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 84 L58 118 L66 118 L64 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M188 84 L184 118 L176 118 L178 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 30 Q116 22 138 28\" fill=\"none\" stroke=\"#5a4e46\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 104 Q30 98 36 124 Q42 140 58 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M188 104 Q212 98 206 124 Q200 140 184 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M50 70 Q120 30 192 70 L192 88 Q120 56 50 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M190 76 L222 60 L214 84 L230 96 L196 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\"/><circle cx=\"80\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"110\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"140\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"168\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><path d=\"M74 168 Q84 182 98 186 M170 168 Q160 182 146 186\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M108 204 Q122 210 136 204\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M118 116 Q110 142 118 146 Q126 150 132 144\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><circle cx=\"96\" cy=\"108\" r=\"10\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><circle cx=\"96\" cy=\"108\" r=\"3\" fill=\"#1a1a1a\"/><circle cx=\"150\" cy=\"108\" r=\"10\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><circle cx=\"150\" cy=\"108\" r=\"3\" fill=\"#1a1a1a\"/><path d=\"M84 92 q12 -8 24 0 M138 92 q12 -8 24 0\" stroke=\"#1a1a1a\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M86 162 Q122 198 158 162 Q122 174 86 162 Z\" fill=\"#fff\" stroke=\"#c71211\" stroke-width=\"6\" stroke-linejoin=\"round\"/><path d=\"M86 162 Q122 198 158 162\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><path d=\"M102 169 V182\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M112 169 V182\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M122 169 V182\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M132 169 V182\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M142 169 V182\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M92 173 Q122 180 152 173\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/></svg>", "boss-2": "<svg width=\"625\" height=\"862\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 -40 250 345\"><path d=\"M20 300 Q30 222 120 214 Q210 222 220 300 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M70 300 L78 236 Q120 250 162 236 L170 300 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"120\" cy=\"272\" r=\"12\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><rect x=\"96\" y=\"186\" width=\"48\" height=\"40\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M52 92 Q48 18 122 14 Q194 18 190 96 Q194 168 162 200 Q122 226 82 200 Q50 170 52 92 Z\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><polygon points=\"51.8,69.9 47.4,59.5 57.1,55.2 54.6,44.0 64.9,41.9 64.5,30.4 74.9,30.6 76.5,19.2 86.7,21.7 90.3,10.9 99.9,15.5 105.4,5.7 113.9,12.4 121.0,4.0 128.1,12.4 136.6,5.7 142.1,15.5 151.7,10.9 155.3,21.7 165.5,19.2 167.1,30.6 177.5,30.4 177.1,41.9 187.4,44.0 184.9,55.2 194.6,59.5 190.2,69.9 190,84 52,84\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 84 L58 118 L66 118 L64 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M188 84 L184 118 L176 118 L178 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 30 Q116 22 138 28\" fill=\"none\" stroke=\"#5a4e46\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 104 Q30 98 36 124 Q42 140 58 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M188 104 Q212 98 206 124 Q200 140 184 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M50 70 Q120 30 192 70 L192 88 Q120 56 50 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M190 76 L222 60 L214 84 L230 96 L196 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\"/><circle cx=\"80\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"110\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"140\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"168\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><path d=\"M74 168 Q84 182 98 186 M170 168 Q160 182 146 186\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M108 204 Q122 210 136 204\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M118 116 Q110 142 118 146 Q126 150 132 144\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><circle cx=\"96\" cy=\"108\" r=\"11\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><circle cx=\"99\" cy=\"108\" r=\"2.4\" fill=\"#1a1a1a\"/><circle cx=\"150\" cy=\"108\" r=\"11\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><circle cx=\"153\" cy=\"108\" r=\"2.4\" fill=\"#1a1a1a\"/><path d=\"M84 88 l24 8 M162 88 l-24 8\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M96 172 q6 -8 12 0 t12 0 t12 0 t12 0\" fill=\"none\" stroke=\"#c71211\" stroke-width=\"7\" stroke-linecap=\"round\"/><path d=\"M96 172 q6 -8 12 0 t12 0 t12 0 t12 0\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2\" stroke-linecap=\"round\"/><g transform=\"translate(64 60) rotate(0) scale(1.1)\"><path d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/></g><g transform=\"translate(176 108) rotate(0) scale(0.9)\"><path d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/></g><g transform=\"translate(190 54) rotate(0) scale(0.8)\"><path d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/></g></svg>", "boss-3": "<svg width=\"625\" height=\"862\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 -40 250 345\"><path d=\"M20 300 Q30 222 120 214 Q210 222 220 300 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M70 300 L78 236 Q120 250 162 236 L170 300 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"120\" cy=\"272\" r=\"12\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><rect x=\"96\" y=\"186\" width=\"48\" height=\"40\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M52 92 Q48 18 122 14 Q194 18 190 96 Q194 168 162 200 Q122 226 82 200 Q50 170 52 92 Z\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><polygon points=\"51.8,69.9 47.4,59.5 57.1,55.2 54.6,44.0 64.9,41.9 64.5,30.4 74.9,30.6 76.5,19.2 86.7,21.7 90.3,10.9 99.9,15.5 105.4,5.7 113.9,12.4 121.0,4.0 128.1,12.4 136.6,5.7 142.1,15.5 151.7,10.9 155.3,21.7 165.5,19.2 167.1,30.6 177.5,30.4 177.1,41.9 187.4,44.0 184.9,55.2 194.6,59.5 190.2,69.9 190,84 52,84\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 84 L58 118 L66 118 L64 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M188 84 L184 118 L176 118 L178 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 30 Q116 22 138 28\" fill=\"none\" stroke=\"#5a4e46\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 104 Q30 98 36 124 Q42 140 58 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M188 104 Q212 98 206 124 Q200 140 184 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M50 70 Q120 30 192 70 L192 88 Q120 56 50 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M190 76 L222 60 L214 84 L230 96 L196 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\"/><circle cx=\"80\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"110\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"140\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"168\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><path d=\"M74 168 Q84 182 98 186 M170 168 Q160 182 146 186\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M108 204 Q122 210 136 204\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M118 116 Q110 142 118 146 Q126 150 132 144\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><path d=\"M83 106 Q96 120 109 106 M137 106 Q150 120 163 106\" stroke=\"#1a1a1a\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M86 116 Q40 150 10 230\" stroke=\"#7cc7ff\" stroke-width=\"16\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><path d=\"M160 116 Q206 150 236 230\" stroke=\"#7cc7ff\" stroke-width=\"16\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><ellipse cx=\"122\" cy=\"172\" rx=\"30\" ry=\"22\" fill=\"#7a1414\" stroke=\"#c71211\" stroke-width=\"7\"/><ellipse cx=\"122\" cy=\"172\" rx=\"33.5\" ry=\"25.5\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><path d=\"M97 159 Q122 148 147 159 L145 167 Q122 160 99 167 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2\"/><path d=\"M110 155 V164\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M118 155 V164\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M126 155 V164\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M134 155 V164\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><ellipse cx=\"125\" cy=\"186\" rx=\"15.0\" ry=\"7.04\" fill=\"#ef7b72\"/></svg>", "boss-4": "<svg width=\"625\" height=\"862\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 -40 250 345\"><path d=\"M20 300 Q30 222 120 214 Q210 222 220 300 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M70 300 L78 236 Q120 250 162 236 L170 300 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"120\" cy=\"272\" r=\"12\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><rect x=\"96\" y=\"186\" width=\"48\" height=\"40\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M52 92 Q48 18 122 14 Q194 18 190 96 Q194 168 162 200 Q122 226 82 200 Q50 170 52 92 Z\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><polygon points=\"51.8,69.9 47.4,59.5 57.1,55.2 54.6,44.0 64.9,41.9 64.5,30.4 74.9,30.6 76.5,19.2 86.7,21.7 90.3,10.9 99.9,15.5 105.4,5.7 113.9,12.4 121.0,4.0 128.1,12.4 136.6,5.7 142.1,15.5 151.7,10.9 155.3,21.7 165.5,19.2 167.1,30.6 177.5,30.4 177.1,41.9 187.4,44.0 184.9,55.2 194.6,59.5 190.2,69.9 190,84 52,84\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 84 L58 118 L66 118 L64 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M188 84 L184 118 L176 118 L178 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 30 Q116 22 138 28\" fill=\"none\" stroke=\"#5a4e46\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 104 Q30 98 36 124 Q42 140 58 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M188 104 Q212 98 206 124 Q200 140 184 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M50 70 Q120 30 192 70 L192 88 Q120 56 50 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M190 76 L222 60 L214 84 L230 96 L196 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\"/><circle cx=\"80\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"110\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"140\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"168\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><path d=\"M74 168 Q84 182 98 186 M170 168 Q160 182 146 186\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M108 204 Q122 210 136 204\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M118 116 Q110 142 118 146 Q126 150 132 144\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><circle cx=\"96\" cy=\"108\" r=\"12\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M96 108 m-1 0 a2 2 0 1 1 3 1 a5 5 0 1 1 -7 -4 a8 8 0 1 1 12 7\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><circle cx=\"150\" cy=\"108\" r=\"12\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M150 108 m-1 0 a2 2 0 1 1 3 1 a5 5 0 1 1 -7 -4 a8 8 0 1 1 12 7\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><ellipse cx=\"122\" cy=\"170\" rx=\"26\" ry=\"18\" fill=\"#7a1414\" stroke=\"#c71211\" stroke-width=\"7\"/><ellipse cx=\"122\" cy=\"170\" rx=\"29.5\" ry=\"21.5\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><path d=\"M101 161 Q122 150 143 161 L141 169 Q122 162 103 169 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2\"/><path d=\"M110 157 V166\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M118 157 V166\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M126 157 V166\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M134 157 V166\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><ellipse cx=\"125\" cy=\"180\" rx=\"13.0\" ry=\"5.76\" fill=\"#ef7b72\"/><circle cx=\"100\" cy=\"196\" r=\"9\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><circle cx=\"116\" cy=\"202\" r=\"11\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><circle cx=\"134\" cy=\"200\" r=\"10\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><circle cx=\"148\" cy=\"194\" r=\"8\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><circle cx=\"124\" cy=\"214\" r=\"8\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><circle cx=\"108\" cy=\"212\" r=\"6\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/></svg>", "boss-5": "<svg width=\"625\" height=\"862\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 -40 250 345\"><path d=\"M20 300 Q30 222 120 214 Q210 222 220 300 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M70 300 L78 236 Q120 250 162 236 L170 300 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"120\" cy=\"272\" r=\"12\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><rect x=\"96\" y=\"186\" width=\"48\" height=\"40\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M52 92 Q48 18 122 14 Q194 18 190 96 Q194 168 162 200 Q122 226 82 200 Q50 170 52 92 Z\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><polygon points=\"51.8,69.9 47.4,59.5 57.1,55.2 54.6,44.0 64.9,41.9 64.5,30.4 74.9,30.6 76.5,19.2 86.7,21.7 90.3,10.9 99.9,15.5 105.4,5.7 113.9,12.4 121.0,4.0 128.1,12.4 136.6,5.7 142.1,15.5 151.7,10.9 155.3,21.7 165.5,19.2 167.1,30.6 177.5,30.4 177.1,41.9 187.4,44.0 184.9,55.2 194.6,59.5 190.2,69.9 190,84 52,84\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 84 L58 118 L66 118 L64 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M188 84 L184 118 L176 118 L178 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 30 Q116 22 138 28\" fill=\"none\" stroke=\"#5a4e46\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 104 Q30 98 36 124 Q42 140 58 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M188 104 Q212 98 206 124 Q200 140 184 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M50 70 Q120 30 192 70 L192 88 Q120 56 50 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M190 76 L222 60 L214 84 L230 96 L196 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\"/><circle cx=\"80\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"110\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"140\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"168\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><path d=\"M74 168 Q84 182 98 186 M170 168 Q160 182 146 186\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M108 204 Q122 210 136 204\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M118 116 Q110 142 118 146 Q126 150 132 144\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><path d=\"M85 97 L107 119 M107 97 L85 119\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M139 97 L161 119 M161 97 L139 119\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linecap=\"round\"/><g opacity=\".8\"><path d=\"M150 40 Q190 -40 230 -20 Q250 10 214 20 Q196 26 178 18 Q164 34 150 40 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><path d=\"M206 -6 a4 4 0 1 1 0.1 0 M222 -4 a4 4 0 1 1 0.1 0\" stroke=\"#1a1a1a\" stroke-width=\"3\"/></g><path d=\"M100 164 Q122 152 148 162 Q142 182 122 184 Q102 182 100 164 Z\" fill=\"#8f0f12\" stroke=\"#1a1a1a\" stroke-width=\"3.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M106 164 Q122 158 142 163 L140 169 Q122 164 108 170 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M102 176 Q122 188 144 174 Q148 190 142 200 Q138 206 140 214 Q141 224 133 224 Q125 224 127 213 Q128 206 124 206 Q120 206 121 220 Q122 236 112 236 Q102 236 105 221 Q108 207 103 199 Q98 188 102 176 Z\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M146 168 Q154 180 153 192 Q153 201 147 201 Q141 201 143 191 Q144 182 142 174 Z\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M98 168 Q92 172 94 180 Q97 184 100 178 Z\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M110 196 Q108 208 112 222\" fill=\"none\" stroke=\"#ff9a96\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M134 196 Q134 204 136 212\" fill=\"none\" stroke=\"#ff9a96\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"110\" cy=\"229\" r=\"2.4\" fill=\"#ff9a96\"/><path d=\"M113 246 q-6 9 0 13 q6 -4 0 -13 Z\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M134 240 q-4 7 0 10 q4 -3 0 -10 Z\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M110 286 q4 -10 14 -6 q10 -8 14 2 q10 0 6 10 q4 10 -8 10 q-6 8 -14 2 q-12 4 -12 -6 q-8 -6 0 -12 Z\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"98\" cy=\"280\" r=\"3\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"152\" cy=\"284\" r=\"3.5\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"146\" cy=\"302\" r=\"2.5\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"300\" r=\"2.5\" fill=\"#d0161a\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "boss-hurt": "<svg width=\"625\" height=\"862\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 -40 250 345\"><path d=\"M20 300 Q30 222 120 214 Q210 222 220 300 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M70 300 L78 236 Q120 250 162 236 L170 300 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"120\" cy=\"272\" r=\"12\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"3\"/><rect x=\"96\" y=\"186\" width=\"48\" height=\"40\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M52 92 Q48 18 122 14 Q194 18 190 96 Q194 168 162 200 Q122 226 82 200 Q50 170 52 92 Z\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><polygon points=\"51.8,69.9 47.4,59.5 57.1,55.2 54.6,44.0 64.9,41.9 64.5,30.4 74.9,30.6 76.5,19.2 86.7,21.7 90.3,10.9 99.9,15.5 105.4,5.7 113.9,12.4 121.0,4.0 128.1,12.4 136.6,5.7 142.1,15.5 151.7,10.9 155.3,21.7 165.5,19.2 167.1,30.6 177.5,30.4 177.1,41.9 187.4,44.0 184.9,55.2 194.6,59.5 190.2,69.9 190,84 52,84\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 84 L58 118 L66 118 L64 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M188 84 L184 118 L176 118 L178 84 Z\" fill=\"#2a2420\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 30 Q116 22 138 28\" fill=\"none\" stroke=\"#5a4e46\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M54 104 Q30 98 36 124 Q42 140 58 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M188 104 Q212 98 206 124 Q200 140 184 134\" fill=\"#f3dfc1\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M50 70 Q120 30 192 70 L192 88 Q120 56 50 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M190 76 L222 60 L214 84 L230 96 L196 90 Z\" fill=\"#183b72\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\"/><circle cx=\"80\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"110\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"140\" cy=\"56\" r=\"3.5\" fill=\"#fecc6b\"/><circle cx=\"168\" cy=\"66\" r=\"3.5\" fill=\"#fecc6b\"/><path d=\"M74 168 Q84 182 98 186 M170 168 Q160 182 146 186\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M108 204 Q122 210 136 204\" stroke=\"#1a1a1a\" stroke-width=\"2.4\" fill=\"none\"/><path d=\"M118 116 Q110 142 118 146 Q126 150 132 144\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><path d=\"M84 100 L106 109 L84 118 M162 100 L140 109 L162 118\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M82 88 l26 6 M164 88 l-26 6\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linecap=\"round\"/><ellipse cx=\"122\" cy=\"172\" rx=\"30\" ry=\"21\" fill=\"#7a1414\" stroke=\"#c71211\" stroke-width=\"7\"/><ellipse cx=\"122\" cy=\"172\" rx=\"33.5\" ry=\"24.5\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><path d=\"M97 160 Q122 149 147 160 L145 168 Q122 161 99 168 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2\"/><path d=\"M110 156 V165\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M118 156 V165\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M126 156 V165\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M134 156 V165\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><ellipse cx=\"125\" cy=\"185\" rx=\"15.0\" ry=\"6.72\" fill=\"#ef7b72\"/><g transform=\"translate(60 64) rotate(0) scale(1.0)\"><path d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/></g><g transform=\"translate(186 70) rotate(0) scale(0.9)\"><path d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\"/></g><path d=\"M70 124 q-14 10 -22 26 M176 124 q14 10 22 26\" stroke=\"#7cc7ff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><ellipse cx=\"150\" cy=\"22\" rx=\"20\" ry=\"16\" fill=\"#ff9f94\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><ellipse cx=\"150\" cy=\"8\" rx=\"13\" ry=\"10\" fill=\"#ffb8ae\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M144 4 q4 -3 8 -1\" stroke=\"#fff\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M112 -16 Q113.8 -7.8 122 -6 Q113.8 -4.2 112 4 Q110.2 -4.2 102 -6 Q110.2 -7.8 112 -16 Z\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M192 -12 Q194.16 -2.16 204 0 Q194.16 2.16 192 12 Q189.84 2.16 180 0 Q189.84 -2.16 192 -12 Z\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M210 26 Q211.44 32.56 218 34 Q211.44 35.44 210 42 Q208.56 35.44 202 34 Q208.56 32.56 210 26 Z\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "fx-egg-splat": "<svg width=\"1000\" height=\"1000\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 400\"><polygon points=\"350,200 296,240 306,306 240,296 200,350 160,296 94,306 104,240 50,200 104,160 94,94 160,104 200,50 240,104 306,94 296,160\" fill=\"#fffdf4\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"210\" cy=\"190\" r=\"62\" fill=\"#ffc21a\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><circle cx=\"190\" cy=\"170\" r=\"16\" fill=\"#fff\" opacity=\".7\"/></svg>", "item-cheese": "<svg width=\"600\" height=\"600\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10 -20 240 240\"><path d=\"M20 40 H200 V150 Q170 176 140 150 Q110 176 80 150 Q50 176 20 150 Z\" fill=\"#ffd34d\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"64\" cy=\"80\" r=\"14\" fill=\"#f2b51b\"/><circle cx=\"140\" cy=\"104\" r=\"10\" fill=\"#f2b51b\"/><circle cx=\"170\" cy=\"66\" r=\"7\" fill=\"#f2b51b\"/></svg>", "item-chili": "<svg width=\"600\" height=\"600\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10 -20 240 240\"><path d=\"M40 40 Q150 20 190 110 Q206 170 150 196 Q170 110 40 80 Z\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M40 40 Q20 24 30 0 M40 40 Q14 60 30 80\" stroke=\"#3a8a3a\" stroke-width=\"10\" fill=\"none\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M90 50 Q140 48 160 90\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" opacity=\".7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "item-egg": "<svg width=\"600\" height=\"600\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10 -20 240 240\"><path d=\"M20 100 Q34 40 96 46 Q170 36 196 96 Q214 150 160 166 Q100 196 52 160 Q4 140 20 100 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"108\" cy=\"104\" r=\"36\" fill=\"#ffc21a\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><circle cx=\"96\" cy=\"92\" r=\"9\" fill=\"#fff\" opacity=\".7\"/></svg>", "item-fried": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><polygon points=\"30,62 56,36 196,36 170,62\" fill=\"#f2bd5e\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"170,62 196,36 196,146 170,172\" fill=\"#cf8a26\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 170,62 170,172 30,172\" fill=\"#eaa63c\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 78 L64 78\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 90 l9 6\" stroke=\"#b86e12\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M150 86 l9 6\" stroke=\"#b86e12\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M52 156 l9 6\" stroke=\"#b86e12\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M140 158 l9 6\" stroke=\"#b86e12\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 72 l9 6\" stroke=\"#b86e12\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M60 108 Q72 94 84 108\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M116 108 Q128 94 140 108\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M86 136 Q100 150 114 136\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "item-ramen": "<svg width=\"600\" height=\"600\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10 -20 240 240\"><path d=\"M150 0 L104 66\" stroke=\"#1a1a1a\" stroke-width=\"11\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M150 0 L104 66\" stroke=\"#8a5a2b\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M176 6 L118 70\" stroke=\"#1a1a1a\" stroke-width=\"11\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M176 6 L118 70\" stroke=\"#8a5a2b\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"110\" cy=\"112\" rx=\"94\" ry=\"20\" fill=\"#f2a23a\" stroke=\"#1a1a1a\" stroke-width=\"6\"/><path d=\"M44 108 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 108 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0\" fill=\"none\" stroke=\"#ffd56a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M52 96 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M52 96 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0\" fill=\"none\" stroke=\"#ffd56a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M64 86 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M64 86 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0\" fill=\"none\" stroke=\"#ffd56a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M124 46 q-6 10 0 20 t0 20 t0 20 t0 18\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M124 46 q-6 10 0 20 t0 20 t0 20 t0 18\" fill=\"none\" stroke=\"#ffd56a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M140 46 q-6 10 0 20 t0 20 t0 20 t0 18\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M140 46 q-6 10 0 20 t0 20 t0 20 t0 18\" fill=\"none\" stroke=\"#ffd56a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M156 46 q-6 10 0 20 t0 20 t0 20 t0 18\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M156 46 q-6 10 0 20 t0 20 t0 20 t0 18\" fill=\"none\" stroke=\"#ffd56a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"62\" cy=\"104\" rx=\"20\" ry=\"14\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><ellipse cx=\"62\" cy=\"104\" rx=\"9\" ry=\"7\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"92\" cy=\"112\" r=\"5\" fill=\"#5cb85c\" stroke=\"#1a1a1a\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"108\" r=\"5\" fill=\"#5cb85c\" stroke=\"#1a1a1a\" stroke-width=\"2\"/><circle cx=\"184\" cy=\"116\" r=\"5\" fill=\"#5cb85c\" stroke=\"#1a1a1a\" stroke-width=\"2\"/><path d=\"M16 112 Q20 196 110 200 Q200 196 204 112 Q160 128 110 128 Q60 128 16 112 Z\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M30 146 Q110 166 190 146\" fill=\"none\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M84 200 L80 212 H140 L136 200\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "item-ricecake": "<svg width=\"600\" height=\"600\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10 -20 240 240\"><g transform=\"rotate(-24 110 110)\"><path d=\"M6 112 H214\" stroke=\"#1a1a1a\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M6 112 H214\" stroke=\"#8a5a2b\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><rect x=\"18\" y=\"94\" width=\"64\" height=\"36\" rx=\"10\" fill=\"#fffaf0\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"82\" cy=\"112\" rx=\"10\" ry=\"18\" fill=\"#f1e6cf\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M24 96 Q48 88 76 98 L76 108 Q68 106 64 114 Q58 106 48 108 Q38 104 32 112 Q26 106 24 106 Z\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M30 122 H58\" stroke=\"#fff\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"36\" cy=\"100\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><ellipse cx=\"52\" cy=\"98\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><ellipse cx=\"66\" cy=\"102\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><rect x=\"84\" y=\"94\" width=\"64\" height=\"36\" rx=\"10\" fill=\"#fffaf0\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"148\" cy=\"112\" rx=\"10\" ry=\"18\" fill=\"#f1e6cf\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M90 96 Q114 88 142 98 L142 108 Q134 106 130 114 Q124 106 114 108 Q104 104 98 112 Q92 106 90 106 Z\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M96 122 H124\" stroke=\"#fff\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"102\" cy=\"100\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><ellipse cx=\"118\" cy=\"98\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><ellipse cx=\"132\" cy=\"102\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><rect x=\"150\" y=\"94\" width=\"64\" height=\"36\" rx=\"10\" fill=\"#fffaf0\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"214\" cy=\"112\" rx=\"10\" ry=\"18\" fill=\"#f1e6cf\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M156 96 Q180 88 208 98 L208 108 Q200 106 196 114 Q190 106 180 108 Q170 104 164 112 Q158 106 156 106 Z\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M162 122 H190\" stroke=\"#fff\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"168\" cy=\"100\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><ellipse cx=\"184\" cy=\"98\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/><ellipse cx=\"198\" cy=\"102\" rx=\"2.4\" ry=\"1.4\" fill=\"#fff8e0\"/></g></svg>", "item-slipper": "<svg width=\"600\" height=\"600\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10 -20 240 240\"><g transform=\"rotate(-28 110 110)\"><path d=\"M110 14 C152 14 168 52 164 92 C160 132 154 166 144 192 C134 214 88 214 78 192 C68 166 62 132 58 92 C54 52 70 14 110 14 Z\" transform=\"translate(6 7)\" fill=\"#2d7fb8\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M110 14 C152 14 168 52 164 92 C160 132 154 166 144 192 C134 214 88 214 78 192 C68 166 62 132 58 92 C54 52 70 14 110 14 Z\" fill=\"#ffffff\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M78 40 Q110 28 142 40\" fill=\"none\" stroke=\"#d7e6f2\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M58 58 Q110 34 164 58 L164 112 Q110 90 58 112 Z\" fill=\"#4aa3df\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M70 70 Q110 52 152 70\" fill=\"none\" stroke=\"#9fd0f0\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"96\" cy=\"140\" r=\"3\" fill=\"#c8dbea\"/><circle cx=\"124\" cy=\"140\" r=\"3\" fill=\"#c8dbea\"/><circle cx=\"104\" cy=\"168\" r=\"3\" fill=\"#c8dbea\"/><circle cx=\"118\" cy=\"184\" r=\"3\" fill=\"#c8dbea\"/><circle cx=\"90\" cy=\"120\" r=\"3\" fill=\"#c8dbea\"/><circle cx=\"130\" cy=\"120\" r=\"3\" fill=\"#c8dbea\"/></g></svg>", "pot-bored": "<svg width=\"750\" height=\"425\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-20 0 300 170\"><path d=\"M18 46 Q22 150 130 158 Q238 150 242 46 Z\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M40 70 Q46 120 86 138\" stroke=\"#5a5a5a\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M-8 52 Q-10 30 18 46\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M268 52 Q270 30 242 46\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><ellipse cx=\"130\" cy=\"44\" rx=\"112\" ry=\"26\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><circle cx=\"92\" cy=\"40\" r=\"7\" fill=\"#ff7a3d\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"160\" cy=\"48\" r=\"5\" fill=\"#ff7a3d\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"130\" cy=\"36\" r=\"4\" fill=\"#fff\" opacity=\".8\"/><path d=\"M90 92 h26 M144 92 h26\" stroke=\"#fff\" stroke-width=\"5\" stroke-linecap=\"round\"/><circle cx=\"104\" cy=\"98\" r=\"4\" fill=\"#fff\"/><circle cx=\"158\" cy=\"98\" r=\"4\" fill=\"#fff\"/><path d=\"M116 124 h28\" stroke=\"#fff\" stroke-width=\"5\" stroke-linecap=\"round\"/></svg>", "pot-proud": "<svg width=\"750\" height=\"425\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-20 0 300 170\"><path d=\"M18 46 Q22 150 130 158 Q238 150 242 46 Z\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M40 70 Q46 120 86 138\" stroke=\"#5a5a5a\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M-8 52 Q-10 30 18 46\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M268 52 Q270 30 242 46\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><ellipse cx=\"130\" cy=\"44\" rx=\"112\" ry=\"26\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><circle cx=\"92\" cy=\"40\" r=\"7\" fill=\"#ff7a3d\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"160\" cy=\"48\" r=\"5\" fill=\"#ff7a3d\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"130\" cy=\"36\" r=\"4\" fill=\"#fff\" opacity=\".8\"/><path d=\"M88 98 Q102 84 116 98 M144 98 Q158 84 172 98\" stroke=\"#fff\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M106 116 Q130 140 154 116\" stroke=\"#fff\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/></svg>", "pot-spicy": "<svg width=\"750\" height=\"425\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-20 0 300 170\"><path d=\"M18 46 Q22 150 130 158 Q238 150 242 46 Z\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\"/><path d=\"M40 70 Q46 120 86 138\" stroke=\"#5a5a5a\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M-8 52 Q-10 30 18 46\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><path d=\"M268 52 Q270 30 242 46\" fill=\"#2c2c2c\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><ellipse cx=\"130\" cy=\"44\" rx=\"112\" ry=\"26\" fill=\"#e63b2e\" stroke=\"#1a1a1a\" stroke-width=\"5\"/><circle cx=\"92\" cy=\"40\" r=\"7\" fill=\"#ff7a3d\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"160\" cy=\"48\" r=\"5\" fill=\"#ff7a3d\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><circle cx=\"130\" cy=\"36\" r=\"4\" fill=\"#fff\" opacity=\".8\"/><circle cx=\"104\" cy=\"96\" r=\"12\" fill=\"#fff\"/><circle cx=\"104\" cy=\"96\" r=\"4\" fill=\"#1a1a1a\"/><circle cx=\"158\" cy=\"96\" r=\"12\" fill=\"#fff\"/><circle cx=\"158\" cy=\"96\" r=\"4\" fill=\"#1a1a1a\"/><ellipse cx=\"130\" cy=\"128\" rx=\"16\" ry=\"12\" fill=\"#e63b2e\" stroke=\"#fff\" stroke-width=\"3\"/></svg>", "tofu-barely": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><polygon points=\"30,62 56,36 196,36 170,62\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"170,62 196,36 196,146 170,172\" fill=\"#e9dab4\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 170,62 170,172 30,172\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 78 L64 78\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"104\" r=\"13\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><path d=\"M72 104 m-1 0 a2 2 0 1 1 3 1 a5 5 0 1 1 -7 -4 a8 8 0 1 1 12 7\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><path d=\"M116 96 L136 104 L116 112\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M78 146 q5.5 -8 11 0 t11 0 t11 0 t11 0\" fill=\"none\" stroke=\"#c71211\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M150 62 L158 78 L150 88 L160 100\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path transform=\"translate(184 70) scale(0.9)\" d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path transform=\"translate(200 104) scale(0.6)\" d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "tofu-broken": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><g transform=\"translate(-22 -20) rotate(-12 62 88)\"><polygon points=\"30,62 96,62 90,112 30,118\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 40,52 106,52 96,62\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g><g transform=\"translate(24 -24) rotate(12 136 87)\"><polygon points=\"104,62 170,62 170,114 98,110\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"104,62 114,52 180,52 170,62\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g><g transform=\"translate(-26 18) rotate(10 60 148)\"><polygon points=\"30,126 88,120 94,172 30,172\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,126 40,116 98,110 88,120\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g><g transform=\"translate(26 22) rotate(-14 136 146)\"><polygon points=\"100,118 170,122 170,172 102,172\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"100,118 110,108 180,112 170,122\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g><rect x=\"-24\" y=\"40\" width=\"14\" height=\"14\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"3\" transform=\"rotate(20 -24 40)\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><rect x=\"214\" y=\"60\" width=\"12\" height=\"12\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"3\" transform=\"rotate(-30 214 60)\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><rect x=\"-14\" y=\"200\" width=\"14\" height=\"14\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"3\" transform=\"rotate(40 -14 200)\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><rect x=\"222\" y=\"196\" width=\"10\" height=\"10\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"3\" transform=\"rotate(15 222 196)\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><rect x=\"104\" y=\"222\" width=\"12\" height=\"12\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"3\" transform=\"rotate(0 104 222)\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><rect x=\"104\" y=\"0\" width=\"10\" height=\"10\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"3\" transform=\"rotate(25 104 0)\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M39 67 L57 85 M57 67 L39 85\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M141 61 L159 79 M159 61 L141 79\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"70\" cy=\"150\" rx=\"18\" ry=\"15\" fill=\"#7a1414\" stroke=\"#c71211\" stroke-width=\"6\"/><ellipse cx=\"70\" cy=\"150\" rx=\"21\" ry=\"18\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><path d=\"M57 143 Q70 134 83 143 L81 150 Q70 144 59 150 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M61 140 V148\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M67 140 V148\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M73 140 V148\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M79 140 V148\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><ellipse cx=\"72\" cy=\"158\" rx=\"9.0\" ry=\"4.5\" fill=\"#ef7b72\"/></svg>", "tofu-fall": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><polygon points=\"30,62 56,36 196,36 170,62\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"170,62 196,36 196,146 170,172\" fill=\"#e9dab4\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 170,62 170,172 30,172\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 78 L64 78\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"104\" r=\"13\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><circle cx=\"72\" cy=\"100\" r=\"3\" fill=\"#1a1a1a\"/><circle cx=\"128\" cy=\"104\" r=\"13\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"4\"/><circle cx=\"128\" cy=\"100\" r=\"3\" fill=\"#1a1a1a\"/><path d=\"M58 84 L82 76 M142 84 L118 76\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"100\" cy=\"146\" rx=\"22\" ry=\"19\" fill=\"#7a1414\" stroke=\"#c71211\" stroke-width=\"6\"/><ellipse cx=\"100\" cy=\"146\" rx=\"25\" ry=\"22\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\"/><path d=\"M83 135 Q100 126 117 135 L115 142 Q100 136 85 142 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M91 132 V140\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M97 132 V140\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M103 132 V140\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M109 132 V140\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><ellipse cx=\"102\" cy=\"158\" rx=\"11.0\" ry=\"5.7\" fill=\"#ef7b72\"/><path transform=\"translate(178 64) scale(0.8)\" d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path transform=\"translate(40 132) scale(0.7)\" d=\"M0 0 C-8 14 -10 22 0 26 C10 22 8 14 0 0 Z\" fill=\"#9fd4ff\" stroke=\"#1a1a1a\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "tofu-ghost": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><g transform=\"translate(196 96)\"><g transform=\"scale(1 1)\"><path d=\"M0 0 C14 -34 52 -58 96 -52 C92 -40 86 -32 76 -28 Q88 -14 70 -6 Q74 10 52 8 Q50 24 30 18 Q14 20 0 12 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M10 6 Q30 -2 52 8 M18 -6 Q46 -14 70 -6 M30 -22 Q58 -32 76 -28\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g></g><g transform=\"translate(30 100)\"><g transform=\"scale(-1 1)\"><path d=\"M0 0 C14 -34 52 -58 96 -52 C92 -40 86 -32 76 -28 Q88 -14 70 -6 Q74 10 52 8 Q50 24 30 18 Q14 20 0 12 Z\" fill=\"#fff\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M10 6 Q30 -2 52 8 M18 -6 Q46 -14 70 -6 M30 -22 Q58 -32 76 -28\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g></g><g opacity=\".88\"><polygon points=\"30,62 56,36 196,36 170,62\" fill=\"#fbfdff\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"170,62 196,36 196,146 170,172\" fill=\"#dfe8f6\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 170,62 170,172 30,172\" fill=\"#f4f8ff\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 78 L64 78\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></g><path d=\"M61 102 Q72 114 83 102\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M117 102 Q128 114 139 102\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M90 138 Q100 146 110 138\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"113\" cy=\"8\" rx=\"46\" ry=\"11\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"10\"/><ellipse cx=\"113\" cy=\"8\" rx=\"46\" ry=\"11\" fill=\"none\" stroke=\"#fecc6b\" stroke-width=\"5\"/><path d=\"M60 176 Q72 196 92 186 Q110 204 132 190 Q148 202 160 186\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-dasharray=\"3 9\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "tofu-idle": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><polygon points=\"30,62 56,36 196,36 170,62\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"170,62 196,36 196,146 170,172\" fill=\"#e9dab4\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 170,62 170,172 30,172\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 78 L64 78\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"72\" cy=\"104\" rx=\"6\" ry=\"8\" fill=\"#1a1a1a\"/><circle cx=\"74\" cy=\"101\" r=\"2.2\" fill=\"#fff\"/><ellipse cx=\"128\" cy=\"104\" rx=\"6\" ry=\"8\" fill=\"#1a1a1a\"/><circle cx=\"130\" cy=\"101\" r=\"2.2\" fill=\"#fff\"/><ellipse cx=\"56\" cy=\"126\" rx=\"11\" ry=\"6\" fill=\"#ff9a8a\" opacity=\".8\"/><path d=\"M50 123 l3 5 M56 123 l3 5 M62 123 l3 5\" stroke=\"#c71211\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"144\" cy=\"126\" rx=\"11\" ry=\"6\" fill=\"#ff9a8a\" opacity=\".8\"/><path d=\"M138 123 l3 5 M144 123 l3 5 M150 123 l3 5\" stroke=\"#c71211\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M88 136 Q100 148 112 136\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>", "tofu-perfect": "<svg width=\"950\" height=\"725\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -40 380 290\"><polygon points=\"30,62 56,36 196,36 170,62\" fill=\"#f6ecd2\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"170,62 196,36 196,146 170,172\" fill=\"#e9dab4\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polygon points=\"30,62 170,62 170,172 30,172\" fill=\"#fff8e7\" stroke=\"#1a1a1a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M44 78 L64 78\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M59 108 Q72 92 85 108\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M115 108 Q128 92 141 108\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"124\" rx=\"11\" ry=\"6\" fill=\"#ff9a8a\" opacity=\".8\"/><path d=\"M48 121 l3 5 M54 121 l3 5 M60 121 l3 5\" stroke=\"#c71211\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"146\" cy=\"124\" rx=\"11\" ry=\"6\" fill=\"#ff9a8a\" opacity=\".8\"/><path d=\"M140 121 l3 5 M146 121 l3 5 M152 121 l3 5\" stroke=\"#c71211\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M70 132 Q100 168 130 132 Q100 142 70 132 Z\" fill=\"#fff\" stroke=\"#c71211\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M70 132 Q100 168 130 132\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2.4\"/><path d=\"M84 138 V150\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M92 138 V150\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M100 138 V150\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M108 138 V150\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M116 138 V150\" stroke=\"#1a1a1a\" stroke-width=\"1.6\"/><path d=\"M206 8 Q208.52 19.48 220 22 Q208.52 24.52 206 36 Q203.48 24.52 192 22 Q203.48 19.48 206 8 Z\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M224 48 Q225.44 54.56 232 56 Q225.44 57.44 224 64 Q222.56 57.44 216 56 Q222.56 54.56 224 48 Z\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M14 30 Q15.8 38.2 24 40 Q15.8 41.8 14 50 Q12.2 41.8 4 40 Q12.2 38.2 14 30 Z\" fill=\"#fecc6b\" stroke=\"#1a1a1a\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"};
+const VB = {tofu:[-80,-40,380,290], item:[-10,-20,240,240], pot:[-20,0,300,170], boss:[0,-40,250,345], splat:[0,0,400,400]};
+
+/* ---------- assets ---------- */
+const IMG = {}, URL_OF = {};
+for (const [k, svg] of Object.entries(SPRITES)) {
+  URL_OF[k] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  const im = new Image(); im.src = URL_OF[k]; IMG[k] = im;
+}
+document.querySelectorAll('img[data-sprite]').forEach(el => el.src = URL_OF[el.dataset.sprite]);
+const $ = id => document.getElementById(id);
+
+/* ---------- layout / scaling ---------- */
+const W = 390, H = 844, GROUND = 806, POT_Y = 716;
+const stage = $('stage'), canvas = $('c'), ctx = canvas.getContext('2d');
+let scale = 1;
+function fit() {
+  scale = Math.min(innerWidth / W, innerHeight / H);
+  stage.style.transform = `scale(${scale})`;
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  canvas.width = Math.round(W * scale * dpr); canvas.height = Math.round(H * scale * dpr);
+  ctx.setTransform(canvas.width / W, 0, 0, canvas.height / H, 0, 0);
+  bg = null;
+}
+addEventListener('resize', fit);
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- storage (best effort) ---------- */
+const today = () => { const d = new Date(); return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; };
+function load() { try { const v = JSON.parse(localStorage.getItem('tofu-catch') || 'null'); if (v && v.date === today()) return v; } catch (e) {} return {date: today(), counted: 0, shared: false, coupon: null}; }
+function save() { try { localStorage.setItem('tofu-catch', JSON.stringify(day)); } catch (e) {} }
+let day = load();
+
+/* ---------- sound ---------- */
+let actx = null, muted = false, hurtTimer = 0;
+function audio() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (actx && actx.state === 'suspended') actx.resume(); }
+function tone(f1, f2, dur, type = 'sine', vol = .18, delay = 0) {
+  if (!actx || muted) return;
+  const t = actx.currentTime + delay, o = actx.createOscillator(), g = actx.createGain();
+  o.type = type; o.frequency.setValueAtTime(f1, t); o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + dur);
+  o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur + .02);
+}
+function noise(dur, vol = .25) {
+  if (!actx || muted) return;
+  const b = actx.createBuffer(1, actx.sampleRate * dur, actx.sampleRate), d = b.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+  const s = actx.createBufferSource(), g = actx.createGain(); s.buffer = b; g.gain.value = vol; s.connect(g).connect(actx.destination); s.start();
+}
+const SFX = {
+  catch: () => tone(520, 900, .12, 'sine', .2),
+  perfect: () => { tone(880, 1320, .1, 'triangle', .16); tone(1320, 1760, .14, 'triangle', .12, .08); },
+  barely: () => tone(400, 300, .18, 'square', .08),
+  broken: () => { noise(.16, .3); tone(700, 520, .18, 'sawtooth', .1, .05); tone(560, 260, .32, 'sawtooth', .1, .22); },
+  bad: () => tone(220, 140, .25, 'square', .12),
+  combo: () => [660, 880, 1100].forEach((f, i) => tone(f, f * 1.01, .12, 'triangle', .14, i * .07)),
+  item: () => tone(700, 1050, .1, 'triangle', .14),
+  faint: () => { tone(400, 80, 1, 'sawtooth', .14); },
+  tick: () => tone(1000, 1000, .05, 'square', .06),
+};
+/* ---------- voice ----------
+   VOICE_CLIPS：之後錄好真人語音（例如老闆本人），把 data:audio/mp3;base64,... 填進對應的 key，就會優先播放錄音；
+   沒填的台詞用裝置內建語音合成，音色依手機而不同。 */
+const VOICE_CLIPS = {};
+const VOICE = {
+  tofuBreak: {lines: ['嘟布～！', '嘟～布～！'], who: 'tofu'},
+  tofuPerfect: {lines: ['剛剛好～', '溫柔～'], who: 'tofu'},
+  bossHurt: {lines: ['我要吐血了！', '我的豆腐啊！', '痛痛痛！', '血壓上來了！'], who: 'boss'},
+  bossSlipper: {lines: ['那是我的拖鞋！'], who: 'boss'},
+  bossFaint: {lines: ['我…不行了…'], who: 'bossWeak'},
+  bossStart: {lines: ['接豆腐囉！', '要來吃飯嗎？'], who: 'boss'},
+  storm: {lines: ['豆腐暴雨來了！'], who: 'boss'},
+  cheer: {lines: ['대박!', '맛있다!'], who: 'korean'},
+};
+const VOICE_STYLE = {tofu: {lang: 'zh-TW', pitch: 2, rate: 1.35}, boss: {lang: 'zh-TW', pitch: .55, rate: 1.1}, bossWeak: {lang: 'zh-TW', pitch: .35, rate: .75}, korean: {lang: 'ko-KR', pitch: 1.3, rate: 1.15}};
+let voices = [], lastVoiceAt = 0;
+function loadVoices() { try { voices = speechSynthesis.getVoices(); } catch (e) {} }
+try { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; } catch (e) {}
+function voiceFor(lang) { return voices.find(v => v.lang === lang) || voices.find(v => v.lang && v.lang.startsWith(lang.slice(0, 2))) || null; }
+function speak(key, force) {
+  if (muted) return;
+  const now = performance.now(); if (!force && now - lastVoiceAt < 700) return; lastVoiceAt = now;
+  const v = VOICE[key]; const i = Math.floor(Math.random() * v.lines.length);
+  const clip = VOICE_CLIPS[key + ':' + i] || VOICE_CLIPS[key];
+  if (clip) { try { const a = new Audio(clip); a.play().catch(() => {}); } catch (e) {} return; }
+  try {
+    if (!('speechSynthesis' in window)) return;
+    const st = VOICE_STYLE[v.who], u = new SpeechSynthesisUtterance(v.lines[i]);
+    u.lang = st.lang; u.pitch = st.pitch; u.rate = st.rate; u.volume = 1; const vc = voiceFor(st.lang); if (vc) u.voice = vc;
+    if (speechSynthesis.speaking) speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+function buzz(ms) { try { navigator.vibrate && navigator.vibrate(ms); } catch (e) {} }
+$('mute').innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="mw" d="M16 9a4 4 0 0 1 0 6"/></svg>';
+$('mute').onclick = () => { muted = !muted; if (muted) { try { speechSynthesis.cancel(); } catch (e) {} } $('mute').querySelector('#mw').setAttribute('d', muted ? 'M16 9l5 6M21 9l-5 6' : 'M16 9a4 4 0 0 1 0 6'); $('mute').setAttribute('aria-label', muted ? '開啟聲音' : '靜音'); };
+
+/* ---------- screens ---------- */
+function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); }
+
+/* ---------- game data ---------- */
+const ITEMS = {
+  tofu:    {spr: 'tofu-fall',     vb: 'tofu', w: 160, half: 30, pts: 10, fragile: true},
+  fried:   {spr: 'item-fried',    vb: 'tofu', w: 150, half: 28, pts: 30},
+  rice:    {spr: 'item-ricecake', vb: 'item', w: 104, half: 18, pts: 15},
+  ramen:   {spr: 'item-ramen',    vb: 'item', w: 74,  half: 26, pts: 20},
+  cheese:  {spr: 'item-cheese',   vb: 'item', w: 70,  half: 24, pts: 5},
+  chili:   {spr: 'item-chili',    vb: 'item', w: 70,  half: 30, pts: 5},
+  slipper: {spr: 'item-slipper',  vb: 'item', w: 88,  half: 24, pts: -20},
+  egg:     {spr: 'item-egg',      vb: 'item', w: 74,  half: 24, pts: 0},
+};
+const PHASES = [
+  {t: 0,  name: '暖身',     speed: 230, gap: 1.1,  dbl: 0,   w: {tofu: 8, rice: 2}},
+  {t: 15, name: '加料',     speed: 280, gap: .9,   dbl: 0,   w: {tofu: 6, rice: 1, fried: 1, ramen: 1, cheese: 1, slipper: 1}},
+  {t: 30, name: '辣起來',   speed: 320, gap: .75,  dbl: .3,  w: {tofu: 6, rice: 1, fried: 1, ramen: 1, cheese: 1, chili: 1, slipper: 1, egg: 1}},
+  {t: 45, name: '豆腐暴雨', speed: 360, gap: .42,  dbl: 0,   w: {tofu: 8, rice: 1, fried: 1, chili: 1, slipper: 1, egg: 1}, storm: true},
+];
+const PERFECT_MAX = 260, BARELY_MAX = 560, GAME_LEN = 60;
+const LINES = {
+  broken: ['嘟布～～！', '我還沒進鍋啊！', '告訴我媽我很嫩…', '下輩子要當炸豆腐'],
+  perfect: ['啊～剛剛好', '溫柔的人最帥'],
+  boss: ['那是今天最後一盒啊！', '二店請支持…豆腐也請支持…', '我要去跟豆腐廠道歉了'],
+  slipper: ['那是我的拖鞋！'],
+  cheer: ['대박!', '맛있다!', '오오오!'],
+};
+const RANKS = [
+  {min: 1000, name: '義華路豆腐之神', sub: '你的手比嫩豆腐還溫柔。', reward: '豆腐煲主餐 9 折', img: 'tofu-perfect'},
+  {min: 600,  name: '嫩豆腐守護者',   sub: '豆腐們都很安心。',       reward: '手工小菜兌換一份', img: 'tofu-perfect'},
+  {min: 300,  name: '實習接豆工',     sub: '還在學習溫柔的路上。',   reward: '韓國拉麵加購免費', img: 'tofu-barely'},
+  {min: 0,    name: '豆腐殺手',       sub: '老闆已經哭到脫水了。',   reward: '韓國拉麵加購免費＋老闆手寫道歉信', img: 'tofu-ghost'},
+];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+/* ---------- state ---------- */
+let G = null, running = false, lastT = 0, bg = null, counted = true;
+function newGame() {
+  return {t: 0, score: 0, combo: 0, perfects: 0, meter: 0, dead: 0, spawnIn: .6, phase: 0,
+    items: [], fx: [], pops: [], crumbs: [], drops: [],
+    pot: {x: W / 2, vx: 0, hist: [], face: 'bored', faceUntil: 0, keyV: 0},
+    spicyUntil: 0, wideUntil: 0, shield: false, eggUntil: 0, shakeUntil: 0, stormShown: false, hurryShown: false, lastSec: 60, ended: false};
+}
+
+/* ---------- input ---------- */
+let dragging = false;
+function toStage(e) { const r = stage.getBoundingClientRect(); return {x: (e.clientX - r.left) / scale, y: (e.clientY - r.top) / scale}; }
+stage.addEventListener('pointerdown', e => { if (!running) return; dragging = true; const p = toStage(e); G.pot.target = p.x; });
+addEventListener('pointermove', e => { if (!running || !dragging) return; G.pot.target = toStage(e).x; });
+addEventListener('pointerup', () => dragging = false);
+const keys = {};
+addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { keys[e.key] = true; e.preventDefault(); } });
+addEventListener('keyup', e => { keys[e.key] = false; });
+
+/* ---------- helpers ---------- */
+function potGeom(cx, pw) {
+  const sw = pw * 300 / 280, sh = sw * 170 / 300, cy = POT_Y + sh / 2 - 8, k = sw / 300, top = cy - sh / 2;
+  return {sw, cy, sx: cx - sw / 2 + 150 * k, sy: top + 44 * k, rx: 112 * k, ry: 26 * k};
+}
+function splash(x, y) { for (let i = 0; i < 8; i++) { const side = i % 2 ? 1 : -1; G.drops.push({x: x + side * (26 + Math.random() * 16), y: y - 4, vx: side * (90 + Math.random() * 160), vy: -180 - Math.random() * 200, r: 2.5 + Math.random() * 2.5, t0: G.t}); } }
+function potW() { return G.t < G.wideUntil ? 176 : 128; }
+function mult() { let m = 1; if (G.combo >= 10) m *= 2; else if (G.combo >= 5) m *= 1.5; if (G.t < G.spicyUntil) m *= 2; if (PHASES[G.phase].storm) m *= 2; return m; }
+function drawSprite(name, cx, cy, w, rot = 0, sx = 1, sy = 1, alpha = 1) {
+  const im = IMG[name]; if (!im || !im.complete) return;
+  const vb = VB[name.startsWith('tofu') || name === 'item-fried' ? 'tofu' : name.startsWith('pot') ? 'pot' : name.startsWith('boss') ? 'boss' : name.startsWith('fx') ? 'splat' : 'item'];
+  const h = w * vb[3] / vb[2];
+  ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx, cy); if (rot) ctx.rotate(rot); ctx.scale(sx, sy);
+  ctx.drawImage(im, -w / 2, -h / 2, w, h); ctx.restore();
+}
+function popText(text, x, y, color, size = 34, font = 'Noto Sans TC') { G.pops.push({text, x, y, color, size, font, t0: G.t, rot: (Math.random() - .5) * .28}); }
+let bubbleTimer = 0;
+function say(text, x, y, up = false) {
+  const b = $('bubble'); b.textContent = text; b.classList.toggle('up', up);
+  const bw = Math.min(330, text.length * 17 + 40); const cx = Math.max(bw / 2 + 8, Math.min(W - bw / 2 - 8, x));
+  b.style.left = cx + 'px'; b.style.top = (up ? y : y - 52) + 'px'; b.style.setProperty('--tail', `${50 + (x - cx) / bw * 100}%`);
+  b.classList.remove('on'); void b.offsetWidth; b.classList.add('on');
+  clearTimeout(bubbleTimer); bubbleTimer = setTimeout(() => b.classList.remove('on'), 1600);
+}
+function bossSay(text) { const b = $('bubble'); say(text, 300, 128, true); }
+
+/* ---------- HUD ---------- */
+let hudCache = {};
+function setText(id, v) { if (hudCache[id] !== v) { hudCache[id] = v; $(id).textContent = v; } }
+function updateMeter(up) {
+  $('bpFill').style.width = (G.meter * 20) + '%';
+  $('bp').classList.toggle('hot', G.meter >= 3);
+  const face = G.meter <= 1 ? 1 : G.meter;
+  clearTimeout(hurtTimer);
+  if (up && G.meter < 5) {
+    $('bossImg').src = URL_OF['boss-hurt'];
+    hurtTimer = setTimeout(() => { $('bossImg').src = URL_OF['boss-' + (G.meter <= 1 ? 1 : G.meter)]; }, 650);
+    const card = $('bossCard'); card.classList.remove('hurt'); void card.offsetWidth; card.classList.add('hurt');
+    const hf = $('hitFx'); hf.textContent = pick(['好痛！', '啊啊！', '痛痛痛！']); hf.classList.remove('on'); void hf.offsetWidth; hf.classList.add('on');
+    const bp = $('bpCard'); bp.classList.remove('shake'); void bp.offsetWidth; bp.classList.add('shake');
+  } else $('bossImg').src = URL_OF['boss-' + face];
+  drawAids(up);
+}
+const AID_SPOTS = [[0, 28, -38], [58, 26, 34], [26, 0, -8], [48, 62, 16]];
+function drawAids(up) {
+  const box = $('aids'), n = Math.min(4, G.meter);
+  while (box.children.length > n) box.lastChild.remove();
+  while (box.children.length < n) {
+    const [x, y, r] = AID_SPOTS[box.children.length], el = document.createElement('div');
+    el.className = 'aid'; el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.setProperty('--r', r + 'deg'); el.style.transform = `rotate(${r}deg)`;
+    if (up) el.style.animationDelay = '420ms'; else el.style.animation = 'none';
+    el.innerHTML = '<svg viewBox="0 0 30 12" width="26" height="11"><rect x="1" y="1" width="28" height="10" rx="5" fill="#f2c79a" stroke="#1a1a1a" stroke-width="1.6"/><rect x="10" y="2.5" width="10" height="7" rx="1.5" fill="#fbe3c8" stroke="#c9996b" stroke-width="1"/><path d="M5 4v4M25 4v4" stroke="#c9996b" stroke-width="1"/></svg>';
+    box.appendChild(el);
+  }
+}
+function burstMeter() {
+  const bp = $('bp'); bp.classList.remove('hot'); bp.classList.add('burst');
+  const r = bp.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+  for (let i = 0; i < 14; i++) {
+    const sh = document.createElement('i'); sh.className = 'shard';
+    sh.style.left = (r.left - sr.left) / scale + Math.random() * r.width / scale + 'px'; sh.style.top = (r.top - sr.top) / scale + 4 + 'px';
+    sh.style.setProperty('--dx', (Math.random() - .5) * 160 + 'px'); sh.style.setProperty('--dy', 30 + Math.random() * 140 + 'px'); sh.style.setProperty('--r', (Math.random() - .5) * 540 + 'deg');
+    $('hud').appendChild(sh); setTimeout(() => sh.remove(), 800);
+  }
+}
+function hud() {
+  setText('score', G.score.toLocaleString('en-US'));
+  const left = Math.max(0, Math.ceil(GAME_LEN - G.t));
+  setText('timer', `0:${String(left).padStart(2, '0')}`.replace('0:60', '1:00'));
+  const tm = $('timer'); tm.classList.toggle('hurry', left <= 10);
+  if (left <= 10 && left !== G.lastSec && left > 0) { tm.classList.remove('tick'); void tm.offsetWidth; tm.classList.add('tick'); SFX.tick(); }
+  G.lastSec = left;
+  const cb = $('combo'); cb.classList.toggle('on', G.combo >= 5);
+  if (G.combo >= 5) { setText('comboN', `COMBO ${G.combo}`); setText('comboX', G.combo >= 10 ? '×2' : '×1.5'); }
+  const chips = [];
+  if (G.t < G.spicyUntil) chips.push(['辣爆 ×2', (G.spicyUntil - G.t) / 5, '#e63b2e']);
+  if (G.t < G.wideUntil) chips.push(['石鍋變寬', (G.wideUntil - G.t) / 5, '#ff7a3d']);
+  if (G.shield) chips.push(['起司護盾', 1, '#ffd34d']);
+  if (PHASES[G.phase].storm) chips.push(['暴雨 ×2', (GAME_LEN - G.t) / 15, '#244d8c']);
+  const key = chips.map(c => c[0] + Math.round(c[1] * 20)).join('|');
+  if (hudCache.status !== key) {
+    hudCache.status = key;
+    $('status').innerHTML = chips.map(([t, p, c]) => `<div class="chip"><span style="width:10px;height:10px;border-radius:50%;background:${c};border:2px solid #1a1a1a"></span>${t}<u style="width:${Math.max(0, Math.min(1, p)) * 100}%"></u></div>`).join('');
+  }
+}
+
+/* ---------- spawning ---------- */
+function spawn() {
+  const ph = PHASES[G.phase]; const entries = Object.entries(ph.w); const total = entries.reduce((s, e) => s + e[1], 0);
+  let r = Math.random() * total, kind = 'tofu'; for (const [k, w] of entries) { if ((r -= w) < 0) { kind = k; break; } }
+  const def = ITEMS[kind];
+  const x = 44 + Math.random() * (W - 88);
+  G.items.push({kind, def, x, y: 100, vy: ph.speed * (0.92 + Math.random() * .16), wob: Math.random() * 6, rot: 0});
+}
+
+/* ---------- catching ---------- */
+function potSpeed() {
+  const h = G.pot.hist; if (h.length < 2) return 0;
+  const a = h[0], b = h[h.length - 1]; const dt = b.t - a.t; return dt > 0 ? Math.abs(b.x - a.x) / dt : 0;
+}
+function breakTofu(x, y, missed) {
+  G.combo = 0; G.dead++; G.meter = Math.min(5, G.meter + 1);
+  G.fx.push({type: 'broken', x, y, t0: G.t});
+  G.fx.push({type: 'ghost', x, y: y - 10, t0: G.t + .15});
+  for (let i = 0; i < 10; i++) G.crumbs.push({x, y, vx: (Math.random() - .5) * 420, vy: -Math.random() * 380 - 80, s: 6 + Math.random() * 8, r: Math.random() * 6, t0: G.t});
+  popText(missed ? '摔碎了！' : '碎了！', x, y - 40, '#e63b2e', 38);
+  G.shakeUntil = G.t + .18; SFX.broken(); buzz(40);
+  speak('tofuBreak', true); setTimeout(() => { if (running) speak('bossHurt', true); }, 650);
+  updateMeter(true);
+  if (G.meter >= 3 && Math.random() < .7) bossSay(pick(LINES.boss)); else say(pick(LINES.broken), Math.max(70, Math.min(320, x)), Math.min(y - 40, 640));
+  if (G.meter >= 5) endGame(true);
+}
+function catchItem(it) {
+  const k = it.kind, px = G.pot.x;
+  G.pot.face = 'proud'; G.pot.faceUntil = G.t + .5;
+  if (it.def.fragile) {
+    const sp = potSpeed();
+    let j = G.shield ? 'perfect' : sp <= PERFECT_MAX ? 'perfect' : sp <= BARELY_MAX ? 'barely' : 'broken';
+    if (G.shield) G.shield = false;
+    if (j === 'broken') { breakTofu(it.x, POT_Y - 10, false); return; }
+    const base = j === 'perfect' ? 10 : 5;
+    G.score += Math.round(base * mult());
+    G.fx.push({type: 'sink', spr: j === 'perfect' ? 'tofu-perfect' : 'tofu-barely', x: it.x, t0: G.t, rel: it.x - px, half: it.def.half, rot: it.rot}); splash(it.x, potGeom(px, potW()).sy);
+    if (j === 'perfect') {
+      G.combo++; G.perfects++;
+      if (G.perfects % 5 === 0 && G.meter > 0) { G.meter--; updateMeter(false); }
+      popText('完美！', it.x, POT_Y - 50, '#fecc6b'); SFX.perfect();
+      if (G.combo === 5 || G.combo === 10 || (G.combo > 10 && G.combo % 10 === 0)) { popText(pick(LINES.cheer), W / 2, 360, '#ff7a3d', 52, 'Black Han Sans'); SFX.combo(); speak('cheer', true); $('combo').classList.remove('bump'); void $('combo').offsetWidth; $('combo').classList.add('bump'); }
+      else if (Math.random() < .15) { say(pick(LINES.perfect), it.x, POT_Y - 80); speak('tofuPerfect'); }
+    } else { G.combo = 0; popText('勉強…', it.x, POT_Y - 50, '#ffffff', 30); SFX.barely(); }
+    return;
+  }
+  const d = it.def; let pts = d.pts;
+  if (pts > 0) pts = Math.round(pts * mult());
+  G.score = Math.max(0, G.score + pts);
+  G.fx.push({type: 'sinkItem', spr: d.spr, w: d.w, x: it.x, t0: G.t, rel: it.x - px, half: d.half, rot: it.rot}); splash(it.x, potGeom(px, potW()).sy);
+  if (k === 'ramen') { G.wideUntil = G.t + 5; popText('石鍋變寬！', it.x, POT_Y - 50, '#ff7a3d', 28); SFX.item(); }
+  else if (k === 'cheese') { G.shield = true; popText('起司護盾！', it.x, POT_Y - 50, '#ffd34d', 28); SFX.item(); }
+  else if (k === 'chili') { G.spicyUntil = G.t + 5; popText('辣爆 ×2！', it.x, POT_Y - 50, '#e63b2e', 34); SFX.combo(); }
+  else if (k === 'slipper') { G.combo = 0; popText('−20', it.x, POT_Y - 50, '#4aa3df', 34); SFX.bad(); bossSay(LINES.slipper[0]); speak('bossSlipper', true); buzz(30); }
+  else if (k === 'egg') { G.eggUntil = G.t + 3; popText('蛋砸到了！', it.x, POT_Y - 50, '#ffc21a', 30); SFX.bad(); buzz(30); }
+  else { popText(`+${pts}`, it.x, POT_Y - 50, '#fecc6b', 30); SFX.catch(); }
+}
+
+/* ---------- update ---------- */
+function update(dt) {
+  G.t += dt;
+  const np = PHASES.reduce((a, p, i) => G.t >= p.t ? i : a, 0);
+  if (np !== G.phase) { G.phase = np; if (PHASES[np].storm) { popText('豆腐暴雨！分數 ×2', W / 2, 300, '#fecc6b', 36); SFX.combo(); speak('storm', true); } }
+  if (!G.hurryShown && G.t >= GAME_LEN - 10) { G.hurryShown = true; popText('最後 10 秒！', W / 2, 250, '#ffffff', 34); }
+  // pot movement
+  const pot = G.pot, pw = potW();
+  if (keys.ArrowLeft || keys.ArrowRight) {
+    const dir = (keys.ArrowRight ? 1 : 0) - (keys.ArrowLeft ? 1 : 0);
+    pot.keyV += dir * 1600 * dt; pot.keyV = Math.max(-520, Math.min(520, pot.keyV));
+    pot.target = undefined;
+  } else pot.keyV *= Math.pow(.0005, dt);
+  if (pot.target !== undefined) pot.x += (pot.target - pot.x) * Math.min(1, dt * 22); else pot.x += pot.keyV * dt;
+  pot.x = Math.max(pw / 2, Math.min(W - pw / 2, pot.x));
+  pot.hist.push({t: G.t, x: pot.x}); while (pot.hist.length && G.t - pot.hist[0].t > .08) pot.hist.shift();
+  if (pot.face === 'proud' && G.t > pot.faceUntil) pot.face = 'bored';
+  // spawn
+  G.spawnIn -= dt;
+  if (G.spawnIn <= 0) { const ph = PHASES[G.phase]; spawn(); if (Math.random() < ph.dbl) spawn(); G.spawnIn = ph.gap * (0.85 + Math.random() * .3); }
+  // items
+  const rim = potGeom(pot.x, pw).sy;
+  for (const it of G.items) {
+    const prevBottom = it.y + it.def.half;
+    it.y += it.vy * dt; it.wob += dt; it.rot = Math.sin(it.wob * Math.PI * 4) * (8 * Math.PI / 180);
+    const bottom = it.y + it.def.half;
+    if (!it.done && prevBottom <= rim && bottom >= rim && Math.abs(it.x - pot.x) < pw * 0.46) { it.done = true; catchItem(it); }
+    else if (!it.done && bottom >= GROUND) { it.done = true; if (it.def.fragile) breakTofu(it.x, GROUND - 26, true); }
+  }
+  G.items = G.items.filter(i => !i.done);
+  G.fx = G.fx.filter(f => G.t - f.t0 < 1.5); G.pops = G.pops.filter(p => G.t - p.t0 < .7); G.crumbs = G.crumbs.filter(c => G.t - c.t0 < .9); G.drops = G.drops.filter(d => G.t - d.t0 < .5);
+  if (G.t >= GAME_LEN && !G.ended) endGame(false);
+}
+
+/* ---------- render ---------- */
+function makeBg() {
+  const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height; const x = c.getContext('2d');
+  x.setTransform(c.width / W, 0, 0, c.height / H, 0, 0);
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0f274d'); g.addColorStop(.5, '#183b72'); g.addColorStop(1, '#244d8c'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.fillStyle = 'rgba(255,236,201,.09)'; for (let yy = 11; yy < H; yy += 22) for (let xx = 11; xx < W; xx += 22) { x.beginPath(); x.arc(xx, yy, 1.5, 0, 7); x.fill(); }
+  x.strokeStyle = 'rgba(255,236,201,.22)'; x.lineWidth = 10; x.beginPath(); x.arc(W / 2, 430, 170, 0, 7); x.stroke(); x.lineWidth = 3; x.beginPath(); x.arc(W / 2, 430, 190, 0, 7); x.stroke();
+  x.strokeStyle = 'rgba(254,204,107,.55)'; x.lineWidth = 3; x.lineCap = 'round';
+  const cloud = (cx, cy, w) => { x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx + w * .3, cy); x.arc(cx + w * .3, cy - 12, 12, Math.PI / 2, -Math.PI / 2, true); x.lineTo(cx + w * .15, cy - 24); x.arc(cx + w * .15, cy - 36, 12, Math.PI / 2, -Math.PI / 2, false); x.lineTo(cx + w * .45, cy - 48); x.moveTo(cx + w * .3, cy); x.lineTo(cx + w, cy); x.stroke(); };
+  cloud(16, 300, 150); cloud(240, 560, 140);
+  // floor
+  x.fillStyle = '#0f274d'; x.fillRect(0, GROUND, W, H - GROUND); x.strokeStyle = '#1a1a1a'; x.lineWidth = 4; x.beginPath(); x.moveTo(0, GROUND); x.lineTo(W, GROUND); x.stroke();
+  x.fillStyle = 'rgba(254,204,107,.85)'; x.font = '700 13px "Noto Sans TC"'; x.textAlign = 'center'; x.fillText('左右拖動石鍋・停穩再接', W / 2, GROUND + 26);
+  return c;
+}
+const ease = {out: t => 1 - Math.pow(1 - t, 3), back: t => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }};
+function render() {
+  if (!bg) bg = makeBg();
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(bg, 0, 0); ctx.setTransform(canvas.width / W, 0, 0, canvas.height / H, 0, 0);
+  if (G.t < G.shakeUntil && !reduceMotion) ctx.translate((Math.random() - .5) * 10, (Math.random() - .5) * 10);
+  const spicy = G.t < G.spicyUntil;
+  if (spicy) { const g = ctx.createRadialGradient(W / 2, H / 2, 260, W / 2, H / 2, 520); g.addColorStop(0, 'rgba(230,59,46,0)'); g.addColorStop(1, `rgba(230,59,46,${.35 + .1 * Math.sin(G.t * 12)})`); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+  // items
+  for (const it of G.items) {
+    if (it.y < 92) continue;
+    if (it.def.fragile && it.vy > 0) { ctx.strokeStyle = 'rgba(255,236,201,.45)'; ctx.lineWidth = 3; ctx.lineCap = 'round'; for (const o of [-14, 0, 14]) { ctx.beginPath(); ctx.moveTo(it.x + o, it.y - 52 - Math.abs(o)); ctx.lineTo(it.x + o, it.y - 76 - Math.abs(o)); ctx.stroke(); } }
+    drawSprite(it.def.spr, it.x, it.y, it.def.w, it.rot);
+  }
+  // pot
+  const pot = G.pot, pw = potW(), shake = spicy && !reduceMotion ? (Math.random() - .5) * 10 : 0;
+  const face = spicy ? 'pot-spicy' : 'pot-' + pot.face;
+  const pg = potGeom(pot.x + shake, pw);
+  drawSprite(face, pot.x + shake, pg.cy, pg.sw);
+  // caught things sink into the soup: clip to everything above the soup's front edge
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, pg.sy); ctx.ellipse(pg.sx, pg.sy, pg.rx, pg.ry, 0, 0, Math.PI * 2); ctx.clip();
+  for (const f of G.fx) {
+    const t = G.t - f.t0;
+    if (f.type !== 'sink' && f.type !== 'sinkItem') continue;
+    if (t > .62) continue;
+    const x = pg.sx + Math.max(-pg.rx * .55, Math.min(pg.rx * .55, f.rel));
+    let sx = 1, sy = 1, dy = 0;
+    if (t < .12) { const k = t / .12; sx = 1 + .15 * k; sy = 1 - .2 * k; }
+    else if (t < .26) { const k = ease.back((t - .12) / .14); sx = 1.15 - .15 * k; sy = .8 + .2 * k; }
+    else { const k = ease.out((t - .26) / .36); dy = (f.half * 2 + 14) * k; }
+    const w = f.type === 'sink' ? 160 : f.w;
+    drawSprite(f.spr, x, pg.sy - f.half + 4 + dy + f.half * (1 - sy), w, f.rot * (1 - Math.min(1, t * 4)), sx, sy);
+  }
+  ctx.restore();
+  // soup front lip + splash drops
+  ctx.save(); ctx.beginPath(); ctx.ellipse(pg.sx, pg.sy, pg.rx, pg.ry, 0, 0, Math.PI); ctx.lineWidth = 3; ctx.strokeStyle = '#1a1a1a'; ctx.stroke(); ctx.restore();
+  for (const d of G.drops) { const t = G.t - d.t0; const x = d.x + d.vx * t, y = d.y + d.vy * t + 700 * t * t; ctx.globalAlpha = Math.max(0, 1 - t / .5); ctx.fillStyle = '#e63b2e'; ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, d.r, 0, 7); ctx.fill(); ctx.stroke(); ctx.globalAlpha = 1; }
+  if (G.shield) { ctx.strokeStyle = '#ffd34d'; ctx.lineWidth = 5; ctx.setLineDash([8, 6]); ctx.beginPath(); ctx.ellipse(pg.sx, pg.sy, pg.rx + 8, pg.ry + 8, 0, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
+  // broken / ghost fx
+  for (const f of G.fx) {
+    const t = G.t - f.t0; if (t < 0) continue;
+    if (f.type === 'broken' && t < .45) { const k = ease.out(t / .45); drawSprite('tofu-broken', f.x, f.y, 150 + 40 * k, 0, 1, 1, 1 - k * .9); }
+    if (f.type === 'ghost' && t < 1.2) { const k = ease.out(t / 1.2); drawSprite('tofu-ghost', f.x, f.y - 120 * k, 150, reduceMotion ? 0 : Math.sin(t * 12) * .12, 1, 1, .9 * (1 - k)); }
+  }
+  ctx.fillStyle = '#fff8e7'; ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 2.5;
+  for (const c of G.crumbs) { const t = G.t - c.t0; const x = c.x + c.vx * t, y = c.y + c.vy * t + 900 * t * t; ctx.save(); ctx.globalAlpha = 1 - t / .9; ctx.translate(x, y); ctx.rotate(c.r + t * 8); ctx.fillRect(-c.s / 2, -c.s / 2, c.s, c.s); ctx.strokeRect(-c.s / 2, -c.s / 2, c.s, c.s); ctx.restore(); }
+  // pops
+  ctx.textAlign = 'center'; ctx.lineJoin = 'round';
+  for (const p of G.pops) {
+    const t = G.t - p.t0; let s = 1, dy = 0, a = 1;
+    if (t < .2) s = .6 + .4 * ease.back(t / .2); else { const k = (t - .2) / .5; dy = -40 * ease.out(k); a = 1 - k; }
+    ctx.save(); ctx.globalAlpha = Math.max(0, a); ctx.translate(p.x, p.y + dy); ctx.rotate(p.rot); ctx.scale(s, s);
+    ctx.font = `${p.font === 'Black Han Sans' ? 400 : 900} ${p.size}px "${p.font}"`; ctx.lineWidth = p.size > 40 ? 10 : 7; ctx.strokeStyle = '#1a1a1a'; ctx.strokeText(p.text, 0, 0); ctx.fillStyle = p.color; ctx.fillText(p.text, 0, 0); ctx.restore();
+  }
+  // egg splat overlay
+  if (G.t < G.eggUntil) {
+    const t = 3 - (G.eggUntil - G.t); let s = 1, dy = 0, a = 1;
+    if (t < .15) s = .3 + .7 * (t / .15); else if (t > 2.55) { const k = (t - 2.55) / .45; dy = 160 * k; a = 1 - k; }
+    drawSprite('fx-egg-splat', W / 2, 400 + dy, 400 * s, .2, 1, 1, a);
+  }
+  ctx.restore();
+}
+
+/* ---------- loop ---------- */
+function frame(ts) {
+  if (!running) return;
+  const dt = Math.min(.05, (ts - lastT) / 1000 || 0); lastT = ts;
+  update(dt); if (!running) return; render(); hud();
+  requestAnimationFrame(frame);
+}
+function startGame() {
+  audio();
+  counted = day.counted < (day.shared ? 2 : 1);
+  G = newGame(); hudCache = {}; $('bp').classList.remove('burst', 'hot'); updateMeter(false); $('bubble').classList.remove('on');
+  show(null); $('hud').classList.add('on'); speak('bossStart', true); running = true; lastT = performance.now(); fit(); requestAnimationFrame(frame);
+}
+let lastResult = null;
+function endGame(fainted) {
+  G.ended = true; running = false; $('bubble').classList.remove('on');
+  render();
+  if (!fainted) $('hud').classList.remove('on');
+  const rank = RANKS.find(r => G.score >= r.min);
+  lastResult = {score: G.score, dead: G.dead, rank};
+  if (counted) {
+    day.counted++;
+    const c = day.coupon;
+    if (!c || (!c.redeemed && G.score > c.score)) day.coupon = {score: G.score, rank: rank.name, reward: rank.reward, code: c && !c.redeemed ? c.code : makeCode(), redeemed: false};
+    save();
+  }
+  if (fainted) { burstMeter(); SFX.broken(); buzz([60, 40, 120]); setTimeout(() => { SFX.faint(); speak('bossFaint', true); $('hud').classList.remove('on'); show('faint'); }, 1100); } else showResult();
+}
+function makeCode() { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; for (let i = 0; i < 6; i++) s += a[Math.floor(Math.random() * a.length)]; return s; }
+function showResult() {
+  const r = lastResult;
+  $('rank').textContent = r.rank.name; $('rankSub').textContent = r.rank.sub; $('rankImg').src = URL_OF[r.rank.img];
+  $('rScore').textContent = r.score.toLocaleString('en-US'); $('rDead').textContent = r.dead;
+  const note = $('practiceNote');
+  if (!counted) { note.textContent = day.shared ? '今天的兩次機會都用完了，這局是練習，不會更新優惠券。' : '這局是練習，不會更新優惠券。分享後可以多一次機會。'; note.classList.remove('hidden'); }
+  else if (day.coupon && day.coupon.score > r.score) { note.textContent = `優惠券保留今天最高分 ${day.coupon.score} 分。`; note.classList.remove('hidden'); }
+  else note.classList.add('hidden');
+  $('shareBtn').textContent = day.shared ? '再玩一局' : '分享再玩一局';
+  $('toCoupon').disabled = !day.coupon;
+  show('result');
+}
+
+/* ---------- coupon ---------- */
+function showCoupon() {
+  const c = day.coupon; if (!c) return;
+  $('cpDate').textContent = `優惠券｜${day.date}`; $('cpReward').textContent = c.reward; $('cpRank').textContent = `${c.rank}・${c.score} 分`; $('cpCode').textContent = c.code;
+  $('cp').classList.toggle('used', !!c.redeemed); $('redeem').disabled = !!c.redeemed; $('redeem').querySelector('span').textContent = c.redeemed ? '已兌換' : '店員核銷（長按 3 秒）';
+  show('coupon');
+}
+let holdStart = 0, holdRaf = 0;
+function holdTick() {
+  const p = Math.min(1, (performance.now() - holdStart) / 3000); $('redeem').querySelector('i').style.width = p * 100 + '%';
+  if (p >= 1) { day.coupon.redeemed = true; save(); SFX.combo(); buzz(80); holdStart = 0; showCoupon(); $('redeem').querySelector('i').style.width = '0'; return; }
+  holdRaf = requestAnimationFrame(holdTick);
+}
+function holdEnd() { cancelAnimationFrame(holdRaf); holdStart = 0; $('redeem').querySelector('i').style.width = '0'; }
+$('redeem').addEventListener('pointerdown', e => { if (day.coupon.redeemed) return; e.preventDefault(); holdStart = performance.now(); holdTick(); });
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => $('redeem').addEventListener(ev, holdEnd));
+$('redeem').addEventListener('contextmenu', e => e.preventDefault());
+
+/* ---------- share image ---------- */
+function makeShare() {
+  const r = lastResult, c = document.createElement('canvas'); c.width = 1080; c.height = 1920; const x = c.getContext('2d');
+  x.fillStyle = '#183b72'; x.fillRect(0, 0, 1080, 1920);
+  x.fillStyle = 'rgba(255,236,201,.1)'; for (let yy = 20; yy < 1920; yy += 44) for (let xx = 20; xx < 1080; xx += 44) { x.beginPath(); x.arc(xx, yy, 3, 0, 7); x.fill(); }
+  x.strokeStyle = '#ffecc9'; x.lineWidth = 22; x.beginPath(); x.arc(540, 820, 360, 0, 7); x.stroke(); x.lineWidth = 6; x.beginPath(); x.arc(540, 820, 400, 0, 7); x.stroke();
+  x.textAlign = 'center'; x.lineJoin = 'round';
+  const st = (t, y, size, fill, lw) => { x.font = `900 ${size}px "Noto Sans TC"`; x.lineWidth = lw; x.strokeStyle = '#1a1a1a'; x.strokeText(t, 540, y); x.fillStyle = fill; x.fillText(t, 540, y); };
+  st('嫩豆腐接接樂', 220, 130, '#fecc6b', 22);
+  const im = IMG[r.rank.img]; x.drawImage(im, 540 - 380, 520, 760, 760 * 290 / 380);
+  x.font = '700 48px "Noto Sans TC"'; x.fillStyle = '#fff3d1'; x.fillText('我的稱號是', 540, 1290);
+  st(r.rank.name, 1420, 120, '#e63b2e', 20);
+  x.fillStyle = '#fff'; x.strokeStyle = '#1a1a1a'; x.lineWidth = 10; x.beginPath(); if (x.roundRect) x.roundRect(120, 1500, 840, 180, 36); else x.rect(120, 1500, 840, 180); x.fill(); x.stroke();
+  x.fillStyle = '#1a1a1a'; x.font = '900 56px "Noto Sans TC"'; x.fillText(`${r.score} 分・犧牲了 ${r.dead} 塊豆腐`, 540, 1612);
+  x.fillStyle = '#fecc6b'; x.fillRect(0, 1760, 1080, 160); x.fillStyle = '#0f274d'; x.font = '900 40px "Noto Sans TC"'; x.fillText('銓Dubu嘟布韓式豆腐煲 義華店', 540, 1830); x.font = '700 32px "Noto Sans TC"'; x.fillText('高雄市三民區義華路 468 號｜#嫩豆腐接接樂 #二店請支持', 540, 1886);
+  return c.toDataURL('image/png');
+}
+
+/* ---------- wiring ---------- */
+let seenTutorial = false;
+$('periodH').textContent = $('periodR').textContent = '活動期間：' + EVENT_PERIOD;
+$('startBtn').onclick = () => { audio(); if (!seenTutorial) { $('rules').scrollTop = 0; show('rules'); } else startGame(); };
+$('rulesBtn').onclick = () => show('tutorial');
+$('goBtn').onclick = () => { seenTutorial = true; startGame(); };
+$('faintBtn').onclick = showResult;
+$('toCoupon').onclick = showCoupon;
+$('cpHome').onclick = $('homeBtn').onclick = () => { refreshHome(); show('home'); };
+$('shareBtn').onclick = () => { if (day.shared) { startGame(); return; } $('shareImg').src = makeShare(); show('share'); };
+$('sharedBtn').onclick = () => { day.shared = true; save(); startGame(); };
+$('shareClose').onclick = () => show('result');
+$('myCoupon').onclick = showCoupon;
+function refreshHome() { day = load(); $('myCoupon').classList.toggle('hidden', !day.coupon); }
+refreshHome(); fit();
+document.fonts && document.fonts.load('900 20px "Noto Sans TC"').then(() => { bg = null; });
+</script>
+</body>
+</html>
