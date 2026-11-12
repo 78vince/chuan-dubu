@@ -366,8 +366,9 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ---------- storage (best effort) ---------- */
 function eventState() { if (TEST_MODE) return 'on'; const t = today(); return t < EVENT_START ? 'before' : t > EVENT_END ? 'after' : 'on'; }
 const today = () => { const d = new Date(); return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; };
-function load() { try { const v = JSON.parse(localStorage.getItem('tofu-catch') || 'null'); if (v && v.date === today()) return v; } catch (e) {} return {date: today(), counted: 0, shared: false, coupon: null}; }
-function save() { try { localStorage.setItem('tofu-catch', JSON.stringify(day)); } catch (e) {} }
+const STORE = TEST_MODE ? 'tofu-catch-test' : 'tofu-catch';
+function load() { try { const v = JSON.parse(localStorage.getItem(STORE) || 'null'); if (v && v.date === today()) { if (eventState() !== 'on') v.coupon = null; return v; } } catch (e) {} return {date: today(), counted: 0, shared: false, coupon: null}; }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(day)); } catch (e) {} }
 let day = load();
 
 /* ---------- sound ---------- */
@@ -755,7 +756,7 @@ function frame(ts) {
 }
 function startGame() {
   audio(); lockPortrait();
-  counted = eventState() === 'on' && day.counted < (day.shared ? 2 : 1);
+  counted = TEST_MODE || (eventState() === 'on' && day.counted < (day.shared ? 2 : 1));
   G = newGame(); hudCache = {}; $('bp').classList.remove('burst', 'hot'); updateMeter(false); $('bubble').classList.remove('on');
   show(null); $('hud').classList.add('on'); speak('bossStart', true); running = true; lastT = performance.now(); fit(); requestAnimationFrame(frame);
 }
@@ -769,7 +770,7 @@ function endGame(fainted) {
   if (counted) {
     day.counted++;
     const c = day.coupon;
-    if (!c || (!c.redeemed && G.score > c.score)) day.coupon = {score: G.score, redeemed: false};
+    if (TEST_MODE || !c || (!c.redeemed && G.score > c.score)) day.coupon = {score: G.score, redeemed: false};
     save();
   }
   if (fainted) { G.meter = 5; $('bpFill').style.width = '100%'; $('bp').classList.add('hot'); $('bossImg').src = URL_OF['boss-5']; drawAids(true);
@@ -784,8 +785,11 @@ function showResult() {
   if (es === 'before') { note.textContent = '活動 11/16 才開始，現在是試玩，還不會發優惠券。'; note.classList.remove('hidden'); }
   else if (es === 'after') { note.textContent = '活動已在 11/30 結束，謝謝你來玩！'; note.classList.remove('hidden'); }
   else if (!counted) { note.textContent = day.shared ? '今天的兩次機會都用完了，這局是練習，不會更新優惠券。' : '這局是練習，不會更新優惠券。分享後可以多一次機會。'; note.classList.remove('hidden'); }
-  else if (day.coupon && day.coupon.score > r.score) { note.textContent = `優惠券保留今天最高分 ${day.coupon.score} 分。`; note.classList.remove('hidden'); }
+  else if (day.coupon && day.coupon.score !== r.score) { note.textContent = day.coupon.redeemed ? '今天的優惠券已兌換，這局不會再發券。' : `這局沒有超過今天最高分，優惠券保留 ${day.coupon.score} 分的獎勵。`; note.classList.remove('hidden'); }
   else note.classList.add('hidden');
+  if (!counted && es === 'on' && day.coupon && day.coupon.score !== r.score) note.textContent += `（目前優惠券：${day.coupon.score} 分）`;
+  const keep = day.coupon && day.coupon.score !== r.score;
+  $('toCoupon').textContent = keep ? `查看優惠券（今天最高 ${day.coupon.score} 分）` : '領優惠券';
   $('shareBtn').textContent = day.shared ? '再玩一局' : '分享再玩一局';
   $('toCoupon').disabled = !day.coupon;
   show('result');
