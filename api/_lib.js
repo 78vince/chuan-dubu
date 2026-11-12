@@ -2,12 +2,12 @@
 const URL_ = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
-// 與遊戲 RANKS 相同；1700 以上為九折（固定折扣碼，不需核銷、不記錄）
+// 與遊戲 RANKS 相同；1600 以上為九折（固定折扣碼，不需核銷、不記錄）
 const RANKS = [
-  {min: 1700, name: '義華路豆腐之神', reward: '豆腐煲主餐 9 折', fixedCode: true},
-  {min: 1000, name: '嫩豆腐守護者', reward: '手工小菜兌換一份'},
-  {min: 500, name: '實習接豆工', reward: '韓國拉麵加購免費'},
-  {min: 0, name: '豆腐殺手', reward: '韓國拉麵加購免費＋老闆愛的眼神關懷'},
+  {min: 1600, name: '義華路豆腐之神', reward: '來店消費整單 9 折', fixedCode: true},
+  {min: 800, name: '嫩豆腐守護者', reward: '黃金炸豆腐免費兌換 1 份'},
+  {min: 500, name: '實習接豆工', reward: '手工小菜免費兌換 1 份'},
+  {min: 0, name: '豆腐殺手', reward: '幫老闆評論，韓國拉麵免費加購'},
 ];
 const LIST = 'tofu-catch:redeems';
 const KEY = id => 'tofu-catch:redeem:' + id;

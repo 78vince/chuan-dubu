@@ -170,6 +170,7 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
 .cp .r{font:900 28px/1.25 "Noto Sans TC";color:var(--gold-400);margin:8px 0}
 .cp .verify{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:6px 14px;font:700 14px "Noto Sans TC";margin:10px 0}
 .cp.item .r{font-size:30px}
+.cp .r{word-break:keep-all;overflow-wrap:anywhere}
 .cp .code{display:inline-block;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:var(--radius-md);padding:6px 18px;font:900 26px "Noto Sans TC";letter-spacing:.12em;margin:10px 0}
 .cp .qr{display:flex;flex-direction:column;align-items:center;gap:6px;margin:4px 0 10px}.cp .qr img{width:150px;height:150px;background:#fff;border:3px solid var(--ink);border-radius:10px;padding:4px}.cp .qr span{font:700 12px 'Noto Sans TC';color:var(--gold-100)}
 .cp .cap{font:700 12px/1.5 "Noto Sans TC";color:var(--gold-100)}
@@ -239,16 +240,16 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
       <div><img data-sprite="item-egg" alt=""><span>生雞蛋 <b>0</b><br>蛋液擋畫面 3 秒</span></div>
     </div></div>
     <div class="rbox"><h3>獎勵</h3><table class="tiers">
-      <tr><td>1700 分以上</td><td>義華路豆腐之神｜豆腐煲主餐 9 折（QR code＋折扣碼）</td></tr>
-      <tr><td>1000–1699 分</td><td>嫩豆腐守護者｜手工小菜兌換一份</td></tr>
-      <tr><td>500–999 分</td><td>實習接豆工｜韓國拉麵加購免費</td></tr>
-      <tr><td>0–499 分</td><td>豆腐殺手｜韓國拉麵加購免費＋老闆愛的眼神關懷</td></tr>
+      <tr><td>1600 分以上</td><td>義華路豆腐之神｜來店消費整單 9 折（QR code＋折扣碼）</td></tr>
+      <tr><td>800–1599 分</td><td>嫩豆腐守護者｜黃金炸豆腐免費兌換 1 份</td></tr>
+      <tr><td>500–799 分</td><td>實習接豆工｜手工小菜免費兌換 1 份</td></tr>
+      <tr><td>低於 500 分</td><td>豆腐殺手｜幫老闆評論，韓國拉麵免費加購</td></tr>
     </table></div>
     <div class="rbox"><h3>兌換規則</h3><ol>
-      <li>每支手機每天 1 局正式成績，分享結算圖後可以多 1 局。</li>
+      <li>每支手機每天 1 局正式成績，分享遊戲稱號到限時動態並標記我們，就能多玩 1 局。</li>
       <li>優惠券保留當天最高分，當天到店使用。</li>
       <li>限銓Dubu嘟布韓式豆腐煲 義華店，須點任一豆腐煲，每桌限用一張，不與其他優惠併用。</li>
-      <li>9 折券：結帳時出示 QR code 或折扣碼即可折抵。其他獎勵：出示優惠券，店員確認品項後長按 3 秒核銷。</li>
+      <li>9 折券：結帳時出示 QR code 或折扣碼即可整單折抵。其他獎勵：出示優惠券，店員確認品項後長按 3 秒核銷；豆腐殺手須先幫老闆留下評論。</li>
       <li>高雄市三民區義華路 468 號｜11:00–13:30、17:00–21:30｜訂位 0902-268-213</li>
     </ol></div>
     <button class="btn wide" id="rulesBtn">我知道了，下一步</button>
@@ -308,7 +309,7 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
 
   <section id="share" class="screen">
     <img id="shareImg" alt="結算分享圖">
-    <p>長按圖片存到手機，<br>分享到 FB 或 IG 限動。</p>
+    <p>長按圖片存到手機，<br>分享到限時動態並標記我們，就能多玩一局！</p>
     <button class="btn wide" id="sharedBtn">我分享了，再玩一局</button>
     <button class="link" id="shareClose">先不要</button>
   </section>
@@ -446,6 +447,7 @@ $('mute').onclick = () => { muted = !muted; if (muted) { try { speechSynthesis.c
 let lockTimer = 0;
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+  if (id !== 'game') { const tu = document.getElementById('timeup'); if (tu) tu.classList.remove('on'); }
   // 結算相關畫面：按鈕先鎖 0.9 秒，避免遊戲中的手指誤觸
   if (['faint', 'result', 'coupon'].includes(id)) { const el = $(id); el.classList.add('lock'); clearTimeout(lockTimer); lockTimer = setTimeout(() => el.classList.remove('lock'), 900); }
 }
@@ -476,10 +478,10 @@ const LINES = {
   cheer: ['대박!', '맛있다!', '오오오!'],
 };
 const RANKS = [
-  {min: 1700, name: '義華路豆腐之神', sub: '你的手比嫩豆腐還溫柔。', reward: '豆腐煲主餐 9 折', img: 'tofu-perfect', fixedCode: true},
-  {min: 1000, name: '嫩豆腐守護者',   sub: '豆腐們都很安心。',       reward: '手工小菜兌換一份', img: 'tofu-perfect'},
-  {min: 500,  name: '實習接豆工',     sub: '還在學習溫柔的路上。',   reward: '韓國拉麵加購免費', img: 'tofu-barely'},
-  {min: 0,    name: '豆腐殺手',       sub: '老闆已經哭到脫水了。',   reward: '韓國拉麵加購免費＋老闆愛的眼神關懷', img: 'tofu-ghost'},
+  {min: 1600, name: '義華路豆腐之神', sub: '你的手比嫩豆腐還溫柔。', reward: '來店消費整單 9 折', img: 'tofu-perfect', fixedCode: true},
+  {min: 800,  name: '嫩豆腐守護者',   sub: '豆腐們都很安心。',       reward: '黃金炸豆腐免費兌換 1 份', img: 'tofu-perfect'},
+  {min: 500,  name: '實習接豆工',     sub: '還在學習溫柔的路上。',   reward: '手工小菜免費兌換 1 份', img: 'tofu-barely'},
+  {min: 0,    name: '豆腐殺手',       sub: '老闆已經哭到脫水了。',   reward: '幫老闆評論，韓國拉麵免費加購', img: 'tofu-ghost', review: true},
 ];
 const pick = a => a[Math.floor(Math.random() * a.length)];
 
@@ -808,7 +810,7 @@ function showResult() {
 /* ---------- coupon ---------- */
 function showCoupon() {
   const c = day.coupon; if (!c) return;
-  $('cpDate').textContent = `優惠券｜${day.date}`; const rk = RANKS.find(r => c.score >= r.min), top = !!rk.fixedCode; $('cpReward').textContent = rk.reward; $('cpRank').textContent = `${rk.name}・${c.score} 分`; $('cpCode').textContent = DISCOUNT_CODE; $('cpCode').classList.toggle('hidden', !top); $('cpQr').classList.toggle('hidden', !top); if (top) $('cpQrImg').src = QR_URL; $('cpVerify').classList.toggle('hidden', top); $('cp').classList.toggle('item', !top); $('redeem').classList.toggle('hidden', top); $('cpHint').textContent = top ? '結帳時出示 QR code 或折扣碼，即可享 9 折。' : '拿給店員看，店員確認後核銷。';
+  $('cpDate').textContent = `優惠券｜${day.date}`; const rk = RANKS.find(r => c.score >= r.min), top = !!rk.fixedCode; $('cpReward').textContent = rk.reward; $('cpRank').textContent = `${rk.name}・${c.score} 分`; $('cpCode').textContent = DISCOUNT_CODE; $('cpCode').classList.toggle('hidden', !top); $('cpQr').classList.toggle('hidden', !top); if (top) $('cpQrImg').src = QR_URL; $('cpVerify').classList.toggle('hidden', top); $('cp').classList.toggle('item', !top); $('redeem').classList.toggle('hidden', top); $('cpHint').textContent = top ? '結帳時出示 QR code 或折扣碼，即可享整單 9 折。' : rk.review ? '幫老闆留下評論後拿給店員看，確認後核銷。' : '拿給店員看，店員確認後核銷。';
   $('cp').classList.toggle('used', !top && !!c.redeemed); $('redeem').disabled = !!c.redeemed; $('redeem').querySelector('span').textContent = c.redeemed ? '已兌換' : '店員核銷（長按 3 秒）';
   show('coupon');
 }
