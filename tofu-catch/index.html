@@ -163,6 +163,8 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
 .cp .in{border:3px dashed var(--ring-cream);border-radius:var(--radius-md);padding:18px 12px}
 .cp .t{font:700 14px "Noto Sans TC";color:var(--gold-100)}
 .cp .r{font:900 28px/1.25 "Noto Sans TC";color:var(--gold-400);margin:8px 0}
+.cp .verify{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:6px 14px;font:700 14px "Noto Sans TC";margin:10px 0}
+.cp.item .r{font-size:30px}
 .cp .code{display:inline-block;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:var(--radius-md);padding:6px 18px;font:900 26px "Noto Sans TC";letter-spacing:.12em;margin:10px 0}
 .cp .qr{display:flex;flex-direction:column;align-items:center;gap:6px;margin:4px 0 10px}.cp .qr img{width:150px;height:150px;background:#fff;border:3px solid var(--ink);border-radius:10px;padding:4px}.cp .qr span{font:700 12px 'Noto Sans TC';color:var(--gold-100)}
 .cp .cap{font:700 12px/1.5 "Noto Sans TC";color:var(--gold-100)}
@@ -232,8 +234,8 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
       <div><img data-sprite="item-egg" alt=""><span>生雞蛋 <b>0</b><br>蛋液擋畫面 3 秒</span></div>
     </div></div>
     <div class="rbox"><h3>獎勵</h3><table class="tiers">
-      <tr><td>1800 分以上</td><td>義華路豆腐之神｜豆腐煲主餐 9 折（折扣碼）</td></tr>
-      <tr><td>1000–1799 分</td><td>嫩豆腐守護者｜手工小菜兌換一份</td></tr>
+      <tr><td>1700 分以上</td><td>義華路豆腐之神｜豆腐煲主餐 9 折（QR code＋折扣碼）</td></tr>
+      <tr><td>1000–1699 分</td><td>嫩豆腐守護者｜手工小菜兌換一份</td></tr>
       <tr><td>500–999 分</td><td>實習接豆工｜韓國拉麵加購免費</td></tr>
       <tr><td>0–499 分</td><td>豆腐殺手｜韓國拉麵加購免費＋老闆手寫道歉信</td></tr>
     </table></div>
@@ -289,6 +291,7 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
         <div class="r" id="cpReward">—</div>
         <div class="t" id="cpRank">—</div>
         <div class="code" id="cpCode">——————</div>
+        <div class="verify hidden" id="cpVerify">店員目視確認獎勵品項即可兌換</div>
         <div id="cpQr" class="qr hidden"><img alt="9 折折扣碼 QR code" id="cpQrImg"><span>結帳時出示，店員掃描或輸入折扣碼</span></div>
         <div class="cap">限義華店｜須點任一豆腐煲｜每桌限用一張<br>高雄市三民區義華路 468 號<br>11:00–13:30、17:00–21:30</div>
       </div>
@@ -461,7 +464,7 @@ const LINES = {
   cheer: ['대박!', '맛있다!', '오오오!'],
 };
 const RANKS = [
-  {min: 1800, name: '義華路豆腐之神', sub: '你的手比嫩豆腐還溫柔。', reward: '豆腐煲主餐 9 折', img: 'tofu-perfect', fixedCode: true},
+  {min: 1700, name: '義華路豆腐之神', sub: '你的手比嫩豆腐還溫柔。', reward: '豆腐煲主餐 9 折', img: 'tofu-perfect', fixedCode: true},
   {min: 1000, name: '嫩豆腐守護者',   sub: '豆腐們都很安心。',       reward: '手工小菜兌換一份', img: 'tofu-perfect'},
   {min: 500,  name: '實習接豆工',     sub: '還在學習溫柔的路上。',   reward: '韓國拉麵加購免費', img: 'tofu-barely'},
   {min: 0,    name: '豆腐殺手',       sub: '老闆已經哭到脫水了。',   reward: '韓國拉麵加購免費＋老闆手寫道歉信', img: 'tofu-ghost'},
@@ -764,12 +767,11 @@ function endGame(fainted) {
   if (counted) {
     day.counted++;
     const c = day.coupon;
-    if (!c || (!c.redeemed && G.score > c.score)) day.coupon = {score: G.score, rank: rank.name, reward: rank.reward, code: rank.fixedCode ? DISCOUNT_CODE : (c && !c.redeemed && c.code !== DISCOUNT_CODE ? c.code : makeCode()), fixed: !!rank.fixedCode, redeemed: false};
+    if (!c || (!c.redeemed && G.score > c.score)) day.coupon = {score: G.score, redeemed: false};
     save();
   }
   if (fainted) { burstMeter(); SFX.broken(); buzz([60, 40, 120]); setTimeout(() => { SFX.faint(); speak('bossFaint', true); $('hud').classList.remove('on'); show('faint'); }, 1100); } else showResult();
 }
-function makeCode() { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; for (let i = 0; i < 6; i++) s += a[Math.floor(Math.random() * a.length)]; return s; }
 function showResult() {
   const r = lastResult;
   $('rank').textContent = r.rank.name; $('rankSub').textContent = r.rank.sub; $('rankImg').src = URL_OF[r.rank.img];
@@ -789,7 +791,7 @@ function showResult() {
 /* ---------- coupon ---------- */
 function showCoupon() {
   const c = day.coupon; if (!c) return;
-  $('cpDate').textContent = `優惠券｜${day.date}`; $('cpReward').textContent = c.reward; $('cpRank').textContent = `${c.rank}・${c.score} 分`; $('cpCode').textContent = c.code; $('cpQr').classList.toggle('hidden', !c.fixed); if (c.fixed) $('cpQrImg').src = QR_URL;
+  $('cpDate').textContent = `優惠券｜${day.date}`; const rk = RANKS.find(r => c.score >= r.min), top = !!rk.fixedCode; $('cpReward').textContent = rk.reward; $('cpRank').textContent = `${rk.name}・${c.score} 分`; $('cpCode').textContent = DISCOUNT_CODE; $('cpCode').classList.toggle('hidden', !top); $('cpQr').classList.toggle('hidden', !top); if (top) $('cpQrImg').src = QR_URL; $('cpVerify').classList.toggle('hidden', top); $('cp').classList.toggle('item', !top);
   $('cp').classList.toggle('used', !!c.redeemed); $('redeem').disabled = !!c.redeemed; $('redeem').querySelector('span').textContent = c.redeemed ? '已兌換' : '店員核銷（長按 3 秒）';
   show('coupon');
 }
