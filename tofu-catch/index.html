@@ -237,13 +237,13 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
       <tr><td>1700 分以上</td><td>義華路豆腐之神｜豆腐煲主餐 9 折（QR code＋折扣碼）</td></tr>
       <tr><td>1000–1699 分</td><td>嫩豆腐守護者｜手工小菜兌換一份</td></tr>
       <tr><td>500–999 分</td><td>實習接豆工｜韓國拉麵加購免費</td></tr>
-      <tr><td>0–499 分</td><td>豆腐殺手｜韓國拉麵加購免費＋老闆手寫道歉信</td></tr>
+      <tr><td>0–499 分</td><td>豆腐殺手｜韓國拉麵加購免費＋老闆愛的眼神關懷</td></tr>
     </table></div>
     <div class="rbox"><h3>兌換規則</h3><ol>
       <li>每支手機每天 1 局正式成績，分享結算圖後可以多 1 局。</li>
       <li>優惠券保留當天最高分，當天到店使用。</li>
       <li>限銓Dubu嘟布韓式豆腐煲 義華店，須點任一豆腐煲，每桌限用一張，不與其他優惠併用。</li>
-      <li>結帳時出示優惠券，由店員長按 3 秒核銷。</li>
+      <li>9 折券：結帳時出示 QR code 或折扣碼即可折抵。其他獎勵：出示優惠券，店員確認品項後長按 3 秒核銷。</li>
       <li>高雄市三民區義華路 468 號｜11:00–13:30、17:00–21:30｜訂位 0902-268-213</li>
     </ol></div>
     <button class="btn wide" id="rulesBtn">我知道了，下一步</button>
@@ -283,7 +283,7 @@ canvas{position:absolute;left:0;top:0;width:390px;height:844px;display:block}
 
   <section id="coupon" class="screen paperbg">
     <h2>領到了！</h2>
-    <p class="hint">拿給店員看，就能兌換。</p>
+    <p class="hint" id="cpHint">拿給店員看，就能兌換。</p>
     <div class="cp" id="cp">
       <img class="tofu" data-sprite="tofu-idle" alt="">
       <div class="in">
@@ -467,7 +467,7 @@ const RANKS = [
   {min: 1700, name: '義華路豆腐之神', sub: '你的手比嫩豆腐還溫柔。', reward: '豆腐煲主餐 9 折', img: 'tofu-perfect', fixedCode: true},
   {min: 1000, name: '嫩豆腐守護者',   sub: '豆腐們都很安心。',       reward: '手工小菜兌換一份', img: 'tofu-perfect'},
   {min: 500,  name: '實習接豆工',     sub: '還在學習溫柔的路上。',   reward: '韓國拉麵加購免費', img: 'tofu-barely'},
-  {min: 0,    name: '豆腐殺手',       sub: '老闆已經哭到脫水了。',   reward: '韓國拉麵加購免費＋老闆手寫道歉信', img: 'tofu-ghost'},
+  {min: 0,    name: '豆腐殺手',       sub: '老闆已經哭到脫水了。',   reward: '韓國拉麵加購免費＋老闆愛的眼神關懷', img: 'tofu-ghost'},
 ];
 const pick = a => a[Math.floor(Math.random() * a.length)];
 
@@ -591,6 +591,7 @@ function potSpeed() {
   const a = h[0], b = h[h.length - 1]; const dt = b.t - a.t; return dt > 0 ? Math.abs(b.x - a.x) / dt : 0;
 }
 function breakTofu(x, y, missed) {
+  if (G.ended) return;
   G.combo = 0; G.dead++; G.meter = Math.min(5, G.meter + 1);
   G.fx.push({type: 'broken', x, y, t0: G.t});
   G.fx.push({type: 'ghost', x, y: y - 10, t0: G.t + .15});
@@ -662,6 +663,7 @@ function update(dt) {
     const bottom = it.y + it.def.half;
     if (!it.done && prevBottom <= rim && bottom >= rim && Math.abs(it.x - pot.x) < pw * 0.46) { it.done = true; catchItem(it); }
     else if (!it.done && bottom >= GROUND) { it.done = true; if (it.def.fragile) breakTofu(it.x, GROUND - 26, true); }
+    if (G.ended) return;
   }
   G.items = G.items.filter(i => !i.done);
   G.fx = G.fx.filter(f => G.t - f.t0 < 1.5); G.pops = G.pops.filter(p => G.t - p.t0 < .7); G.crumbs = G.crumbs.filter(c => G.t - c.t0 < .9); G.drops = G.drops.filter(d => G.t - d.t0 < .5);
@@ -770,7 +772,8 @@ function endGame(fainted) {
     if (!c || (!c.redeemed && G.score > c.score)) day.coupon = {score: G.score, redeemed: false};
     save();
   }
-  if (fainted) { burstMeter(); SFX.broken(); buzz([60, 40, 120]); setTimeout(() => { SFX.faint(); speak('bossFaint', true); $('hud').classList.remove('on'); show('faint'); }, 1100); } else showResult();
+  if (fainted) { G.meter = 5; $('bpFill').style.width = '100%'; $('bp').classList.add('hot'); $('bossImg').src = URL_OF['boss-5']; drawAids(true);
+    setTimeout(() => { burstMeter(); SFX.broken(); buzz([60, 40, 120]); setTimeout(() => { SFX.faint(); speak('bossFaint', true); $('hud').classList.remove('on'); show('faint'); }, 1100); }, 650); } else showResult();
 }
 function showResult() {
   const r = lastResult;
@@ -791,8 +794,8 @@ function showResult() {
 /* ---------- coupon ---------- */
 function showCoupon() {
   const c = day.coupon; if (!c) return;
-  $('cpDate').textContent = `優惠券｜${day.date}`; const rk = RANKS.find(r => c.score >= r.min), top = !!rk.fixedCode; $('cpReward').textContent = rk.reward; $('cpRank').textContent = `${rk.name}・${c.score} 分`; $('cpCode').textContent = DISCOUNT_CODE; $('cpCode').classList.toggle('hidden', !top); $('cpQr').classList.toggle('hidden', !top); if (top) $('cpQrImg').src = QR_URL; $('cpVerify').classList.toggle('hidden', top); $('cp').classList.toggle('item', !top);
-  $('cp').classList.toggle('used', !!c.redeemed); $('redeem').disabled = !!c.redeemed; $('redeem').querySelector('span').textContent = c.redeemed ? '已兌換' : '店員核銷（長按 3 秒）';
+  $('cpDate').textContent = `優惠券｜${day.date}`; const rk = RANKS.find(r => c.score >= r.min), top = !!rk.fixedCode; $('cpReward').textContent = rk.reward; $('cpRank').textContent = `${rk.name}・${c.score} 分`; $('cpCode').textContent = DISCOUNT_CODE; $('cpCode').classList.toggle('hidden', !top); $('cpQr').classList.toggle('hidden', !top); if (top) $('cpQrImg').src = QR_URL; $('cpVerify').classList.toggle('hidden', top); $('cp').classList.toggle('item', !top); $('redeem').classList.toggle('hidden', top); $('cpHint').textContent = top ? '結帳時出示 QR code 或折扣碼，即可享 9 折。' : '拿給店員看，店員確認後核銷。';
+  $('cp').classList.toggle('used', !top && !!c.redeemed); $('redeem').disabled = !!c.redeemed; $('redeem').querySelector('span').textContent = c.redeemed ? '已兌換' : '店員核銷（長按 3 秒）';
   show('coupon');
 }
 let holdStart = 0, holdRaf = 0;
