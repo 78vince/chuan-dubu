@@ -8,8 +8,8 @@
 | `/tofu-catch/` | 嫩豆腐接接樂 網頁遊戲 | 預覽版 |
 | `/tofu-catch/social/` | 社群貼文圖片（輪播 5 張＋限動 1 張） | 完成 |
 | `/owner/` | 業主專區：遊戲連結與 QR、貼文、圖片、活動規則、兌換紀錄 | 完成 |
-| `/api/redeem` | 店員核銷時寫入兌換紀錄（Vercel Function） | 待部署 |
-| `/api/records` | 業主讀取／清除測試紀錄，需 PIN（Vercel Function） | 待部署 |
+| `/api/redeem` | 店員核銷時寫入兌換紀錄（Vercel Function） | 上線 |
+| `/api/records` | 業主讀取／清除測試紀錄，需 PIN（Vercel Function） | 上線 |
 | `/menu/` | 門市資訊與完整菜單 | 上線 |
 | `/assets/brand/` | 品牌 logo 與共用素材 | — |
 
