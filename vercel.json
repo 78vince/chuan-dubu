@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/owner/", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/owner/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
+  ]
+}
