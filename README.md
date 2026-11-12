@@ -5,7 +5,7 @@
 | 路徑 | 內容 | 狀態 |
 | --- | --- | --- |
 | `/` | 活動入口頁（Vercel 上會導向 `/owner/`） | 上線 |
-| `/tofu-catch/` | 嫩豆腐接接樂 網頁遊戲 | 預覽版 |
+| `/tofu-catch/` | 嫩豆腐接接樂 網頁遊戲（對外網址：https://78vince.github.io/chuan-dubu/tofu-catch/） | 預覽版 |
 | `/tofu-catch/social/` | 社群貼文圖片（輪播 5 張＋限動 1 張） | 完成 |
 | `/owner/` | 業主專區：遊戲連結與 QR、貼文、圖片、活動規則、兌換紀錄 | 完成 |
 | `/api/redeem` | 店員核銷時寫入兌換紀錄（Vercel Function） | 上線 |
