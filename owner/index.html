@@ -93,7 +93,7 @@ h3{font:900 16px/1.3 var(--font);margin:0 0 10px}
 <body>
 <header class="top"><div class="wrap">
   <img src="../assets/brand/chuan-dubu-logo.svg" alt="銓Dubu嘟布">
-  <div><h1>嫩豆腐接接樂｜業主專區</h1><p>銓Dubu嘟布韓式豆腐煲 義華店・活動期間 2026/11/16（一）– 11/29（日）</p></div>
+  <div><h1>嫩豆腐接接樂｜業主專區</h1><p>銓Dubu嘟布韓式豆腐煲 義華店・活動期間 2026/11/17（二）– 11/30（一）</p></div>
   <span class="status" id="status">—</span>
 </div></header>
 
@@ -163,7 +163,7 @@ h3{font:900 16px/1.3 var(--font);margin:0 0 10px}
       </div>
     </div>
     <div class="grid g2">
-      <div class="card"><h3>每日兌換（11/16–11/29）</h3><div class="bars" id="bars"></div><div class="bars-x" id="barsX"></div><p class="muted" id="outside"></p></div>
+      <div class="card"><h3>每日兌換（11/17–11/30）</h3><div class="bars" id="bars"></div><div class="bars-x" id="barsX"></div><p class="muted" id="outside"></p></div>
       <div class="card"><h3>各獎項兌換數</h3><div id="tiers"></div></div>
     </div>
     <div class="card" style="margin-top:16px">
@@ -194,7 +194,7 @@ h3{font:900 16px/1.3 var(--font);margin:0 0 10px}
 500 分以上｜手工小菜免費兌換1份
 豆腐殺手(低於500分)｜幫老闆評論，韓國拉麵免費加購
 
-📅 活動期間：2026/11/16（一）– 11/29（日）
+📅 活動期間：2026/11/17（二）– 11/30（一）
 🎮 遊戲連結：https://78vince.github.io/chuan-dubu/tofu-catch/
 📍 高雄市三民區義華路 468 號｜11:00–13:30、17:00–21:30
 ☎️ 訂位 0902-268-213
@@ -219,7 +219,7 @@ h3{font:900 16px/1.3 var(--font);margin:0 0 10px}
 500 分以上｜手工小菜免費兌換1份
 豆腐殺手(低於500分)｜幫老闆評論，韓國拉麵免費加購
 
-📅 活動期間：2026/11/16（一）– 11/29（日）
+📅 活動期間：2026/11/17（二）– 11/30（一）
 🎮 遊戲連結：個人檔案首頁連結
 📍 高雄市三民區義華路 468 號｜11:00–13:30、17:00–21:30
 ☎️ 訂位 0902-268-213
@@ -227,7 +227,7 @@ h3{font:900 16px/1.3 var(--font);margin:0 0 10px}
 🔥分享遊戲稱號到限時動態並標記我們，就能多玩一局！
 留言告訴我們 你是： 👑「義華路豆腐之神」 還是 💀「豆腐殺手」？就把遊戲連結傳給你!
 
-#嫩豆腐接接樂 #二店請支持 #銓Dubu嘟布 #高雄美食 #三民區美食 #韓式豆腐煲</pre></article><article class="post card"><header><b>限動文字貼紙</b><button class="btn sm" data-copy="p-story">複製文案</button></header><pre id="p-story">你是👑「義華路豆腐之神」還是💀「豆腐殺手」？60 秒接嫩豆腐，1600 分整單 9 折！（11/16–11/29，加連結貼紙：https://78vince.github.io/chuan-dubu/tofu-catch/）</pre></article></div>
+#嫩豆腐接接樂 #二店請支持 #銓Dubu嘟布 #高雄美食 #三民區美食 #韓式豆腐煲</pre></article><article class="post card"><header><b>限動文字貼紙</b><button class="btn sm" data-copy="p-story">複製文案</button></header><pre id="p-story">你是👑「義華路豆腐之神」還是💀「豆腐殺手」？60 秒接嫩豆腐，1600 分整單 9 折！（11/17–11/30，加連結貼紙：https://78vince.github.io/chuan-dubu/tofu-catch/）</pre></article></div>
 </section>
 
 <!-- 圖片 -->
@@ -285,7 +285,7 @@ h3{font:900 16px/1.3 var(--font);margin:0 0 10px}
 <script>
 const $ = id => document.getElementById(id);
 const API = location.protocol === 'file:' ? '' : /github\.io$/.test(location.hostname) ? 'https://chuan-dubu.vercel.app/api' : '/api';
-const START = '2026/11/16', END = '2026/11/29';
+const START = '2026/11/17', END = '2026/11/30';
 const TIERS = [
   {name: '嫩豆腐守護者', reward: '黃金炸豆腐免費兌換 1 份', range: '800–1599 分'},
   {name: '實習接豆工', reward: '手工小菜免費兌換 1 份', range: '500–799 分'},
@@ -356,7 +356,7 @@ function render() {
   $('kSide').textContent = list.filter(r => r.tier === '實習接豆工').length;
   $('kRamen').textContent = list.filter(r => r.tier === '豆腐殺手').length;
   // 每日
-  const days = []; for (let d = new Date('2026-11-16T12:00:00+08:00'); tpeDay(d) <= END; d = new Date(d.getTime() + 864e5)) days.push(tpeDay(d));
+  const days = []; for (let d = new Date('2026-11-17T12:00:00+08:00'); tpeDay(d) <= END; d = new Date(d.getTime() + 864e5)) days.push(tpeDay(d));
   const cnt = days.map(d => list.filter(r => day(r) === d).length), max = Math.max(1, ...cnt);
   $('bars').innerHTML = cnt.map((n, i) => `<div class="bar" title="${days[i]}：${n} 筆"><em style="bottom:${n / max * 100}%">${n || ''}</em><i class="${n ? '' : 'zero'}" style="height:${n / max * 100}%"></i></div>`).join('');
   $('barsX').innerHTML = days.map(d => `<span>${+d.slice(8)}</span>`).join('');
