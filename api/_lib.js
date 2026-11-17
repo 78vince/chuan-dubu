@@ -10,6 +10,10 @@ const RANKS = [
   {min: 0, name: '豆腐殺手', reward: '幫老闆評論，韓國拉麵免費加購'},
 ];
 const LIST = 'tofu-catch:redeems';
+// 活動開始（台北時間 2026/11/17 00:00）之後核銷的紀錄一律算正式，不再標成測試
+const EVENT_START_MS = Date.parse('2026-11-17T00:00:00+08:00');
+function isTest(r) { return !!r.test && Date.parse(r.redeemedAt) < EVENT_START_MS; }
+function normalize(r) { return {...r, test: isTest(r)}; }
 const KEY = id => 'tofu-catch:redeem:' + id;
 
 function ready() { return Boolean(URL_ && TOKEN); }
@@ -31,4 +35,4 @@ function body(req) {
   if (req.body && typeof req.body === 'object') return req.body;
   try { return JSON.parse(req.body || '{}'); } catch (e) { return {}; }
 }
-module.exports = {RANKS, LIST, KEY, ready, pipeline, cors, body};
+module.exports = {RANKS, LIST, KEY, ready, pipeline, cors, body, isTest, normalize};

@@ -1,6 +1,6 @@
 // GET  /api/records            — 業主頁面讀取兌換紀錄（需 PIN，放在 X-Owner-Pin header）
 // POST /api/records {action:'purge-test'} — 清除預覽／測試資料
-const {LIST, KEY, ready, pipeline, cors, body} = require('./_lib');
+const {LIST, KEY, ready, pipeline, cors, body, normalize} = require('./_lib');
 
 module.exports = async (req, res) => {
   cors(res);
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
   if (!ready()) return res.status(503).json({error: '尚未設定資料庫'});
   try {
     const [raw] = await pipeline([['LRANGE', LIST, '0', '-1']]);
-    const list = (raw || []).map(s => { try { return JSON.parse(s); } catch (e) { return null; } }).filter(Boolean);
+    const list = (raw || []).map(s => { try { return JSON.parse(s); } catch (e) { return null; } }).filter(Boolean).map(normalize);
     if (req.method === 'GET') return res.status(200).json({records: list});
     if (req.method === 'POST' && body(req).action === 'purge-test') {
       const tests = list.filter(r => r.test), keep = list.filter(r => !r.test);

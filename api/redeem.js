@@ -1,5 +1,5 @@
 // POST /api/redeem — 店員在遊戲優惠券頁長按核銷時，遊戲送出一筆兌換紀錄
-const {RANKS, LIST, KEY, ready, pipeline, cors, body} = require('./_lib');
+const {RANKS, LIST, KEY, ready, pipeline, cors, body, isTest} = require('./_lib');
 
 module.exports = async (req, res) => {
   cors(res);
@@ -16,8 +16,9 @@ module.exports = async (req, res) => {
     playedOn: /^\d{4}\/\d{2}\/\d{2}$/.test(b.playedOn) ? b.playedOn : null,
     redeemedAt: new Date().toISOString(),
     deviceAt: typeof b.redeemedAt === 'string' ? b.redeemedAt.slice(0, 30) : null,
-    test: !!b.test,
+    test: false,
   };
+  rec.test = isTest({...rec, test: !!b.test});
   try {
     const [set] = await pipeline([['SET', KEY(id), JSON.stringify(rec), 'NX']]);
     if (set !== 'OK') return res.status(409).json({error: '已記錄過'});
