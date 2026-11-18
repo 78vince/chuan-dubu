@@ -123,7 +123,7 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
     <div class="card">
       <h3>活動重點</h3>
       <ul class="note">
-        <li><b>期間：</b>11/27（五）開播，12/6（日）六集播完，共兩週</li>
+        <li><b>期間：</b>11/20（五）開播，11/29（日）六集播完，共兩週</li>
         <li><b>影片：</b>只釋出 MV 合輯；六集用劇照圖發文</li>
         <li><b>做法：</b>每次只做一件事——發一支 Reels，再分享到限動加連結。不辦抽獎、不需要等留言互動</li>
         <li><b>期間：</b>不限日期，長期放在 IG 個人檔案</li>
@@ -213,12 +213,12 @@ const MATE={spicy:'kelp',kelp:'spicy',kimchi:'army',army:'kimchi',soybean:'class
 const FOE={spicy:'classic',classic:'spicy',kimchi:'soybean',soybean:'kimchi',army:'kelp',kelp:'army'};
 const S='../social/';
 const epPost=k=>`${S}ep${T[k].ep}-${k}-post-1x1.jpg`, epStory=k=>`${S}ep${T[k].ep}-${k}-story.jpg`;
-const EPDATE=['11/28（六）11:00','11/29（日）17:30','12/2（三）21:00','12/4（五）11:30','12/5（六）11:00','12/6（日）17:30'];
+const EPDATE=['11/21（六）11:00','11/22（日）17:30','11/25（三）21:00','11/27（五）11:30','11/28（六）11:00','11/29（日）17:30'];
 const VD='../video/';
 const epVid=k=>`${VD}ep${T[k].ep}-${k}.mp4`;
 
 const POSTS=[
- {id:'launchFB',title:'開播｜FB 版 MV＋連結',when:'11/27（五）11:30',plat:'FB 影片／Reels',vid:VD+'mv-lyrics.mp4',imgs:[S+'01-launch-4x5.jpg'],
+ {id:'launchFB',title:'開播｜FB 版 MV＋連結',when:'11/20（五）11:30',plat:'FB 影片／Reels',vid:VD+'mv-lyrics.mp4',imgs:[S+'01-launch-4x5.jpg'],
   text:`📺 正式播出｜你是哪一種豆腐煲？
 
 🎵 主題曲 MV 首播
@@ -234,7 +234,7 @@ const POSTS=[
 標記那個「越泡越愛」的朋友 👀
 
 ${TAGS}`},
- {id:'launchIG',title:'開播｜IG Reels MV（連結在個人檔案）',when:'11/27（五）11:30',plat:'IG Reels',vid:VD+'mv-lyrics.mp4',imgs:[S+'01-launch-4x5.jpg'],
+ {id:'launchIG',title:'開播｜IG Reels MV（連結在個人檔案）',when:'11/20（五）11:30',plat:'IG Reels',vid:VD+'mv-lyrics.mp4',imgs:[S+'01-launch-4x5.jpg'],
   text:`📺 正式播出｜你是哪一種豆腐煲？
 
 🎵 主題曲 MV 首播
@@ -248,7 +248,7 @@ ${TAGS}`},
 測完把結果限動標記我們，我們會轉發 💛
 
 ${TAGS}`},
- {id:'launchStory',title:'開播｜限時動態',when:'11/27（五）11:35',plat:'IG／FB 限動',imgs:[S+'01-launch-story.jpg'],
+ {id:'launchStory',title:'開播｜限時動態',when:'11/20（五）11:35',plat:'IG／FB 限動',imgs:[S+'01-launch-story.jpg'],
   text:`限動操作：
 1. 上傳圖片
 2. 加「連結」貼紙，網址：${SITE}
@@ -294,16 +294,16 @@ const epAct=(e,d,t)=>({d,t,plat:'IG＋FB 貼文＋限動',title:`EP.${e.ep}《${
   steps:[`IG、FB 發 EP.${e.ep} 1:1 劇照圖，貼上 EP.${e.ep} 文案，打卡義華店`,`限動發 EP.${e.ep} 限動圖，加連結貼紙`],
   mats:[[epPost(e.k),'1:1 圖'],[epStory(e.k),'限動圖']]});
 const PLAN=[
- {wk:'第 1 週｜開播',sub:'11/27–12/2'},
- {d:'2026-11-27',t:'10:30',plat:'IG 個人檔案',title:'換上測驗連結',steps:['IG 個人檔案的「連結」改成測驗網址','FB 粉專簡介也放上測驗網址'],mats:[]},
- {d:'2026-11-27',t:'11:30',plat:'IG Reels＋FB＋限動',title:'MV 首播＋測驗開播',post:'launchIG',steps:['IG 發 Reels：MV 文字版＋「開播｜IG」文案，發完置頂','FB 發同一支 MV＋「開播｜FB」文案','分享到限動，加連結貼紙（做法見「開播｜限時動態」）'],mats:[[VD+'mv-lyrics.mp4','MV 文字版'],[S+'01-launch-story.jpg','限動圖']]},
- epAct(EPS[0],'2026-11-28','11:00'),
- epAct(EPS[1],'2026-11-29','17:30'),
- epAct(EPS[2],'2026-12-02','21:00'),
- {wk:'第 2 週｜完結',sub:'12/4–12/6'},
- epAct(EPS[3],'2026-12-04','11:30'),
- epAct(EPS[4],'2026-12-05','11:00'),
- epAct(EPS[5],'2026-12-06','17:30'),
+ {wk:'第 1 週｜開播',sub:'11/20–11/25'},
+ {d:'2026-11-20',t:'10:30',plat:'IG 個人檔案',title:'換上測驗連結',steps:['IG 個人檔案的「連結」改成測驗網址','FB 粉專簡介也放上測驗網址'],mats:[]},
+ {d:'2026-11-20',t:'11:30',plat:'IG Reels＋FB＋限動',title:'MV 首播＋測驗開播',post:'launchIG',steps:['IG 發 Reels：MV 文字版＋「開播｜IG」文案，發完置頂','FB 發同一支 MV＋「開播｜FB」文案','分享到限動，加連結貼紙（做法見「開播｜限時動態」）'],mats:[[VD+'mv-lyrics.mp4','MV 文字版'],[S+'01-launch-story.jpg','限動圖']]},
+ epAct(EPS[0],'2026-11-21','11:00'),
+ epAct(EPS[1],'2026-11-22','17:30'),
+ epAct(EPS[2],'2026-11-25','21:00'),
+ {wk:'第 2 週｜完結',sub:'11/27–11/29'},
+ epAct(EPS[3],'2026-11-27','11:30'),
+ epAct(EPS[4],'2026-11-28','11:00'),
+ epAct(EPS[5],'2026-11-29','17:30'),
 ];
 const WD='日一二三四五六';
 const fmt=d=>{const x=new Date(d+'T00:00:00+08:00');return `${x.getMonth()+1}/${x.getDate()}`};
