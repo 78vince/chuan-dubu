@@ -123,7 +123,8 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
     <div class="card">
       <h3>活動重點</h3>
       <ul class="note">
-        <li><b>期間：</b>11/27（五）開播，12/6（日）六集播完，共兩週、7 支 Reels</li>
+        <li><b>期間：</b>11/27（五）開播，12/6（日）六集播完，共兩週</li>
+        <li><b>影片：</b>只釋出 MV 合輯；六集用劇照圖發文</li>
         <li><b>做法：</b>每次只做一件事——發一支 Reels，再分享到限動加連結。不辦抽獎、不需要等留言互動</li>
         <li><b>期間：</b>不限日期，長期放在 IG 個人檔案</li>
         <li><b>形式：</b>8 題測驗 → 六種豆腐煲人格，各自一集韓劇劇照＋主題曲</li>
@@ -150,13 +151,13 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
   <h2>行銷行動時間表</h2>
   <div class="grid g2">
     <div class="card"><h3>為什麼這樣排</h3><ul class="note">
-      <li>粉絲還不多，所以<b>以 Reels 為主</b>：Reels 會推給非粉絲，比一般貼文容易被新的人看到</li>
+      <li>開播用 <b>MV 發 Reels</b>：Reels 會推給非粉絲，最適合打開知名度；之後六集用劇照圖接力，讓 MV 持續有話題</li>
       <li>時間都卡在<b>吃飯前</b>：週五 11:30、週六 11:00 午餐前，週日 17:30 晚餐前，週三 21:00 睡前滑手機</li>
       <li>不靠留言、投票這類需要粉絲參與的內容，每次發完就算完成</li></ul></div>
-    <div class="card"><h3>每次發文都一樣的 3 步</h3><ul class="note">
-      <li>① IG 發 Reels：上傳影片、貼文案，<b>打卡地點選「銓Dubu嘟布 義華店」</b></li>
-      <li>② FB 粉專發同一支影片＋同一份文案（FB 可直接放測驗網址）</li>
-      <li>③ 把 Reels 分享到限動，加「連結」貼紙導到測驗</li></ul></div>
+    <div class="card"><h3>發文步驟</h3><ul class="note">
+      <li>IG、FB 發貼文（開播日是 MV，之後是劇照圖），貼上文案，<b>打卡地點選「銓Dubu嘟布 義華店」</b></li>
+      <li>FB 可直接放測驗網址；IG 寫「連結在個人檔案」</li>
+      <li>發完到限動，加「連結」貼紙導到測驗</li></ul></div>
   </div>
   <div id="planList"></div>
 </section>
@@ -174,8 +175,6 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
   <p class="muted" style="margin-top:-8px">全部為直式 9:16，可直接發 IG／FB Reels、限動。點「下載」取得原檔。</p>
   <h3>MV｜난 정말 순두부찌개를 사랑해 我真的很愛韓式豆腐煲</h3>
   <div class="vgrid" id="mvList"></div>
-  <h3 style="margin-top:28px">六集劇照影片（10 秒，已配主題曲副歌）</h3>
-  <div class="vgrid six" id="epVids"></div>
 </section>
 
 <!-- 社群圖片 -->
@@ -256,7 +255,7 @@ ${TAGS}`},
    貼紙文字建議：測我的豆腐煲人格
 3. 貼紙放在圖片下方預留的位置
 4. 可加「投票」貼紙：你覺得你是哪一鍋？（辣嫩／部隊）`},
- ...ORDER.map((k,i)=>{const t=T[k],m=T[MATE[k]],f=T[FOE[k]];return{id:'ep'+t.ep,title:`EP.${t.ep}｜${t.drama}`,when:EPDATE[i],plat:'IG Reels＋FB＋限動',vid:epVid(k),imgs:[epPost(k),epStory(k)],
+ ...ORDER.map((k,i)=>{const t=T[k],m=T[MATE[k]],f=T[FOE[k]];return{id:'ep'+t.ep,title:`EP.${t.ep}｜${t.drama}`,when:EPDATE[i],plat:'IG＋FB 貼文＋限動',imgs:[epPost(k),epStory(k)],
   text:`EP.${t.ep}｜${t.drama}
 
 「${t.line}」
@@ -291,9 +290,9 @@ const FAQ=[
 
 /* 行銷行動：d=日期, t=時間, post=對應貼文 id */
 const EPS=ORDER.map((k,i)=>({k,ep:T[k].ep,drama:T[k].drama,name:T[k].name}));
-const epAct=(e,d,t)=>({d,t,plat:'IG Reels＋FB＋限動',title:`EP.${e.ep}《${e.drama}》${e.ep==='06'?'完結篇':'首播'}`,post:'ep'+e.ep,
-  steps:[`IG 發 Reels：上傳 EP.${e.ep} 影片，貼上 EP.${e.ep} 文案`,'FB 同時發同一支影片＋同一份文案（可加測驗網址）',`5 分鐘內分享到限動，或改用 EP.${e.ep} 限動圖，再加連結貼紙`],
-  mats:[[epVid(e.k),'影片'],[epPost(e.k),'1:1 圖'],[epStory(e.k),'限動圖']]});
+const epAct=(e,d,t)=>({d,t,plat:'IG＋FB 貼文＋限動',title:`EP.${e.ep}《${e.drama}》${e.ep==='06'?'完結篇':'劇照'}`,post:'ep'+e.ep,
+  steps:[`IG、FB 發 EP.${e.ep} 1:1 劇照圖，貼上 EP.${e.ep} 文案，打卡義華店`,`限動發 EP.${e.ep} 限動圖，加連結貼紙`],
+  mats:[[epPost(e.k),'1:1 圖'],[epStory(e.k),'限動圖']]});
 const PLAN=[
  {wk:'第 1 週｜開播',sub:'11/27–12/2'},
  {d:'2026-11-27',t:'10:30',plat:'IG 個人檔案',title:'換上測驗連結',steps:['IG 個人檔案的「連結」改成測驗網址','FB 粉專簡介也放上測驗網址'],mats:[]},
@@ -341,7 +340,6 @@ document.getElementById('planList').innerHTML=PLAN.map(a=>a.wk?`<div class="wk">
 document.getElementById('nextUp').innerHTML=nextIdx<0?'<p class="muted">六集都播完了。之後測驗連結繼續放在個人檔案即可。</p>':acts.slice(nextIdx,nextIdx+3).map((a,i)=>actHTML(a,i===0)).join('');
 const vcard=(src,cap)=>`<figure class="vid"><video src="${src}" poster="${src.replace('.mp4','.jpg')}" controls playsinline preload="none"></video><figcaption><span>${cap}</span><a class="btn sm ghost" href="${src}" download="${fname(src)}">下載</a></figcaption></figure>`;
 document.getElementById('mvList').innerHTML=vcard(VD+'mv-lyrics.mp4','文字版（含歌名、韓中歌詞）67 秒｜開播主推')+vcard(VD+'mv-clean.mp4','無字版 60 秒｜限動、重播用');
-document.getElementById('epVids').innerHTML=ORDER.map(k=>vcard(epVid(k),`EP.${T[k].ep} ${T[k].name}`)).join('');
 document.addEventListener('click',e=>{const b=e.target.closest('[data-goto]');if(!b)return;document.querySelector('nav button[data-tab="posts"]').click();setTimeout(()=>{const el=document.getElementById('t-'+b.dataset.goto);el&&el.closest('.post').scrollIntoView({behavior:'smooth',block:'start'})},50)});
 
 /* tabs */
