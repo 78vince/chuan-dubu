@@ -79,6 +79,15 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
 .vid figcaption{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:8px;font-size:13px;flex-wrap:wrap}
 .vgrid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
 @media(min-width:760px){.vgrid{grid-template-columns:repeat(3,1fr)}.vgrid.six{grid-template-columns:repeat(6,1fr)}}
+.hday{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.hday .hd b{display:block;font:900 22px/1.1 var(--serif);color:var(--navy)}.hday .hd span{font-size:12px;color:var(--muted)}
+.hday ul{list-style:none;margin:0;padding:0}
+.hday li{position:relative;padding:0 0 12px 18px;font-size:14.5px}
+.hday li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--line)}
+.hday li.key::before{background:var(--gold)}
+.hday li time{font:700 13px var(--sans);color:#8A6A3A;margin-right:6px;font-variant-numeric:tabular-nums}
+.hday li b{font-weight:700}.hday li small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+@media(max-width:520px){.hday{grid-template-columns:1fr;gap:6px}}
 .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#EFE3CC;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
@@ -97,6 +106,7 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
   <button role="tab" data-tab="vids" aria-selected="false">影片</button>
   <button role="tab" data-tab="imgs" aria-selected="false">社群圖片</button>
   <button role="tab" data-tab="faq" aria-selected="false">回覆話術</button>
+  <button role="tab" data-tab="hist" aria-selected="false">開發歷程</button>
 </div></nav>
 
 <main class="wrap">
@@ -185,6 +195,13 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
   <div class="ep-grid" id="epPosts"></div>
   <h3 style="margin-top:28px">EP 限動（9:16）</h3>
   <div class="ep-grid" id="epStories"></div>
+</section>
+
+<!-- 開發歷程 -->
+<section id="hist" hidden>
+  <h2>開發歷程</h2>
+  <p class="muted" style="margin-top:-8px">從提案到開播準備完成的工作紀錄。金色圓點是影響方向或上線的關鍵決定。</p>
+  <div id="histList"></div>
 </section>
 
 <!-- 回覆話術 -->
@@ -318,6 +335,36 @@ const actHTML=(a,isNext)=>`<div class="act${ts(a)+30*60e3<now?' past':''}${isNex
   <div><span class="tag">${a.plat}</span><h4>${a.title}</h4><ol>${a.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
   <div class="mats">${a.post?`<button class="btn sm" data-goto="${a.post}">文案：${ptitle(a.post)}</button>`:''}${a.mats.map(m=>m[0].startsWith('#')?'':`<a class="btn sm ghost" href="${m[0]}" download="${fname(m[0])}">${m[1]}</a>`).join('')}</div></div></div>`;
 
+
+const HIST=[
+ ['11/10','提案',[
+  ['','在五個網頁遊戲提案中提出「你是哪一種豆腐煲？」人格測驗','開發成本最低、限動分享率最高；當時先選「嫩豆腐接接樂」優先開發'] ]],
+ ['11/17','企劃與韓劇方向',[
+  ['','完整企劃','不提供折扣，目的是話題與品牌曝光；活動不限日期、不在店面辦實體活動'],
+  ['','列出待確認清單並定案','上線暫定 11/23；以消費者為主，不放老闆、店員內容；先做測驗版'],
+  ['key','改為韓劇風格','結果頁出現韓劇情境照，搭配產品照；建立精緻韓風 Design Tokens'],
+  ['key','六部劇名與台詞定案','用豆腐煲諧音命名，經多輪挑選：辣麼嫩的你、越泡越愛你、大醬軍、我海帶著你的愛、愛你沒有部隊、風味你停留；取消第七種'],
+  ['','撰寫六張劇照的生成提示詞','主角在各種誇張又浪漫的場合吃鍋，如雨中邊哭邊吃辣嫩；構圖收緊、表情更生動'],
+  ['','結果頁版型','滿版劇照壓 EP、劇名、台詞；取消「本命之煲」印章；加入主題曲〈따뜻한 순두부의 온도〉循環播放'] ]],
+ ['11/18','測驗完成與社群素材',[
+  ['','套用六張劇照','商品照沿用既有產品照；大醬換成新版商品照'],
+  ['','韓文點綴與中文註解','韓文大字、中文小字，意思互相對應；之後取消韓文語音與前綴符號'],
+  ['','封面改版','先試一張多劇融合大圖，改成六張劇照快速交叉輪播、放大並壓暗'],
+  ['key','<time>10:27</time>推上 Vercel 測試版',''],
+  ['key','<time>13:56</time>業主頁上線','刪除測試版標籤；加入社群貼文文案、18 張社群圖片、回覆話術'],
+  ['','<time>14:09</time>Google Flow 把劇照做成影片','先做 EP.04 海邊，再依序完成其餘五集，每集 10 秒'],
+  ['','<time>14:33</time>大醬軍、愛你沒有部隊重生','修正湯匙突然變筷子、憑空出現桌子等不合理轉場'],
+  ['key','<time>14:51</time>六集合輯 MV','六集串接＋主題曲＋品牌結尾動畫，60 秒直式'],
+  ['','<time>14:56</time>風味你停留重生','結尾不再配一口白飯；合輯同步更新為無字版'],
+  ['','<time>15:06</time>MV 文字版','加入韓中對照歌詞、淡入淡出'],
+  ['key','<time>15:30</time>MV 文字版定稿','開頭黑畫面淡入並加入歌名，歌詞依實際時間點校正'],
+  ['','<time>15:48</time>業主頁加入影片與行銷行動排程',''],
+  ['','<time>16:03</time>排程精簡','粉絲不多，改為兩週、以 Reels 為主，不靠留言互動'],
+  ['key','<time>16:16</time>只釋出 MV 合輯，接上 Google Analytics','六集改用劇照圖發文；建立 GA4 資源並在測驗網站啟用追蹤'],
+  ['key','<time>16:24</time>開播日改為本週五 11/20','排程整體提前一週，11/29 完結'],
+  ['','<time>16:35</time>業主頁新增開發歷程',''] ]],
+];
+
 /* render */
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 document.querySelector('#typeTable tbody').innerHTML=ORDER.map(k=>{const t=T[k];return`<tr><td class="d">EP.${t.ep}</td><td>${t.drama}</td><td>${t.name}人格</td><td>${t.slogan}</td><td>${T[MATE[k]].name}</td><td>${T[FOE[k]].name}</td></tr>`}).join('');
@@ -335,6 +382,7 @@ const mini=(p,cap)=>`<div><a href="${p}" download="${fname(p)}"><img src="${p}" 
 document.getElementById('epPosts').innerHTML=ORDER.map(k=>mini(epPost(k),'EP.'+T[k].ep+' '+T[k].name)).join('');
 document.getElementById('epStories').innerHTML=ORDER.map(k=>mini(epStory(k),'EP.'+T[k].ep+' 限動')).join('');
 document.getElementById('faqList').innerHTML=FAQ.map((f,i)=>`<div class="card"><h3>${f[0]}</h3><pre id="f${i}">${esc(f[1])}</pre><button class="btn sm" data-copy="f${i}">複製</button></div>`).join('');
+document.getElementById('histList').innerHTML=HIST.map(([d,t,items])=>`<div class="hday"><div class="hd"><b>${d}</b><span>${t}</span></div><ul>${items.map(([c,a,b])=>`<li class="${c}"><b>${a}</b>${b?`<small>${b}</small>`:''}</li>`).join('')}</ul></div>`).join('');
 
 document.getElementById('planList').innerHTML=PLAN.map(a=>a.wk?`<div class="wk">${a.wk}<small>${a.sub}</small></div>`:actHTML(a,acts.indexOf(a)===nextIdx)).join('');
 document.getElementById('nextUp').innerHTML=nextIdx<0?'<p class="muted">六集都播完了。之後測驗連結繼續放在個人檔案即可。</p>':acts.slice(nextIdx,nextIdx+3).map((a,i)=>actHTML(a,i===0)).join('');
