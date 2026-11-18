@@ -123,8 +123,8 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
     <div class="card">
       <h3>活動重點</h3>
       <ul class="note">
-        <li><b>開播：</b>11/27（五）11:30，11/25 起預熱</li>
-        <li><b>節奏：</b>每週五、六、日各一則主力內容（週末聚餐決策時段），週二晚上一則互動</li>
+        <li><b>期間：</b>11/27（五）開播，12/6（日）六集播完，共兩週、7 支 Reels</li>
+        <li><b>做法：</b>每次只做一件事——發一支 Reels，再分享到限動加連結。不辦抽獎、不需要等留言互動</li>
         <li><b>期間：</b>不限日期，長期放在 IG 個人檔案</li>
         <li><b>形式：</b>8 題測驗 → 六種豆腐煲人格，各自一集韓劇劇照＋主題曲</li>
         <li><b>不提供折扣</b>，目的是話題與品牌曝光</li>
@@ -149,18 +149,14 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
 <section id="plan" hidden>
   <h2>行銷行動時間表</h2>
   <div class="grid g2">
-    <div class="card"><h3>發文時段原則</h3><ul class="note">
-      <li><b>週五 11:30</b>：午餐前，大家開始想週末吃什麼 → 放最重要的新內容</li>
-      <li><b>週六 11:00</b>：週末午餐決策時段</li>
-      <li><b>週日 17:30</b>：晚餐前，適合互動、配對、總整理</li>
-      <li><b>週二 21:00</b>：平日睡前滑手機高峰，放留言／投票類互動</li>
-      <li>每則 Reels 發完 <b>5 分鐘內</b>分享到限動，限動加「連結」貼紙導到測驗</li></ul></div>
-    <div class="card"><h3>發文前檢查</h3><ul class="note">
-      <li>IG 個人檔案的連結已換成測驗網址（11/27 10:30 前完成）</li>
-      <li>IG 貼文寫「連結在個人檔案」；FB 可直接貼網址</li>
-      <li>Reels 封面選人物正在吃的那一格，比較吸睛</li>
-      <li>發文後 1 小時內回覆留言（話術在「回覆話術」）</li>
-      <li>有人限動標記測驗結果 → 當天轉發</li></ul></div>
+    <div class="card"><h3>為什麼這樣排</h3><ul class="note">
+      <li>粉絲還不多，所以<b>以 Reels 為主</b>：Reels 會推給非粉絲，比一般貼文容易被新的人看到</li>
+      <li>時間都卡在<b>吃飯前</b>：週五 11:30、週六 11:00 午餐前，週日 17:30 晚餐前，週三 21:00 睡前滑手機</li>
+      <li>不靠留言、投票這類需要粉絲參與的內容，每次發完就算完成</li></ul></div>
+    <div class="card"><h3>每次發文都一樣的 3 步</h3><ul class="note">
+      <li>① IG 發 Reels：上傳影片、貼文案，<b>打卡地點選「銓Dubu嘟布 義華店」</b></li>
+      <li>② FB 粉專發同一支影片＋同一份文案（FB 可直接放測驗網址）</li>
+      <li>③ 把 Reels 分享到限動，加「連結」貼紙導到測驗</li></ul></div>
   </div>
   <div id="planList"></div>
 </section>
@@ -218,22 +214,11 @@ const MATE={spicy:'kelp',kelp:'spicy',kimchi:'army',army:'kimchi',soybean:'class
 const FOE={spicy:'classic',classic:'spicy',kimchi:'soybean',soybean:'kimchi',army:'kelp',kelp:'army'};
 const S='../social/';
 const epPost=k=>`${S}ep${T[k].ep}-${k}-post-1x1.jpg`, epStory=k=>`${S}ep${T[k].ep}-${k}-story.jpg`;
-const EPDATE=['11/28（六）11:00','11/29（日）17:30','12/4（五）11:30','12/5（六）11:00','12/11（五）11:30','12/12（六）11:00'];
+const EPDATE=['11/28（六）11:00','11/29（日）17:30','12/2（三）21:00','12/4（五）11:30','12/5（六）11:00','12/6（日）17:30'];
 const VD='../video/';
 const epVid=k=>`${VD}ep${T[k].ep}-${k}.mp4`;
 
 const POSTS=[
- {id:'teaser',title:'預熱｜EP.00 即將播出',when:'11/25（三）21:00',plat:'FB＋IG',imgs:[S+'00-teaser-4x5.jpg'],
-  text:`🎬 EP.00 預告｜你的那一集，即將播出
-
-六部韓劇，六鍋豆腐煲。
-有人在雨裡邊哭邊吃辣嫩，
-有人在雪地裡多加一份起司。
-
-這週五，來看看你是哪一集的主角。
-11/27（五）11:30 正式播出 📺
-
-${TAGS}`},
  {id:'launchFB',title:'開播｜FB 版 MV＋連結',when:'11/27（五）11:30',plat:'FB 影片／Reels',vid:VD+'mv-lyrics.mp4',imgs:[S+'01-launch-4x5.jpg'],
   text:`📺 正式播出｜你是哪一種豆腐煲？
 
@@ -290,102 +275,6 @@ ${t.desc}
 還不知道自己是哪一鍋？測驗連結在個人檔案 🔗
 
 ${TAGS}`}}),
- {id:'pair',title:'配對篇｜本命 CP 與天敵',when:'12/6（日）17:30',plat:'FB＋IG',imgs:[S+'01-launch-4x5.jpg'],
-  text:`💞 豆腐煲人格配對表
-
-本命 CP（一起吃鍋最對味）
-🌶️ 辣嫩 × 🌊 海帶｜一個嗆、一個聽
-📱 泡菜 × 🧀 部隊｜熱鬧加熱鬧，群組不會冷
-🫕 大醬 × 🍚 風味｜老靈魂配經典，穩
-
-天敵（約吃飯可能會吵起來）
-🌶️ 辣嫩 vs 🍚 風味
-📱 泡菜 vs 🫕 大醬
-🧀 部隊 vs 🌊 海帶
-
-你跟另一半／好朋友是哪一組？
-留言標記他，看看你們是 CP 還是天敵 👀
-
-🔗 測驗連結在個人檔案
-${TAGS}`},
- {id:'call',title:'留言徵集｜曬出你的結果',when:'12/1（二）21:00',plat:'FB＋IG',imgs:[],
-  text:`📸 曬出你的那一集！
-
-測完「你是哪一種豆腐煲？」了嗎？
-留言告訴我們你是哪一鍋，
-或把結果發限動標記我們，我們會轉發 💛
-
-週末還有新的一集，記得追劇 👀
-
-🔗 測驗連結在個人檔案
-${TAGS}`},
- {id:'report',title:'戰況／月報模板（數字自行替換）',when:'12/15（二）21:00、每月初',plat:'FB＋IG',imgs:[],
-  text:`📊 本月豆腐煲人格統計
-
-這個月有 ___ 人測出自己的那一集！
-
-🥇 ___豆腐煲人格 ___%
-🥈 ___豆腐煲人格 ___%
-🥉 ___豆腐煲人格 ___%
-
-最稀有的是 ___豆腐煲人格，只有 ___%
-你是稀有的那一鍋嗎？
-
-🔗 測驗連結在個人檔案
-${TAGS}`},
- {id:'holiday',title:'聖誕篇',when:'12/24（四）17:30',plat:'FB＋IG',imgs:[],
-  text:`🎄 聖誕特別篇
-
-天冷了，該跟誰一起吃鍋？
-辣嫩配海帶、泡菜配部隊、大醬配風味——
-找到你的本命 CP，一起來義華路吃一鍋 🍲
-
-還沒測？連結在個人檔案 🔗
-
-${STORE}
-
-${TAGS}`},
-
- {id:'poll',title:'開播晚間限動｜投票',when:'11/27（五）18:00',plat:'IG／FB 限動',imgs:[S+'01-launch-story.jpg'],
-  text:`限動操作：
-1. 把中午的 MV Reels 分享到限動（或用上線限動圖）
-2. 加「投票」貼紙，題目：你覺得自己是哪一鍋？
-   選項：🌶️ 辣嫩　🧀 部隊
-3. 加「連結」貼紙：${SITE}
-   貼紙文字：測完再投一次`},
- {id:'cpq',title:'互動限動｜標記你的本命 CP',when:'12/8（二）21:00',plat:'IG／FB 限動',imgs:[],
-  text:`限動操作：
-1. 用任一張 EP 限動圖當底
-2. 加「提問」貼紙：你跟誰是本命 CP？標記他 👇
-3. 加「連結」貼紙：${SITE}
-4. 隔天把有趣的回答整理成 1～2 則限動分享（記得先遮名字或取得同意）`},
- {id:'sum',title:'六集總整理｜輪播貼文',when:'12/13（日）17:30',plat:'FB＋IG（輪播）',vid:VD+'mv-clean.mp4',imgs:ORDER.map(epPost).slice(0,2),
-  text:`📺 六集總整理｜你追到第幾集了？
-
-EP.01《辣麼嫩的你》辣嫩豆腐煲
-EP.02《越泡越愛你》泡菜豆腐煲
-EP.03《大醬軍》大醬豆腐煲
-EP.04《我海帶著你的愛》海帶豆腐煲
-EP.05《愛你沒有部隊》部隊豆腐煲
-EP.06《風味你停留》風味豆腐煲
-
-左滑看全部劇照 👉
-你是哪一集？留言告訴我們，或直接來義華路吃你的本命煲 🍲
-
-🔗 測驗連結在個人檔案
-${TAGS}`},
- {id:'nye',title:'跨年篇｜MV 無字版重播',when:'12/31（四）17:30',plat:'IG Reels＋FB',vid:VD+'mv-clean.mp4',imgs:[],
-  text:`🎆 跨年特別篇
-
-2026 的最後一鍋，想跟誰一起吃？
-辣嫩的你、部隊的他、海帶的她——
-今年最後一晚，用一鍋熱湯收尾 🍲
-
-還沒測你是哪一種豆腐煲？連結在個人檔案 🔗
-
-${STORE}
-
-${TAGS}`},
 ];
 
 
@@ -402,35 +291,20 @@ const FAQ=[
 
 /* 行銷行動：d=日期, t=時間, post=對應貼文 id */
 const EPS=ORDER.map((k,i)=>({k,ep:T[k].ep,drama:T[k].drama,name:T[k].name}));
-const epAct=(e,d,t)=>({d,t,plat:'IG Reels＋FB＋限動',title:`EP.${e.ep}《${e.drama}》首播`,post:'ep'+e.ep,
+const epAct=(e,d,t)=>({d,t,plat:'IG Reels＋FB＋限動',title:`EP.${e.ep}《${e.drama}》${e.ep==='06'?'完結篇':'首播'}`,post:'ep'+e.ep,
   steps:[`IG 發 Reels：上傳 EP.${e.ep} 影片，貼上 EP.${e.ep} 文案`,'FB 同時發同一支影片＋同一份文案（可加測驗網址）',`5 分鐘內分享到限動，或改用 EP.${e.ep} 限動圖，再加連結貼紙`],
   mats:[[epVid(e.k),'影片'],[epPost(e.k),'1:1 圖'],[epStory(e.k),'限動圖']]});
 const PLAN=[
- {wk:'預熱',sub:'開播前兩天'},
- {d:'2026-11-25',t:'21:00',plat:'FB＋IG',title:'EP.00 預告貼文',post:'teaser',steps:['IG、FB 發預告貼文','同步分享到限動'],mats:[[S+'00-teaser-4x5.jpg','預告圖']]},
- {d:'2026-11-26',t:'21:00',plat:'IG 限動',title:'開播倒數',steps:['限動放預告圖','加「倒數計時」貼紙：你是哪一種豆腐煲？開播，時間設 11/27 11:30','鼓勵追蹤者按「提醒我」'],mats:[[S+'00-teaser-4x5.jpg','預告圖']]},
- {wk:'第 1 週｜開播',sub:'11/27–12/1'},
- {d:'2026-11-27',t:'10:30',plat:'IG 個人檔案',title:'換上測驗連結',steps:['IG 個人檔案的「連結」改成測驗網址','FB 粉專「按鈕」或簡介也放上測驗網址'],mats:[['#ov','測驗連結']]},
- {d:'2026-11-27',t:'11:30',plat:'IG Reels＋FB',title:'MV 首播＋測驗開播',post:'launchIG',steps:['IG 發 Reels：上傳 MV（文字版），貼上「開播｜IG Reels」文案','FB 發同一支 MV，貼上「開播｜FB 版」文案（含網址）','把 Reels 置頂在 IG 個人檔案'],mats:[[VD+'mv-lyrics.mp4','MV 文字版']]},
- {d:'2026-11-27',t:'11:35',plat:'IG／FB 限動',title:'開播限動＋連結貼紙',post:'launchStory',steps:['上傳開播限動圖','加連結貼紙導到測驗'],mats:[[S+'01-launch-story.jpg','限動圖']]},
- {d:'2026-11-27',t:'18:00',plat:'IG／FB 限動',title:'晚餐前投票',post:'poll',steps:['分享 MV 到限動','加投票貼紙＋連結貼紙'],mats:[[S+'01-launch-story.jpg','限動圖']]},
+ {wk:'第 1 週｜開播',sub:'11/27–12/2'},
+ {d:'2026-11-27',t:'10:30',plat:'IG 個人檔案',title:'換上測驗連結',steps:['IG 個人檔案的「連結」改成測驗網址','FB 粉專簡介也放上測驗網址'],mats:[]},
+ {d:'2026-11-27',t:'11:30',plat:'IG Reels＋FB＋限動',title:'MV 首播＋測驗開播',post:'launchIG',steps:['IG 發 Reels：MV 文字版＋「開播｜IG」文案，發完置頂','FB 發同一支 MV＋「開播｜FB」文案','分享到限動，加連結貼紙（做法見「開播｜限時動態」）'],mats:[[VD+'mv-lyrics.mp4','MV 文字版'],[S+'01-launch-story.jpg','限動圖']]},
  epAct(EPS[0],'2026-11-28','11:00'),
  epAct(EPS[1],'2026-11-29','17:30'),
- {d:'2026-12-01',t:'21:00',plat:'FB＋IG',title:'留言徵集：曬出你的結果',post:'call',steps:['發留言徵集貼文（可搭 EP.01 或 EP.02 圖）','整理開播以來有人標記的限動，逐一轉發'],mats:[[epPost('spicy'),'EP.01 圖']]},
- {wk:'第 2 週',sub:'12/4–12/8'},
- epAct(EPS[2],'2026-12-04','11:30'),
- epAct(EPS[3],'2026-12-05','11:00'),
- {d:'2026-12-06',t:'17:30',plat:'FB＋IG',title:'配對篇：本命 CP 與天敵',post:'pair',steps:['發配對篇貼文，可用 6 張 EP 1:1 圖做輪播','留言區回覆大家標記的 CP'],mats:[[epPost('spicy'),'EP 1:1 圖（社群圖片頁）']]},
- {d:'2026-12-08',t:'21:00',plat:'IG／FB 限動',title:'互動限動：標記你的本命 CP',post:'cpq',steps:['提問貼紙收集回答','隔天挑有趣的回答分享'],mats:[[epStory('kelp'),'EP.04 限動圖']]},
- {wk:'第 3 週',sub:'12/11–12/15'},
- epAct(EPS[4],'2026-12-11','11:30'),
- epAct(EPS[5],'2026-12-12','11:00'),
- {d:'2026-12-13',t:'17:30',plat:'FB＋IG',title:'六集總整理（輪播）',post:'sum',steps:['6 張 EP 1:1 圖依序上傳成輪播貼文','限動放 MV 無字版，加連結貼紙'],mats:[[VD+'mv-clean.mp4','MV 無字版'],[epPost('spicy'),'EP 1:1 圖（社群圖片頁）']]},
- {d:'2026-12-15',t:'21:00',plat:'FB＋IG',title:'戰況公布',post:'report',steps:['填入人數與各人格比例後發文（需要網站流量數據，沒有的話改成「留言最多的是哪一鍋」）'],mats:[]},
- {wk:'節日加碼',sub:'12 月下旬'},
- {d:'2026-12-24',t:'17:30',plat:'FB＋IG',title:'聖誕篇',post:'holiday',steps:['發聖誕篇貼文，搭配本命 CP 話題','限動加連結貼紙'],mats:[[S+'01-launch-4x5.jpg','上線圖']]},
- {d:'2026-12-31',t:'17:30',plat:'IG Reels＋FB',title:'跨年篇：MV 無字版重播',post:'nye',steps:['用 MV 無字版發 Reels，貼上跨年篇文案'],mats:[[VD+'mv-clean.mp4','MV 無字版']]},
- {d:'2027-01-08',t:'11:30',plat:'FB＋IG',title:'12 月月報',post:'report',steps:['之後每月第一個週五發一次月報，讓測驗持續有話題'],mats:[]},
+ epAct(EPS[2],'2026-12-02','21:00'),
+ {wk:'第 2 週｜完結',sub:'12/4–12/6'},
+ epAct(EPS[3],'2026-12-04','11:30'),
+ epAct(EPS[4],'2026-12-05','11:00'),
+ epAct(EPS[5],'2026-12-06','17:30'),
 ];
 const WD='日一二三四五六';
 const fmt=d=>{const x=new Date(d+'T00:00:00+08:00');return `${x.getMonth()+1}/${x.getDate()}`};
@@ -464,7 +338,7 @@ document.getElementById('epStories').innerHTML=ORDER.map(k=>mini(epStory(k),'EP.
 document.getElementById('faqList').innerHTML=FAQ.map((f,i)=>`<div class="card"><h3>${f[0]}</h3><pre id="f${i}">${esc(f[1])}</pre><button class="btn sm" data-copy="f${i}">複製</button></div>`).join('');
 
 document.getElementById('planList').innerHTML=PLAN.map(a=>a.wk?`<div class="wk">${a.wk}<small>${a.sub}</small></div>`:actHTML(a,acts.indexOf(a)===nextIdx)).join('');
-document.getElementById('nextUp').innerHTML=nextIdx<0?'<p class="muted">排程都完成了，之後每月第一個週五發月報即可。</p>':acts.slice(nextIdx,nextIdx+3).map((a,i)=>actHTML(a,i===0)).join('');
+document.getElementById('nextUp').innerHTML=nextIdx<0?'<p class="muted">六集都播完了。之後測驗連結繼續放在個人檔案即可。</p>':acts.slice(nextIdx,nextIdx+3).map((a,i)=>actHTML(a,i===0)).join('');
 const vcard=(src,cap)=>`<figure class="vid"><video src="${src}" poster="${src.replace('.mp4','.jpg')}" controls playsinline preload="none"></video><figcaption><span>${cap}</span><a class="btn sm ghost" href="${src}" download="${fname(src)}">下載</a></figcaption></figure>`;
 document.getElementById('mvList').innerHTML=vcard(VD+'mv-lyrics.mp4','文字版（含歌名、韓中歌詞）67 秒｜開播主推')+vcard(VD+'mv-clean.mp4','無字版 60 秒｜限動、重播用');
 document.getElementById('epVids').innerHTML=ORDER.map(k=>vcard(epVid(k),`EP.${T[k].ep} ${T[k].name}`)).join('');
