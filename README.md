@@ -6,6 +6,8 @@
 | --- | --- | --- |
 | `/` | 活動入口頁（Vercel 上會導向 `/owner/`） | 上線 |
 | `/tofu-catch/` | 嫩豆腐接接樂 網頁遊戲（對外網址：https://78vince.github.io/chuan-dubu/tofu-catch/） | 活動中 |
+| `/tofu-quiz/` | 你是哪一種豆腐煲？韓劇風人格測驗（Vercel 測試：https://chuan-dubu.vercel.app/tofu-quiz/） | 測試版 |
+| `/tofu-quiz/r/<人格>/` | 各人格分享頁，帶 OG 預覽圖，自動導回測驗並帶 `?from=` | 測試版 |
 | `/tofu-catch/social/` | 社群貼文圖片（輪播 5 張＋限動 1 張） | 完成 |
 | `/owner/` | 業主專區：遊戲連結與 QR、貼文、圖片、活動規則、兌換紀錄 | 完成 |
 | `/api/redeem` | 店員核銷時寫入兌換紀錄（Vercel Function） | 上線 |
