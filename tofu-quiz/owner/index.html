@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>業主專區｜你是哪一種豆腐煲？｜銓Dubu嘟布韓式豆腐煲</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--sans:"Noto Sans TC","Noto Sans CJK TC","PingFang TC",system-ui,sans-serif;--serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC",serif;
+--ink:#1E1D1B;--muted:#6E675C;--paper:#F6F1E7;--raised:#FFFDF8;--line:#E3D9C6;--navy:#1F2633;--gold:#B8935A;--gold-l:#D4B27A;--r:6px}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.7 var(--sans)}
+a{color:#8A6A3A}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+.top{background:var(--navy);color:#EFE3CC}
+.top .wrap{padding-top:26px;padding-bottom:24px}
+.top small{letter-spacing:.3em;color:var(--gold-l);font-size:12px}
+.top h1{margin:6px 0 2px;font:900 28px/1.3 var(--serif);background:linear-gradient(180deg,#F3DDA8,#B8935A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.top p{margin:0;font-size:13px;opacity:.8}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav button{flex:none;font:500 15px var(--sans);padding:7px 16px;border-radius:999px;border:1px solid transparent;background:none;color:var(--muted);cursor:pointer}
+nav button[aria-selected=true]{background:var(--navy);color:#EFE3CC}
+main{padding:24px 0 70px}
+section[hidden]{display:none}
+h2{font:900 22px/1.3 var(--serif);margin:6px 0 16px}
+h3{font:700 17px/1.4 var(--serif);margin:0 0 8px}
+.card{background:var(--raised);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+.muted{color:var(--muted);font-size:13px}
+.btn{display:inline-flex;align-items:center;gap:6px;font:500 14px var(--sans);padding:8px 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#EFE3CC;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--navy)}
+.btn.sm{padding:5px 12px;font-size:13px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.link{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.link img{width:130px;height:130px;background:#fff;padding:6px;border:1px solid var(--line);border-radius:6px}
+.url{font:500 13px ui-monospace,Menlo,monospace;word-break:break-all;background:#F1E8D6;border-radius:4px;padding:6px 10px;display:block;margin:6px 0 10px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:12px;letter-spacing:.05em}
+td.d{white-space:nowrap;font-variant-numeric:tabular-nums;color:#8A6A3A;font-weight:700}
+ul.note{margin:0;padding-left:20px}ul.note li{margin:4px 0}
+.chip{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;background:#EFE3CC;color:#6B4F26;margin-right:4px}
+/* posts */
+.post{display:grid;gap:16px;margin-bottom:18px}
+@media(min-width:760px){.post{grid-template-columns:240px 1fr}}
+.post .pics{display:flex;flex-direction:column;gap:8px}
+.post .pics img{width:100%;border-radius:4px;border:1px solid var(--line);display:block}
+.post .pics .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.post header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.post header .when{font-size:12px;color:var(--muted)}
+pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);background:#FBF7EE;border:1px dashed var(--line);border-radius:4px;padding:12px 14px;margin:0 0 10px}
+/* images */
+.shot{margin:0}
+.shot img{width:100%;display:block;border-radius:4px;border:1px solid var(--line);background:#ddd}
+.shot figcaption{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:13px}
+.ep-grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
+@media(min-width:760px){.ep-grid{grid-template-columns:repeat(6,1fr)}}
+.ep-grid div{font-size:12px;text-align:center}
+.ep-grid img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:4px;display:block;margin-bottom:4px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#EFE3CC;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <small>OWNER ONLY · 業主專區</small>
+  <h1>你是哪一種豆腐煲？</h1>
+  <p>銓Dubu嘟布韓式豆腐煲 義華店｜六部韓劇 × 六鍋豆腐煲 人格測驗</p>
+</div></header>
+
+<nav><div class="wrap" role="tablist">
+  <button role="tab" data-tab="ov" aria-selected="true">總覽</button>
+  <button role="tab" data-tab="posts" aria-selected="false">社群貼文</button>
+  <button role="tab" data-tab="imgs" aria-selected="false">社群圖片</button>
+  <button role="tab" data-tab="faq" aria-selected="false">回覆話術</button>
+</div></nav>
+
+<main class="wrap">
+
+<!-- 總覽 -->
+<section id="ov">
+  <h2>活動總覽</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>測驗連結</h3>
+      <div class="link">
+        <img src="qr.svg" alt="測驗 QR Code">
+        <div style="flex:1;min-width:200px">
+          <span class="muted">正式連結（貼文、限動、QR 都用這個）</span>
+          <code class="url" id="urlMain">https://78vince.github.io/chuan-dubu/tofu-quiz/</code>
+          <div class="row">
+            <button class="btn sm" data-copy="urlMain">複製連結</button>
+            <a class="btn sm ghost" href="https://78vince.github.io/chuan-dubu/tofu-quiz/" target="_blank" rel="noopener">開啟測驗</a>
+            <a class="btn sm ghost" href="qr.svg" download="你是哪一種豆腐煲-QR.svg">下載 QR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>活動重點</h3>
+      <ul class="note">
+        <li><b>上線日：</b>11/23（日）暫定</li>
+        <li><b>期間：</b>不限日期，長期放在 IG 個人檔案</li>
+        <li><b>形式：</b>8 題測驗 → 六種豆腐煲人格，各自一集韓劇劇照＋主題曲</li>
+        <li><b>不提供折扣</b>，目的是話題與品牌曝光</li>
+        <li>店內不另辦實體活動，店員只需知道「有這個測驗」即可</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>六種人格</h3>
+    <div style="overflow-x:auto"><table id="typeTable"><thead><tr><th>EP</th><th>劇名</th><th>人格</th><th>一句話</th><th>本命 CP</th><th>天敵</th></tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>建議發文排程</h3>
+    <p class="muted" style="margin-top:0">日期可依實際狀況調整；每則貼文的文案與圖片都在「社群貼文」頁。</p>
+    <div style="overflow-x:auto"><table id="schedTable"><thead><tr><th>日期</th><th>內容</th><th>平台</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<!-- 社群貼文 -->
+<section id="posts" hidden>
+  <h2>社群貼文</h2>
+  <p class="muted" style="margin-top:-8px">按「複製文案」直接貼到 FB／IG；圖片點一下即可下載原檔。IG 貼文無法放連結，請寫「連結在個人檔案」，並把測驗連結放在 IG 個人檔案。</p>
+  <div id="postList"></div>
+</section>
+
+<!-- 社群圖片 -->
+<section id="imgs" hidden>
+  <h2>社群圖片</h2>
+  <div class="grid g3" id="mainImgs"></div>
+  <h3 style="margin-top:28px">EP 貼文（1:1）</h3>
+  <div class="ep-grid" id="epPosts"></div>
+  <h3 style="margin-top:28px">EP 限動（9:16）</h3>
+  <div class="ep-grid" id="epStories"></div>
+</section>
+
+<!-- 回覆話術 -->
+<section id="faq" hidden>
+  <h2>留言／私訊回覆話術</h2>
+  <div class="grid g2" id="faqList"></div>
+</section>
+
+</main>
+<div class="toast" id="toast">已複製</div>
+
+<script>
+const SITE='https://78vince.github.io/chuan-dubu/tofu-quiz/';
+const TAGS='#你是哪一種豆腐煲 #銓Dubu嘟布 #韓式豆腐煲 #高雄美食 #三民區美食';
+const STORE='📍 銓Dubu嘟布韓式豆腐煲 義華店\n高雄市三民區義華路 468 號\n⏰ 11:00–13:30、17:00–21:30\n📞 訂位 0902-268-213';
+const T={
+ spicy:{ep:'01',drama:'辣麼嫩的你',name:'辣嫩豆腐煲',line:'我就是愛你，辣嫩怎麼辦？',ko:'겉은 부드럽고, 속은 매워요',slogan:'外表很嫩，內心很嗆',desc:'看起來乖巧好相處，一開口就是小辣椒。嘴硬心軟，罵完人會偷偷幫他把事情做完。',eat:'辣嫩豆腐煲配拉麵，辣到流汗都不認輸。',emo:'🌶️'},
+ kimchi:{ep:'02',drama:'越泡越愛你',name:'泡菜豆腐煲',line:'感情跟泡菜一樣，越泡越入味，越泡越愛你。',ko:'내가 없으면 단톡방이 썰렁해',slogan:'沒有我在，群組是死的',desc:'酸甜又帶勁，是朋友圈的話題製造機。限動比新聞更新得快，吃飯前一定先讓手機吃。',eat:'泡菜豆腐煲，先拍一張再開動。',emo:'📱'},
+ soybean:{ep:'03',drama:'大醬軍',name:'大醬豆腐煲',line:'我不大會醬情話，只會醬你放在心上。',ko:'끓일수록 깊어지는 올드 소울',slogan:'越熬越香的老靈魂',desc:'穩、慢、有味道。訂位、算錢、吐苦水都找你，你就是朋友圈的那鍋高湯。',eat:'大醬豆腐煲先喝三口湯，再拌白飯。',emo:'🫕'},
+ kelp:{ep:'04',drama:'我海帶著你的愛',name:'海帶豆腐煲',line:'這麼多年過去了，你海帶著我的愛嗎？',ko:'무심한 척해도 다 듣고 있어',slogan:'佛系，但不是沒在聽',desc:'像海邊的微風，安靜地讓人放鬆。群組已讀不回，但每一則都看得清清楚楚。',eat:'海帶豆腐煲配冬粉，慢慢吸。',emo:'🌊'},
+ army:{ep:'05',drama:'愛你沒有部隊',name:'部隊豆腐煲',line:'多加一份起司沒有部隊，多愛你一點也沒有部隊。',ko:'다 넣어 주세요, 곱빼기로!',slogan:'我全都要，而且要大份',desc:'人生不做選擇題。火腿、香腸、起司、拉麵⋯⋯行程跟鍋一樣滿。',eat:'部隊豆腐煲＋主廚推薦再加一道。',emo:'🧀'},
+ classic:{ep:'06',drama:'風味你停留',name:'風味豆腐煲',line:'走進義華路，連風都味你停留。',ko:'클래식은 설명이 필요 없죠',slogan:'經典，就是不需要解釋',desc:'不追流行，只追好吃。大家選擇困難時的答案，平凡但從不踩雷。',eat:'風味豆腐煲配白飯和三樣小菜，原味最大。',emo:'🍚'}
+};
+const ORDER=['spicy','kimchi','soybean','kelp','army','classic'];
+const MATE={spicy:'kelp',kelp:'spicy',kimchi:'army',army:'kimchi',soybean:'classic',classic:'soybean'};
+const FOE={spicy:'classic',classic:'spicy',kimchi:'soybean',soybean:'kimchi',army:'kelp',kelp:'army'};
+const S='../social/';
+const epPost=k=>`${S}ep${T[k].ep}-${k}-post-1x1.jpg`, epStory=k=>`${S}ep${T[k].ep}-${k}-story.jpg`;
+const EPDATE=['11/25','11/27','11/29','12/1','12/3','12/5'];
+
+const POSTS=[
+ {id:'teaser',title:'預熱｜EP.00 即將播出',when:'11/21（五）',plat:'FB＋IG',imgs:[S+'00-teaser-4x5.jpg'],
+  text:`🎬 EP.00 預告｜你的那一集，即將播出
+
+六部韓劇，六鍋豆腐煲。
+有人在雨裡邊哭邊吃辣嫩，
+有人在雪地裡多加一份起司。
+
+這週末，來看看你是哪一集的主角。
+11/23 正式播出 📺
+
+${TAGS}`},
+ {id:'launchFB',title:'上線｜FB 版（可放連結）',when:'11/23（日）',plat:'FB',imgs:[S+'01-launch-4x5.jpg'],
+  text:`📺 正式播出｜你是哪一種豆腐煲？
+
+8 個場景，看見你的那一集。
+六部韓劇 × 六鍋豆腐煲，
+測出你的本命煲，還有專屬劇照和主題曲 🎵
+
+👉 立即測驗：${SITE}
+
+測完記得分享結果，
+標記那個「越泡越愛」的朋友 👀
+
+${TAGS}`},
+ {id:'launchIG',title:'上線｜IG 版（連結在個人檔案）',when:'11/23（日）',plat:'IG',imgs:[S+'01-launch-4x5.jpg'],
+  text:`📺 正式播出｜你是哪一種豆腐煲？
+
+8 個場景，看見你的那一集。
+辣嫩、泡菜、大醬、海帶、部隊、風味——
+你會是哪一部韓劇的主角？
+
+🔗 測驗連結在個人檔案
+測完把結果限動標記我們，我們會轉發 💛
+
+${TAGS}`},
+ {id:'launchStory',title:'上線｜限時動態',when:'11/23（日）',plat:'IG／FB 限動',imgs:[S+'01-launch-story.jpg'],
+  text:`限動操作：
+1. 上傳圖片
+2. 加「連結」貼紙，網址：${SITE}
+   貼紙文字建議：測我的豆腐煲人格
+3. 貼紙放在圖片下方預留的位置
+4. 可加「投票」貼紙：你覺得你是哪一鍋？（辣嫩／部隊）`},
+ ...ORDER.map((k,i)=>{const t=T[k],m=T[MATE[k]],f=T[FOE[k]];return{id:'ep'+t.ep,title:`EP.${t.ep}｜${t.drama}`,when:EPDATE[i],plat:'FB＋IG（貼文＋限動）',imgs:[epPost(k),epStory(k)],
+  text:`EP.${t.ep}｜${t.drama}
+
+「${t.line}」
+
+${t.emo} ${t.name}人格
+${t.ko}
+（${t.slogan}）
+
+${t.desc}
+
+🍲 本命吃法：${t.eat}
+💞 本命 CP：${m.name}人格
+⚡ 天敵：${f.name}人格
+
+標記你身邊的${t.name}人格 👇
+還不知道自己是哪一鍋？測驗連結在個人檔案 🔗
+
+${TAGS}`}}),
+ {id:'pair',title:'配對篇｜本命 CP 與天敵',when:'12/7',plat:'FB＋IG',imgs:[S+'01-launch-4x5.jpg'],
+  text:`💞 豆腐煲人格配對表
+
+本命 CP（一起吃鍋最對味）
+🌶️ 辣嫩 × 🌊 海帶｜一個嗆、一個聽
+📱 泡菜 × 🧀 部隊｜熱鬧加熱鬧，群組不會冷
+🫕 大醬 × 🍚 風味｜老靈魂配經典，穩
+
+天敵（約吃飯可能會吵起來）
+🌶️ 辣嫩 vs 🍚 風味
+📱 泡菜 vs 🫕 大醬
+🧀 部隊 vs 🌊 海帶
+
+你跟另一半／好朋友是哪一組？
+留言標記他，看看你們是 CP 還是天敵 👀
+
+🔗 測驗連結在個人檔案
+${TAGS}`},
+ {id:'call',title:'留言徵集｜曬出你的結果',when:'12/10',plat:'FB＋IG',imgs:[],
+  text:`📸 曬出你的那一集！
+
+測完「你是哪一種豆腐煲？」了嗎？
+留言告訴我們你是哪一鍋，
+或把結果發限動標記我們，我們會轉發 💛
+
+目前最多人是……下週公布 👀
+
+🔗 測驗連結在個人檔案
+${TAGS}`},
+ {id:'report',title:'月報模板｜人格統計（數字自行替換）',when:'每月月初',plat:'FB＋IG',imgs:[],
+  text:`📊 本月豆腐煲人格統計
+
+這個月有 ___ 人測出自己的那一集！
+
+🥇 ___豆腐煲人格 ___%
+🥈 ___豆腐煲人格 ___%
+🥉 ___豆腐煲人格 ___%
+
+最稀有的是 ___豆腐煲人格，只有 ___%
+你是稀有的那一鍋嗎？
+
+🔗 測驗連結在個人檔案
+${TAGS}`},
+ {id:'holiday',title:'節日模板｜聖誕／跨年（可替換節日）',when:'12/24、12/31',plat:'FB＋IG',imgs:[],
+  text:`🎄 聖誕特別篇
+
+天冷了，該跟誰一起吃鍋？
+辣嫩配海帶、泡菜配部隊、大醬配風味——
+找到你的本命 CP，一起來義華路吃一鍋 🍲
+
+還沒測？連結在個人檔案 🔗
+
+${STORE}
+
+${TAGS}`},
+];
+
+const SCHED=[['11/21','預熱 EP.00 貼文','FB＋IG'],['11/23','正式上線貼文＋限動，測驗連結放上 IG 個人檔案','FB＋IG'],
+ ...ORDER.map((k,i)=>[EPDATE[i],`EP.${T[k].ep}《${T[k].drama}》貼文＋限動`,'FB＋IG']),
+ ['12/7','配對篇','FB＋IG'],['12/10','留言徵集','FB＋IG'],['12/24、12/31','節日模板','FB＋IG'],['每月初','月報模板（看 GA 數字）','FB＋IG']];
+
+const FAQ=[
+ ['測驗在哪裡？','謝謝你的關注！測驗連結在我們 IG 個人檔案，或直接點這裡：'+SITE+' 測完歡迎分享結果給我們看 💛'],
+ ['測驗有優惠嗎？','這次的測驗純粹好玩，沒有搭配優惠喔！不過歡迎帶著你的本命煲結果來義華店，點一鍋屬於你的那一集 🍲'],
+ ['音樂沒有聲音？','手機請確認沒有開靜音，劇照出現時左上角有音樂按鈕可以開關 🎵'],
+ ['我測出來不準！','哈哈哈每個人都有好幾面！可以重新測一次，或者告訴我們你覺得自己是哪一鍋 👀'],
+ ['可以訂位嗎？','可以的！訂位請撥 0902-268-213。\n義華店：高雄市三民區義華路 468 號\n營業時間 11:00–13:30、17:00–21:30'],
+ ['有標記我們的限動','（轉發時加一句）你是'+'___'+'人格！快來義華路吃你的本命煲 🍲'],
+];
+
+/* render */
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+document.querySelector('#typeTable tbody').innerHTML=ORDER.map(k=>{const t=T[k];return`<tr><td class="d">EP.${t.ep}</td><td>${t.drama}</td><td>${t.name}人格</td><td>${t.slogan}</td><td>${T[MATE[k]].name}</td><td>${T[FOE[k]].name}</td></tr>`}).join('');
+document.querySelector('#schedTable tbody').innerHTML=SCHED.map(r=>`<tr><td class="d">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+const fname=p=>p.split('/').pop();
+const pic=p=>`<a href="${p}" download="${fname(p)}" title="下載"><img src="${p}" alt="" loading="lazy"></a>`;
+document.getElementById('postList').innerHTML=POSTS.map(p=>`<article class="card post">
+  <div class="pics">${p.imgs.length==2?`<div class="two">${p.imgs.map(pic).join('')}</div>`:p.imgs.map(pic).join('')||'<div class="muted">純文字貼文，可搭配任一張 EP 圖</div>'}</div>
+  <div><header><h3>${p.title}</h3><span class="when"><span class="chip">${p.when}</span>${p.plat}</span></header>
+  <pre id="t-${p.id}">${esc(p.text)}</pre>
+  <div class="row"><button class="btn sm" data-copy="t-${p.id}">複製文案</button>${p.imgs.map(i=>`<a class="btn sm ghost" href="${i}" download="${fname(i)}">下載${/story/.test(i)?'限動圖':'貼文圖'}</a>`).join('')}</div></div>
+</article>`).join('');
+const shot=(p,cap)=>`<figure class="shot"><a href="${p}" download="${fname(p)}"><img src="${p}" alt="" loading="lazy"></a><figcaption><span>${cap}</span><a class="btn sm ghost" href="${p}" download="${fname(p)}">下載</a></figcaption></figure>`;
+document.getElementById('mainImgs').innerHTML=shot(S+'00-teaser-4x5.jpg','預熱貼文 4:5')+shot(S+'01-launch-4x5.jpg','上線貼文 4:5')+shot(S+'01-launch-story.jpg','上線限動 9:16');
+const mini=(p,cap)=>`<div><a href="${p}" download="${fname(p)}"><img src="${p}" alt="" loading="lazy" style="${/post/.test(p)?'aspect-ratio:1':''}"></a>${cap}</div>`;
+document.getElementById('epPosts').innerHTML=ORDER.map(k=>mini(epPost(k),'EP.'+T[k].ep+' '+T[k].name)).join('');
+document.getElementById('epStories').innerHTML=ORDER.map(k=>mini(epStory(k),'EP.'+T[k].ep+' 限動')).join('');
+document.getElementById('faqList').innerHTML=FAQ.map((f,i)=>`<div class="card"><h3>${f[0]}</h3><pre id="f${i}">${esc(f[1])}</pre><button class="btn sm" data-copy="f${i}">複製</button></div>`).join('');
+
+/* tabs */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('main>section').forEach(s=>s.hidden=s.id!==b.dataset.tab);
+  history.replaceState(null,'','#'+b.dataset.tab);scrollTo(0,0);
+});
+function fromHash(){const h=location.hash.slice(1);const b=h&&document.querySelector(`nav button[data-tab="${h}"]`);b&&b.click()}
+fromHash();addEventListener('hashchange',fromHash);
+/* copy */
+const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),1400)};
+async function copyText(s){try{await navigator.clipboard.writeText(s)}catch(e){const a=document.createElement('textarea');a.value=s;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;copyText(document.getElementById(b.dataset.copy).textContent).then(()=>toast('已複製'))});
+</script>
+</body>
+</html>

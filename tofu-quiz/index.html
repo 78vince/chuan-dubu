@@ -243,7 +243,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="badge-test" id="testBadge" hidden>測試版</div>
 <div class="app">
 
 <!-- HOME -->
@@ -487,7 +486,7 @@ function fitLine(el,text){
   while(el.scrollWidth>max&&fs>14){fs-=1;el.style.fontSize=fs+'px'}
   if(el.scrollWidth>max){el.style.whiteSpace='normal';el.innerHTML=text.replace('\n','<br>');el.style.fontSize='18px'}
 }
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0);$('testBadge').hidden=!PREVIEW||id==='result';if(id==='result'&&result)requestAnimationFrame(()=>{fitLine($('rLine'),TYPES[result].line);fitKo()})}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0);if(id==='result'&&result)requestAnimationFrame(()=>{fitLine($('rLine'),TYPES[result].line);fitKo()})}
 window.addEventListener('resize',()=>{if(result&&$('result').classList.contains('on')){fitLine($('rLine'),TYPES[result].line);fitKo()}});
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200)}
 
@@ -521,7 +520,6 @@ function startCover(){
 
 /* ========== 首頁 ========== */
 function initHome(){
-  $('testBadge').hidden=!PREVIEW;
   $('logoImg').src=svgURL(LOGO_SVG);
   startCover();
   if(from){
