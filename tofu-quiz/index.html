@@ -169,7 +169,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .r-intro{text-align:center;padding:36px 24px 6px}
 .r-intro .who{font-size:13px;letter-spacing:.24em;color:var(--ink-muted)}
 .r-intro .nm{font-family:var(--font-serif);font-weight:700;font-size:28px;letter-spacing:.06em;margin-top:6px}
-.ko-say{display:inline-flex;align-items:center;gap:10px;margin-top:22px;background:none;border:0;padding:6px 8px;border-radius:var(--radius-md);
+.ko-say{display:inline-flex;max-width:100%;align-items:center;gap:10px;margin-top:22px;background:none;border:0;padding:6px 8px;border-radius:var(--radius-md);
   font-family:var(--font-korean);font-weight:700;font-size:clamp(22px,6.6vw,28px);line-height:1.45;color:var(--ink);letter-spacing:.02em;text-align:center}
 .ko-say svg{flex:none;color:var(--gold-text)}
 .ko-say span{word-break:keep-all}
@@ -475,10 +475,11 @@ function stillHTML(k,opt={}){
 }
 function fillStill(el,k,opt){el.innerHTML=stillHTML(k,opt);el.style.setProperty('--tc',TYPES[k].c)}
 function fitKo(){
-  const b=$('koBtn'),sp=$('rKo'),max=b.parentElement.clientWidth-8; if(!max)return;
+  const b=$('koBtn'),sp=$('rKo'); const max=Math.min(b.parentElement.clientWidth,document.documentElement.clientWidth-40); if(!max)return;
+  const w=()=>Math.max(b.scrollWidth,sp.getBoundingClientRect().width);
   sp.style.whiteSpace='nowrap'; let fs=28; b.style.fontSize=fs+'px';
-  while(b.scrollWidth>max&&fs>19){fs-=1;b.style.fontSize=fs+'px'}
-  if(b.scrollWidth>max){sp.style.whiteSpace='normal'}
+  while(w()>max&&fs>16){fs-=1;b.style.fontSize=fs+'px'}
+  if(w()>max){sp.style.whiteSpace='normal'}
 }
 function fitLine(el,text){
   el.style.whiteSpace='nowrap'; el.textContent=text.replace('\n',''); let fs=20; el.style.fontSize=fs+'px';
@@ -487,7 +488,9 @@ function fitLine(el,text){
   if(el.scrollWidth>max){el.style.whiteSpace='normal';el.innerHTML=text.replace('\n','<br>');el.style.fontSize='18px'}
 }
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0);if(id==='result'&&result)requestAnimationFrame(()=>{fitLine($('rLine'),TYPES[result].line);fitKo()})}
-window.addEventListener('resize',()=>{if(result&&$('result').classList.contains('on')){fitLine($('rLine'),TYPES[result].line);fitKo()}});
+const refit=()=>{if(result&&$('result').classList.contains('on')){fitLine($('rLine'),TYPES[result].line);fitKo()}};
+window.addEventListener('resize',refit);
+if(document.fonts){document.fonts.ready.then(refit);document.fonts.addEventListener&&document.fonts.addEventListener('loadingdone',refit)}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200)}
 
 /* ========== 主題曲 ========== */

@@ -88,6 +88,31 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
 .hday li time{font:700 13px var(--sans);color:#8A6A3A;margin-right:6px;font-variant-numeric:tabular-nums}
 .hday li b{font-weight:700}.hday li small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
 @media(max-width:520px){.hday{grid-template-columns:1fr;gap:6px}}
+.tgrid{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:640px){.tgrid{grid-template-columns:1fr 1fr}}@media(min-width:900px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+.tcard{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:14px;background:#FBF7EE}
+.tcard .ep{font:700 12px var(--sans);color:#8A6A3A;margin-right:8px}.tcard b{font:700 16px var(--serif)}
+.tcard div{margin-top:4px}.tcard small{display:block;color:var(--muted);font-size:12.5px;margin-top:4px}
+@media(max-width:600px){
+  .wrap{padding:0 14px}
+  .top h1{font-size:24px}
+  nav button{padding:6px 12px;font-size:14px}
+  h2{font-size:20px}
+  .card{padding:14px}
+  .act{grid-template-columns:1fr;gap:8px;padding:12px 14px}
+  .act .dt{display:flex;align-items:baseline;gap:8px}
+  .act .dt b{display:inline;font-size:18px}.act .dt br{display:none}.act .dt i{margin-top:0}
+  .post{gap:12px}
+  .post .pics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .post .pics>a,.post .pics .two{grid-column:auto}
+  .post .pics .two{display:contents}
+  .post .pics img{height:220px;object-fit:cover}
+  .post header{flex-direction:column;gap:4px}
+  pre{font-size:14px;padding:10px 12px}
+  .link img{width:110px;height:110px}
+  .vgrid{grid-template-columns:1fr 1fr}
+  .ep-grid{grid-template-columns:repeat(3,1fr)}
+}
 .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#EFE3CC;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%)}
 </style>
@@ -135,8 +160,7 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
       <ul class="note">
         <li><b>期間：</b>11/20（五）開播，11/29（日）六集播完，共兩週</li>
         <li><b>影片：</b>只釋出 MV 合輯；六集用劇照圖發文</li>
-        <li><b>做法：</b>每次只做一件事——發一支 Reels，再分享到限動加連結。不辦抽獎、不需要等留言互動</li>
-        <li><b>期間：</b>不限日期，長期放在 IG 個人檔案</li>
+        <li><b>做法：</b>開播日發 MV Reels，之後每集發劇照圖＋限動連結。不辦抽獎、不需要等留言互動</li>
         <li><b>形式：</b>8 題測驗 → 六種豆腐煲人格，各自一集韓劇劇照＋主題曲</li>
         <li><b>不提供折扣</b>，目的是話題與品牌曝光</li>
         <li>店內不另辦實體活動，店員只需知道「有這個測驗」即可</li>
@@ -146,7 +170,7 @@ pre{white-space:pre-wrap;word-break:break-word;font:400 14.5px/1.8 var(--sans);b
 
   <div class="card" style="margin-top:16px">
     <h3>六種人格</h3>
-    <div style="overflow-x:auto"><table id="typeTable"><thead><tr><th>EP</th><th>劇名</th><th>人格</th><th>一句話</th><th>本命 CP</th><th>天敵</th></tr></thead><tbody></tbody></table></div>
+    <div class="tgrid" id="typeGrid"></div>
   </div>
 
   <div class="card" style="margin-top:16px">
@@ -267,11 +291,12 @@ ${TAGS}`},
 ${TAGS}`},
  {id:'launchStory',title:'開播｜限時動態',when:'11/20（五）11:35',plat:'IG／FB 限動',imgs:[S+'01-launch-story.jpg'],
   text:`限動操作：
-1. 上傳圖片
+1. 上傳開播限動圖
 2. 加「連結」貼紙，網址：${SITE}
-   貼紙文字建議：測我的豆腐煲人格
-3. 貼紙放在圖片下方預留的位置
-4. 可加「投票」貼紙：你覺得你是哪一鍋？（辣嫩／部隊）`},
+   貼紙文字：測我的豆腐煲人格
+3. 貼紙放在畫面中間空白處
+
+※ IG 限動裡只有「連結」貼紙可以點，粉絲點了就會直接進入測驗。`},
  ...ORDER.map((k,i)=>{const t=T[k],m=T[MATE[k]],f=T[FOE[k]];return{id:'ep'+t.ep,title:`EP.${t.ep}｜${t.drama}`,when:EPDATE[i],plat:'IG＋FB 貼文＋限動',imgs:[epPost(k),epStory(k)],
   text:`EP.${t.ep}｜${t.drama}
 
@@ -333,7 +358,7 @@ const ptitle=id=>{const p=POSTS.find(x=>x.id===id);return p?p.title:''};
 const actHTML=(a,isNext)=>`<div class="act${ts(a)+30*60e3<now?' past':''}${isNext?' next':''}">
   <div class="dt"><b>${fmt(a.d)}</b><span>週${wd(a.d)}</span><br><i>${a.t}</i></div>
   <div><span class="tag">${a.plat}</span><h4>${a.title}</h4><ol>${a.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
-  <div class="mats">${a.post?`<button class="btn sm" data-goto="${a.post}">文案：${ptitle(a.post)}</button>`:''}${a.mats.map(m=>m[0].startsWith('#')?'':`<a class="btn sm ghost" href="${m[0]}" download="${fname(m[0])}">${m[1]}</a>`).join('')}</div></div></div>`;
+  <div class="mats">${a.post?`<button class="btn sm" data-goto="${a.post}">看文案</button>`:''}${a.mats.map(m=>m[0].startsWith('#')?'':`<a class="btn sm ghost" href="${m[0]}" download="${fname(m[0])}">${m[1]}</a>`).join('')}</div></div></div>`;
 
 
 const HIST=[
@@ -353,7 +378,7 @@ const HIST=[
 
 /* render */
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-document.querySelector('#typeTable tbody').innerHTML=ORDER.map(k=>{const t=T[k];return`<tr><td class="d">EP.${t.ep}</td><td>${t.drama}</td><td>${t.name}人格</td><td>${t.slogan}</td><td>${T[MATE[k]].name}</td><td>${T[FOE[k]].name}</td></tr>`}).join('');
+document.getElementById('typeGrid').innerHTML=ORDER.map(k=>{const t=T[k];return`<div class="tcard"><span class="ep">EP.${t.ep}</span><b>${t.drama}</b><div>${t.name}人格｜${t.slogan}</div><small>本命 CP：${T[MATE[k]].name}　天敵：${T[FOE[k]].name}</small></div>`}).join('');
 const fname=p=>p.split('/').pop();
 const pic=p=>`<a href="${p}" download="${fname(p)}" title="下載"><img src="${p}" alt="" loading="lazy"></a>`;
 document.getElementById('postList').innerHTML=POSTS.map(p=>`<article class="card post">
